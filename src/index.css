@@ -1,0 +1,64 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    margin-top: 10%;
+    background-color: #FFFEF4;
+}
+
+.heading {
+    font-family: Breathing;
+    font-size: 400%;
+    display: table;
+    margin: auto;
+    margin-top: 10%;
+    color: #36454F;
+}
+
+.markdownContainer {
+  text-align: left;
+  width: 600px;
+  display: table;
+  margin: auto;
+  margin-top: 10%;
+  align-self: center;
+  background-color: #FAFBFF;
+  padding: 10%;
+  color:#41403E;
+  outline:none;
+  box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  border:solid 6px #36454F;
+}
+
+@font-face {
+  font-family: Breathing;
+  src: url(fonts/Breathing.ttf);
+}
+
+@import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
+*{
+  box-sizing:border-box;
+}
+
+button{
+      text-align: left;
+      width: 600px;
+      display: table;
+      margin: auto;
+      margin-top: 10%;
+      align-self: center;
+      background-color: #FAFBFF;
+      padding: 10%;
+      color:#41403E;
+      outline:none;
+      box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      border:solid 6px #41403E;
+}
