@@ -1,0 +1,82 @@
+@import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
+
+body, html {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  background-color: #fffef4;
+  margin-top: 10%;
+}
+
+.heading {
+  color: #36454f;
+  font-family: Breathing;
+  font-size: 400%;
+  display: table;
+  margin: 10% auto auto;
+}
+
+.markdownContainer {
+  display: table;
+  margin: 10% auto auto;
+  align-self: center;
+  background-color: #fafbff;
+  border: 6px solid #36454f;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  box-shadow: 20px 38px 34px -26px rgba(0, 0, 0, .2);
+  color: #41403e;
+  outline: none;
+  padding: 10%;
+  text-align: left;
+  width: 600px;
+}
+
+@font-face {
+  font-family: Breathing;
+  src: url('../public/assets/Breathing.ttf');
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
