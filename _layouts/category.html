@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<div class="category-page">
+  <h1>{{ page.title }}</h1>
+  {% if page.description %}<p class="category-desc">{{ page.description }}</p>{% endif %}
+
+  {% assign posts = site[page.collection] | sort: 'date' | reverse %}
+  {% if posts.size > 0 %}
+  <ul class="post-list">
+    {% for post in posts %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <div class="post-meta">
+        {% if post.date %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>{% endif %}
+        {% if post.subtitle %}<span class="post-excerpt">{{ post.subtitle }}</span>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty-state">No posts yet.</p>
+  {% endif %}
+</div>

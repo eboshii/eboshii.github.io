@@ -1,0 +1,44 @@
+title: eboshii
+description: Thoughts on academia, quantitative finance, and travel.
+baseurl: ""
+url: "https://eboshii.github.io"
+
+collections:
+  academic:
+    output: true
+    permalink: /academic/:title/
+  quant:
+    output: true
+    permalink: /quant/:title/
+  travel:
+    output: true
+    permalink: /travel/:title/
+
+defaults:
+  - scope:
+      path: "_academic"
+      type: academic
+    values:
+      layout: post
+  - scope:
+      path: "_quant"
+      type: quant
+    values:
+      layout: post
+  - scope:
+      path: "_travel"
+      type: travel
+    values:
+      layout: post
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  math_engine: mathjax
