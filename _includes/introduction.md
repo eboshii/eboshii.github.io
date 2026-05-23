@@ -1,1 +1,1 @@
-Thoughts on artificial life, quantitative finance, and travel.
+I am eboshii, a hft quant researcher based in Hong Kong. In my spare time I write pages about artificial life, travel and financial markets. 
