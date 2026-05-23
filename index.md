@@ -4,7 +4,7 @@ title: Home
 ---
 
 <div class="home-intro">
-  <p>Thoughts on artificial life, quantitative finance, and travel.</p>
+  {% include introduction.md %}
 </div>
 
 <div class="section-grid">
