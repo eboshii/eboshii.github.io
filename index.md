@@ -4,13 +4,12 @@ title: Home
 ---
 
 <div class="home-intro">
-  <h1>eboshii</h1>
-  <p>Thoughts on academia, quantitative finance, and travel.</p>
+  <p>Thoughts on artificial life, quantitative finance, and travel.</p>
 </div>
 
 <div class="section-grid">
-  <a class="section-card" href="/academic/">
-    <h2>academic</h2>
+  <a class="section-card" href="/artificial-life/">
+    <h2>artificial life</h2>
     <p>Research notes, papers, and ideas.</p>
   </a>
   <a class="section-card" href="/quant/">

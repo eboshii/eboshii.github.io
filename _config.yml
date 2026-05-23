@@ -4,9 +4,9 @@ baseurl: ""
 url: "https://eboshii.github.io"
 
 collections:
-  academic:
+  artificial_life:
     output: true
-    permalink: /academic/:title/
+    permalink: /artificial-life/:title/
   quant:
     output: true
     permalink: /quant/:title/
@@ -16,8 +16,8 @@ collections:
 
 defaults:
   - scope:
-      path: "_academic"
-      type: academic
+      path: "_artificial_life"
+      type: artificial_life
     values:
       layout: post
   - scope:
