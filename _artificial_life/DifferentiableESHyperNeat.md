@@ -1,7 +1,7 @@
- ---
-  title: Differentiable ES-HyperNEAT
-  math: true
-  ---
+---
+title: Differentiable ES-HyperNEAT
+math: true
+---
 
   Es-HyperNEAT uses a [Compositional Pattern-Producing Network (CPPN)](https://en.wikipedia.org/wiki/Compositional_pattern-producing_network) to learn where to place neural network nodes and the weights to apply to their edges. 
 
@@ -66,3 +66,6 @@ $$h_2 = \cos(\mathbf{w}_{h2}^T \mathbf{x} + b_{h2})$$
 $$h_3 = \exp(-(\mathbf{w}_{h3}^T \mathbf{x} + b_{h3})^2)$$
 $$w = w_{o1}h_1 + w_{o2}h_2 + w_{o3}h_3 + b_o$$
 
+With such a CPPN, the $f(0,-1,x,y)$ substrate might look like:
+
+I'm positing that a 2-dimensional substrate is quite limiting. 
