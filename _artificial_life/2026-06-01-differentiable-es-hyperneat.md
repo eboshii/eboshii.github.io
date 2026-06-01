@@ -1,17 +1,18 @@
 ---
 title: Differentiable ES-HyperNEAT
+date: 2026-06-01
 math: true
 ---
 
-  Es-HyperNEAT uses a [Compositional Pattern-Producing Network (CPPN)](https://en.wikipedia.org/wiki/Compositional_pattern-producing_network) to learn where to place neural network nodes and the weights to apply to their edges. 
+Es-HyperNEAT uses a [Compositional Pattern-Producing Network (CPPN)](https://en.wikipedia.org/wiki/Compositional_pattern-producing_network) to learn where to place neural network nodes and the weights to apply to their edges.
 
-  The CPPN $f$ is a composition of some set of canoncial functions, and is of the form.
+The CPPN $f$ is a composition of some set of canoncial functions, and is of the form.
 
-  $$
+$$
 f(x_0,y_0,x_1,y_1) = w
-  $$
+$$
 
- The $(0,-1,x,y)$ space is considered a node centric *substrate* in ES-HyperNEAT, in this case centered arbitrarily on $(0,-1)$ in order to construct the 2-D substrate. The 2-dimensional substrate is searched, using a recursive [Quadtree](https://en.wikipedia.org/wiki/Quadtree) algorithm, to identify areas of high complexity (which corresponds to areas of high variance in $w$). 
+The $(0,-1,x,y)$ space is considered a node centric *substrate* in ES-HyperNEAT, in this case centered arbitrarily on $(0,-1)$ in order to construct the 2-D substrate. The 2-dimensional substrate is searched, using a recursive [Quadtree](https://en.wikipedia.org/wiki/Quadtree) algorithm, to identify areas of high complexity (which corresponds to areas of high variance in $w$). 
 
 A trivial example of a CPPN:
 
