@@ -19,6 +19,11 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   {% endif %}
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    mermaid.contentLoaded();
+  </script>
   {% if page.scripts %}
     {% for script in page.scripts %}
   <script src="{{ script }}"></script>
