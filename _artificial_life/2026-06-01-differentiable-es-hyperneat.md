@@ -15,7 +15,7 @@ $$
 The $(0,-1,x,y)$ space is considered a node centric *substrate* in ES-HyperNEAT, in this case centered arbitrarily on $(0,-1)$ in order to construct the 2-D substrate. The 2-dimensional substrate is searched, using a recursive [Quadtree](https://en.wikipedia.org/wiki/Quadtree) algorithm, to identify areas of high complexity (which corresponds to areas of high variance in $w$). 
 
 A trivial example of a CPPN:
-
+ 
 ```
 graph LR
     subgraph Input Layer
