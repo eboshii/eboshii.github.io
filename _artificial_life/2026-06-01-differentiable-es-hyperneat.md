@@ -70,3 +70,5 @@ $$w = w_{o1}h_1 + w_{o2}h_2 + w_{o3}h_3 + b_o$$
 With such a CPPN, the $f(0,-1,x,y)$ substrate might look like:
 
 I'm positing that a 2-dimensional substrate is quite limiting. 
+
+This is still a WIP, why are you here. 
