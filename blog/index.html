@@ -1,0 +1,33 @@
+---
+layout: default
+title: Blog
+description: Artificial life, finance, and travel.
+---
+<div class="category-page">
+  <h1>blog</h1>
+
+  {% assign all_posts = site.artificial_life | concat: site.quant | concat: site.travel | sort: 'date' | reverse %}
+  {% assign published_posts = "" | split: "" %}
+  {% for post in all_posts %}
+    {% assign first_word = post.content | strip_html | lstrip | downcase | split: " " | first %}
+    {% unless first_word == "draft" %}
+      {% assign published_posts = published_posts | push: post %}
+    {% endunless %}
+  {% endfor %}
+
+  {% if published_posts.size > 0 %}
+  <ul class="post-list">
+    {% for post in published_posts %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <div class="post-meta">
+        {% if post.date %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>{% endif %}
+        {% if post.subtitle %}<span class="post-excerpt">{{ post.subtitle }}</span>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty-state">No posts yet.</p>
+  {% endif %}
+</div>
