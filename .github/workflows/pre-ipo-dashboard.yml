@@ -1,0 +1,66 @@
+name: Update pre-IPO listings dashboard
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pre-ipo-dashboard
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch latest trade.xyz listings
+        id: fetch
+        run: |
+          python scripts/pre_ipo_dashboard.py | tee fetch_output.txt
+          if grep -q "^NEW LISTING DETECTED:" fetch_output.txt; then
+            {
+              echo "new_listings<<EOF"
+              grep "^NEW LISTING DETECTED:" fetch_output.txt | sed 's/^NEW LISTING DETECTED: //'
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+          fi
+          rm -f fetch_output.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/pre_ipo.json data/pre_ipo_state.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update pre-IPO listings dashboard"
+            git push
+          fi
+
+      # Push a phone alert via ntfy.sh (https://ntfy.sh) when a new listing
+      # appears. Install the ntfy app and subscribe to a private topic name,
+      # then add that name as the repo secret NTFY_TOPIC.
+      - name: Notify phone of new listings
+        if: steps.fetch.outputs.new_listings != '' && secrets.NTFY_TOPIC != ''
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          curl -sf \
+            -H "Title: New pre-IPO listing on trade.xyz" \
+            -H "Priority: high" \
+            -H "Tags: rotating_light" \
+            -d "${{ steps.fetch.outputs.new_listings }}" \
+            "https://ntfy.sh/$NTFY_TOPIC"
