@@ -49,6 +49,10 @@ def fetch_ipop_tickers(known_symbols):
     known dex symbols are pre-IPO perpetuals. Returns None on failure so the
     caller can fall back to the last-known set instead of wiping it out.
     """
+    # Hyperliquid dex symbol names are namespaced (e.g. "xyz:UNITREE"), but
+    # trade.xyz's docs just say "UNITREE" - match on the bare ticker.
+    base_to_full = {sym.split(":", 1)[-1]: sym for sym in known_symbols}
+
     matched = set()
     fetched_any = False
     for url in IPOP_SPEC_URLS:
@@ -59,19 +63,17 @@ def fetch_ipop_tickers(known_symbols):
             print(f"WARNING: could not fetch {url}: {exc}", file=sys.stderr)
             continue
         fetched_any = True
-        # Tickers in these docs render inside table cells / code spans as
-        # bare uppercase tokens (e.g. ">UNITREE<"). Match against known dex
-        # symbols rather than trying to parse exact table structure, so
-        # markup changes on trade.xyz's side don't silently break this.
-        tokens = set(re.findall(r">([A-Z][A-Z0-9]{2,14})<", resp.text))
-        found = known_symbols & tokens
-        matched |= found
-        print(
-            f"DEBUG {url}: status={resp.status_code} bytes={len(resp.text)} "
-            f"has_UNITREE_text={'UNITREE' in resp.text.upper()} "
-            f"regex_tokens={len(tokens)} matched_here={sorted(found)}",
-            file=sys.stderr,
-        )
+        text = resp.text
+        # Search for each known ticker directly rather than extracting
+        # arbitrary tokens first - the docs page may embed ticker text
+        # inside JSON props, code spans, or plain prose, not just bare
+        # ">TICKER<" HTML text nodes.
+        found = {
+            base
+            for base in base_to_full
+            if re.search(r"(?<![A-Za-z0-9])" + re.escape(base) + r"(?![A-Za-z0-9])", text)
+        }
+        matched |= {base_to_full[base] for base in found}
 
     return matched if fetched_any else None
 
