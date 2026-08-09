@@ -64,14 +64,20 @@ def fetch_ipop_tickers(known_symbols):
             continue
         fetched_any = True
         text = resp.text
-        # Search for each known ticker directly rather than extracting
-        # arbitrary tokens first - the docs page may embed ticker text
-        # inside JSON props, code spans, or plain prose, not just bare
-        # ">TICKER<" HTML text nodes.
+        # Each IPOP has its own section with boilerplate phrasing, e.g.
+        # "UNITREE is a pre-IPO market reflecting the market-implied
+        # expected price...". Anchor on that phrase rather than a bare
+        # ticker match - a bare-word search over the whole spec index
+        # false-positives on tickers whose name coincidentally appears in
+        # another company's description (e.g. "DRAM" inside CXMT's blurb).
         found = {
             base
             for base in base_to_full
-            if re.search(r"(?<![A-Za-z0-9])" + re.escape(base) + r"(?![A-Za-z0-9])", text)
+            if re.search(
+                r"(?<![A-Za-z0-9])" + re.escape(base) + r"\s+is\s+a\s+pre-IPO\s+market",
+                text,
+                re.IGNORECASE,
+            )
         }
         matched |= {base_to_full[base] for base in found}
 
