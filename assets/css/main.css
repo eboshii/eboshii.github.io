@@ -232,6 +232,11 @@ main {
   font-size: 0.9rem;
 }
 
+.alert-warn {
+  background: color-mix(in srgb, #B8860B 12%, transparent);
+  border-color: #B8860B;
+}
+
 .badge {
   display: inline-block;
   background: #C0392B;

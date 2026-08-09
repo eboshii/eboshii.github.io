@@ -29,10 +29,10 @@ jobs:
         id: fetch
         run: |
           python scripts/pre_ipo_dashboard.py | tee fetch_output.txt
-          if grep -q "^NEW LISTING DETECTED:" fetch_output.txt; then
+          if grep -qE "^(NEW LISTING DETECTED|NEW UNCLASSIFIED SYMBOL):" fetch_output.txt; then
             {
               echo "new_listings<<EOF"
-              grep "^NEW LISTING DETECTED:" fetch_output.txt | sed 's/^NEW LISTING DETECTED: //'
+              grep -E "^(NEW LISTING DETECTED|NEW UNCLASSIFIED SYMBOL):" fetch_output.txt
               echo "EOF"
             } >> "$GITHUB_OUTPUT"
           fi

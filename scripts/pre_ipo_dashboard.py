@@ -134,7 +134,14 @@ def main():
         )
     markets.sort(key=lambda m: m["symbol"])
 
+    # The IPOP docs are trade.xyz's own reference material, not a live feed -
+    # they may lag behind a market actually going live on the dex. Flag any
+    # brand-new symbol we can't yet match to the docs too, so a real pre-IPO
+    # listing is never missed just because trade.xyz hasn't updated their
+    # page yet. This trades a few false positives (a new commodity/FX pair)
+    # for never missing the early signal that matters.
     new_pre_ipo_symbols = new_symbols & ipop_tickers
+    new_unclassified_symbols = new_symbols - ipop_tickers
 
     state["last_run"] = now_iso
     save_state(state)
@@ -144,7 +151,8 @@ def main():
         json.dumps(
             {
                 "last_run": now_iso,
-                "new_symbols": sorted(new_pre_ipo_symbols) if not first_run else [],
+                "new_pre_ipo_symbols": sorted(new_pre_ipo_symbols) if not first_run else [],
+                "new_unclassified_symbols": sorted(new_unclassified_symbols) if not first_run else [],
                 "market_count": len(markets),
                 "pre_ipo_count": len(ipop_tickers),
                 "markets": markets,
@@ -156,12 +164,17 @@ def main():
 
     if first_run:
         print(f"First run: seeded state with {len(markets)} known markets ({len(ipop_tickers)} pre-IPO).")
-    elif new_pre_ipo_symbols:
-        print(f"NEW LISTING DETECTED: {', '.join(sorted(new_pre_ipo_symbols))}")
-    elif new_symbols:
-        print(f"New non-pre-IPO symbol(s) added, no alert: {', '.join(sorted(new_symbols))}")
     else:
-        print("No new listings.")
+        if new_pre_ipo_symbols:
+            print(f"NEW LISTING DETECTED: {', '.join(sorted(new_pre_ipo_symbols))}")
+        if new_unclassified_symbols:
+            print(
+                "NEW UNCLASSIFIED SYMBOL: "
+                f"{', '.join(sorted(new_unclassified_symbols))} "
+                "(not yet matched to trade.xyz's IPOP docs - verify manually)"
+            )
+        if not new_pre_ipo_symbols and not new_unclassified_symbols:
+            print("No new listings.")
 
 
 if __name__ == "__main__":

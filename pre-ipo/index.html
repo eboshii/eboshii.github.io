@@ -12,8 +12,12 @@ description: Live pre-IPO perpetual futures (IPOPs) listed on trade.xyz's HIP-3 
   {% assign pre_ipo_markets = d.markets | where: "is_pre_ipo", true %}
   <p class="dashboard-meta">Last checked {{ d.last_run | date: "%b %-d, %Y %H:%M" }} UTC &middot; {{ pre_ipo_markets.size }} pre-IPO market{% if pre_ipo_markets.size != 1 %}s{% endif %} (of {{ d.market_count }} total on the dex)</p>
 
-  {% if d.new_symbols and d.new_symbols.size > 0 %}
-  <div class="alert">New pre-IPO listing{% if d.new_symbols.size != 1 %}s{% endif %} detected: <strong>{{ d.new_symbols | join: ", " }}</strong></div>
+  {% if d.new_pre_ipo_symbols and d.new_pre_ipo_symbols.size > 0 %}
+  <div class="alert">New pre-IPO listing{% if d.new_pre_ipo_symbols.size != 1 %}s{% endif %} detected: <strong>{{ d.new_pre_ipo_symbols | join: ", " }}</strong></div>
+  {% endif %}
+
+  {% if d.new_unclassified_symbols and d.new_unclassified_symbols.size > 0 %}
+  <div class="alert alert-warn">New symbol{% if d.new_unclassified_symbols.size != 1 %}s{% endif %} just appeared on the dex, not yet confirmed pre-IPO: <strong>{{ d.new_unclassified_symbols | join: ", " }}</strong> &mdash; trade.xyz's docs may not have caught up yet. Check <a href="https://trade.xyz">trade.xyz</a> directly, see the full list below.</div>
   {% endif %}
 
   {% if pre_ipo_markets.size > 0 %}
@@ -40,7 +44,7 @@ description: Live pre-IPO perpetual futures (IPOPs) listed on trade.xyz's HIP-3 
   <p class="empty-state">No pre-IPO markets classified yet — the classifier may not have run successfully. Check back after the next scheduled run.</p>
   {% endif %}
 
-  <details class="all-markets">
+  <details class="all-markets"{% if d.new_unclassified_symbols and d.new_unclassified_symbols.size > 0 %} open{% endif %}>
     <summary>Show all {{ d.market_count }} trade.xyz markets (equities, commodities, FX, indices)</summary>
     <div class="table-scroll">
     <table class="dashboard-table">
@@ -49,8 +53,8 @@ description: Live pre-IPO perpetual futures (IPOPs) listed on trade.xyz's HIP-3 
       </thead>
       <tbody>
         {% for m in d.markets %}
-        <tr>
-          <td>{{ m.symbol }}</td>
+        <tr{% if m.is_new %} class="new-row"{% endif %}>
+          <td>{{ m.symbol }}{% if m.is_new %} <span class="badge">NEW</span>{% endif %}</td>
           <td>{% if m.is_pre_ipo %}Pre-IPO{% else %}Other{% endif %}</td>
           <td>{{ m.mark_px | default: "–" }}</td>
           <td{% if m.pct_change %}{% if m.pct_change < 0 %} class="neg"{% else %} class="pos"{% endif %}{% endif %}>{% if m.pct_change %}{{ m.pct_change | round: 2 }}%{% else %}–{% endif %}</td>
