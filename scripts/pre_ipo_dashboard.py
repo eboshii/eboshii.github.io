@@ -49,6 +49,10 @@ def fetch_ipop_tickers(known_symbols):
     known dex symbols are pre-IPO perpetuals. Returns None on failure so the
     caller can fall back to the last-known set instead of wiping it out.
     """
+    # Hyperliquid dex symbol names are namespaced (e.g. "xyz:UNITREE"), but
+    # trade.xyz's docs just say "UNITREE" - match on the bare ticker.
+    base_to_full = {sym.split(":", 1)[-1]: sym for sym in known_symbols}
+
     matched = set()
     fetched_any = False
     for url in IPOP_SPEC_URLS:
@@ -59,12 +63,23 @@ def fetch_ipop_tickers(known_symbols):
             print(f"WARNING: could not fetch {url}: {exc}", file=sys.stderr)
             continue
         fetched_any = True
-        # Tickers in these docs render inside table cells / code spans as
-        # bare uppercase tokens (e.g. ">UNITREE<"). Match against known dex
-        # symbols rather than trying to parse exact table structure, so
-        # markup changes on trade.xyz's side don't silently break this.
-        tokens = set(re.findall(r">([A-Z][A-Z0-9]{2,14})<", resp.text))
-        matched |= known_symbols & tokens
+        text = resp.text
+        # Each IPOP has its own section with boilerplate phrasing, e.g.
+        # "UNITREE is a pre-IPO market reflecting the market-implied
+        # expected price...". Anchor on that phrase rather than a bare
+        # ticker match - a bare-word search over the whole spec index
+        # false-positives on tickers whose name coincidentally appears in
+        # another company's description (e.g. "DRAM" inside CXMT's blurb).
+        found = {
+            base
+            for base in base_to_full
+            if re.search(
+                r"(?<![A-Za-z0-9])" + re.escape(base) + r"\s+is\s+a\s+pre-IPO\s+market",
+                text,
+                re.IGNORECASE,
+            )
+        }
+        matched |= {base_to_full[base] for base in found}
 
     return matched if fetched_any else None
 

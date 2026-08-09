@@ -325,6 +325,11 @@
       "first_seen": "2026-08-09T05:55:35.504076+00:00"
     }
   },
-  "known_ipop_tickers": [],
-  "last_run": "2026-08-09T09:03:38.190621+00:00"
+  "known_ipop_tickers": [
+    "xyz:CBRS",
+    "xyz:CXMT",
+    "xyz:SPCX",
+    "xyz:UNITREE"
+  ],
+  "last_run": "2026-08-09T09:15:46.281573+00:00"
 }
