@@ -35,6 +35,12 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+exclude:
+  - scripts/
+  - data/
+  - Gemfile
+  - Gemfile.lock
+
 markdown: kramdown
 highlighter: rouge
 
