@@ -54,10 +54,14 @@ jobs:
       # appears. Install the ntfy app and subscribe to a private topic name,
       # then add that name as the repo secret NTFY_TOPIC.
       - name: Notify phone of new listings
-        if: steps.fetch.outputs.new_listings != '' && secrets.NTFY_TOPIC != ''
+        if: steps.fetch.outputs.new_listings != ''
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "NTFY_TOPIC secret not set, skipping notification."
+            exit 0
+          fi
           curl -sf \
             -H "Title: New pre-IPO listing on trade.xyz" \
             -H "Priority: high" \
