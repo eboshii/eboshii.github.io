@@ -28,6 +28,8 @@ IPOP_SPEC_URLS = [
     "https://docs.trade.xyz/asset-directory/pre-ipo-perpetuals-ipops",
 ]
 
+YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+
 ROOT = Path(__file__).resolve().parent.parent
 STATE_PATH = ROOT / "data" / "pre_ipo_state.json"
 DATA_PATH = ROOT / "_data" / "pre_ipo.json"
@@ -42,6 +44,38 @@ def fetch_markets():
     resp.raise_for_status()
     meta, asset_ctxs = resp.json()
     return meta["universe"], asset_ctxs
+
+
+def is_already_public(ticker):
+    """Best-effort secondary confirmation: query Yahoo Finance's chart API
+    for a live quote under this exact ticker. trade.xyz's own docs are
+    sometimes stale - a company can IPO without its IPOP entry ever getting
+    a "Converted on" marker (observed for SPCX/SpaceX). This only works when
+    the dex's synthetic ticker happens to match the real listed ticker (true
+    for US-listed names like SPCX, not for foreign A-share names). Returns
+    False on any ambiguity so a missing/failed lookup never overrides the
+    primary docs-based classification.
+    """
+    try:
+        resp = requests.get(
+            YAHOO_CHART_URL.format(symbol=ticker),
+            params={"range": "1d", "interval": "1d"},
+            timeout=10,
+            headers={"User-Agent": "Mozilla/5.0"},
+        )
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception:
+        return False
+
+    results = ((data.get("chart") or {}).get("result")) or []
+    if not results:
+        return False
+    meta = results[0].get("meta") or {}
+    has_price = bool(meta.get("regularMarketPrice"))
+    is_equity = meta.get("instrumentType") == "EQUITY"
+    has_exchange = bool(meta.get("fullExchangeName") or meta.get("exchangeName"))
+    return has_price and is_equity and has_exchange
 
 
 def fetch_ipop_tickers(known_symbols):
@@ -70,16 +104,34 @@ def fetch_ipop_tickers(known_symbols):
         # ticker match - a bare-word search over the whole spec index
         # false-positives on tickers whose name coincidentally appears in
         # another company's description (e.g. "DRAM" inside CXMT's blurb).
-        found = {
-            base
-            for base in base_to_full
-            if re.search(
+        for base in base_to_full:
+            m = re.search(
                 r"(?<![A-Za-z0-9])" + re.escape(base) + r"\s+is\s+a\s+pre-IPO\s+market",
                 text,
                 re.IGNORECASE,
             )
-        }
-        matched |= {base_to_full[base] for base in found}
+            if not m:
+                continue
+            # Once a company actually IPOs, trade.xyz keeps the descriptive
+            # text but appends a "Converted on <date>" marker instead of
+            # removing the entry - e.g. CBRS/Cerebras and SPCX/SpaceX both
+            # say "... Converted on <date>. See ..." while still-private
+            # names like UNITREE only describe a future conversion event.
+            window = text[m.end():m.end() + 800]
+            if re.search(r"Converted\s+on\b", window, re.IGNORECASE):
+                continue
+            # Secondary confirmation for docs entries that never got a
+            # "Converted on" marker even though the company already IPO'd
+            # (e.g. SPCX/SpaceX) - only fires when the dex ticker matches a
+            # real, actively-traded listing on Yahoo Finance.
+            if is_already_public(base):
+                print(
+                    f"INFO: {base} matched pre-IPO docs but Yahoo Finance shows it's already "
+                    "publicly traded, excluding.",
+                    file=sys.stderr,
+                )
+                continue
+            matched.add(base_to_full[base])
 
     return matched if fetched_any else None
 
