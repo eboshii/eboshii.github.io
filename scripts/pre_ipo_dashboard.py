@@ -64,7 +64,14 @@ def fetch_ipop_tickers(known_symbols):
         # symbols rather than trying to parse exact table structure, so
         # markup changes on trade.xyz's side don't silently break this.
         tokens = set(re.findall(r">([A-Z][A-Z0-9]{2,14})<", resp.text))
-        matched |= known_symbols & tokens
+        found = known_symbols & tokens
+        matched |= found
+        print(
+            f"DEBUG {url}: status={resp.status_code} bytes={len(resp.text)} "
+            f"has_UNITREE_text={'UNITREE' in resp.text.upper()} "
+            f"regex_tokens={len(tokens)} matched_here={sorted(found)}",
+            file=sys.stderr,
+        )
 
     return matched if fetched_any else None
 
