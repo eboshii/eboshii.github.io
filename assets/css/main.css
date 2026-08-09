@@ -232,6 +232,11 @@ main {
   font-size: 0.9rem;
 }
 
+.alert-warn {
+  background: color-mix(in srgb, #B8860B 12%, transparent);
+  border-color: #B8860B;
+}
+
 .badge {
   display: inline-block;
   background: #C0392B;
@@ -275,6 +280,21 @@ main {
 
 .dashboard-table .pos { color: #4A7A3E; }
 .dashboard-table .neg { color: #C0392B; }
+
+.all-markets {
+  margin-top: 2rem;
+}
+
+.all-markets summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.all-markets summary:hover {
+  color: var(--accent);
+}
 
 /* -----------------------------------------------
    Individual post

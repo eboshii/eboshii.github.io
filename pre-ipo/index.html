@@ -1,27 +1,33 @@
 ---
 layout: default
 title: Pre-IPO Listings
-description: Live pre-IPO and equity perpetual futures listed on trade.xyz's HIP-3 dex on Hyperliquid.
+description: Live pre-IPO perpetual futures (IPOPs) listed on trade.xyz's HIP-3 dex on Hyperliquid.
 ---
 <div class="category-page">
   <h1>pre-ipo listings</h1>
-  <p class="category-desc">Perpetual futures on <a href="https://trade.xyz">trade.xyz</a>'s HIP-3 dex on Hyperliquid — including pre-IPO names like Unitree. A cronjob polls the dex and flags new listings here as soon as they appear.</p>
+  <p class="category-desc">Pre-IPO perpetuals (IPOPs) on <a href="https://trade.xyz">trade.xyz</a>'s HIP-3 dex on Hyperliquid — synthetic exposure to private companies like Unitree ahead of their public listing. A cronjob polls the dex every 15 minutes and flags new listings here as soon as they appear.</p>
 
   {% assign d = site.data.pre_ipo %}
   {% if d and d.markets %}
-  <p class="dashboard-meta">Last checked {{ d.last_run | date: "%b %-d, %Y %H:%M" }} UTC &middot; {{ d.market_count }} market{% if d.market_count != 1 %}s{% endif %} tracked</p>
+  {% assign pre_ipo_markets = d.markets | where: "is_pre_ipo", true %}
+  <p class="dashboard-meta">Last checked {{ d.last_run | date: "%b %-d, %Y %H:%M" }} UTC &middot; {{ pre_ipo_markets.size }} pre-IPO market{% if pre_ipo_markets.size != 1 %}s{% endif %} (of {{ d.market_count }} total on the dex)</p>
 
-  {% if d.new_symbols and d.new_symbols.size > 0 %}
-  <div class="alert">New listing{% if d.new_symbols.size != 1 %}s{% endif %} detected: <strong>{{ d.new_symbols | join: ", " }}</strong></div>
+  {% if d.new_pre_ipo_symbols and d.new_pre_ipo_symbols.size > 0 %}
+  <div class="alert">New pre-IPO listing{% if d.new_pre_ipo_symbols.size != 1 %}s{% endif %} detected: <strong>{{ d.new_pre_ipo_symbols | join: ", " }}</strong></div>
   {% endif %}
 
+  {% if d.new_unclassified_symbols and d.new_unclassified_symbols.size > 0 %}
+  <div class="alert alert-warn">New symbol{% if d.new_unclassified_symbols.size != 1 %}s{% endif %} just appeared on the dex, not yet confirmed pre-IPO: <strong>{{ d.new_unclassified_symbols | join: ", " }}</strong> &mdash; trade.xyz's docs may not have caught up yet. Check <a href="https://trade.xyz">trade.xyz</a> directly, see the full list below.</div>
+  {% endif %}
+
+  {% if pre_ipo_markets.size > 0 %}
   <div class="table-scroll">
   <table class="dashboard-table">
     <thead>
       <tr><th>Symbol</th><th>Mark Px</th><th>24h Chg</th><th>Open Interest</th><th>Max Lev</th><th>First Seen</th></tr>
     </thead>
     <tbody>
-      {% for m in d.markets %}
+      {% for m in pre_ipo_markets %}
       <tr{% if m.is_new %} class="new-row"{% endif %}>
         <td>{{ m.symbol }}{% if m.is_new %} <span class="badge">NEW</span>{% endif %}</td>
         <td>{{ m.mark_px | default: "–" }}</td>
@@ -34,6 +40,30 @@ description: Live pre-IPO and equity perpetual futures listed on trade.xyz's HIP
     </tbody>
   </table>
   </div>
+  {% else %}
+  <p class="empty-state">No pre-IPO markets classified yet — the classifier may not have run successfully. Check back after the next scheduled run.</p>
+  {% endif %}
+
+  <details class="all-markets"{% if d.new_unclassified_symbols and d.new_unclassified_symbols.size > 0 %} open{% endif %}>
+    <summary>Show all {{ d.market_count }} trade.xyz markets (equities, commodities, FX, indices)</summary>
+    <div class="table-scroll">
+    <table class="dashboard-table">
+      <thead>
+        <tr><th>Symbol</th><th>Category</th><th>Mark Px</th><th>24h Chg</th></tr>
+      </thead>
+      <tbody>
+        {% for m in d.markets %}
+        <tr{% if m.is_new %} class="new-row"{% endif %}>
+          <td>{{ m.symbol }}{% if m.is_new %} <span class="badge">NEW</span>{% endif %}</td>
+          <td>{% if m.is_pre_ipo %}Pre-IPO{% else %}Other{% endif %}</td>
+          <td>{{ m.mark_px | default: "–" }}</td>
+          <td{% if m.pct_change %}{% if m.pct_change < 0 %} class="neg"{% else %} class="pos"{% endif %}{% endif %}>{% if m.pct_change %}{{ m.pct_change | round: 2 }}%{% else %}–{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </details>
   {% else %}
   <p class="empty-state">Dashboard data hasn't been generated yet — check back after the next scheduled run.</p>
   {% endif %}
