@@ -34,17 +34,18 @@
 </head>
 <body>
   <header>
-    <nav>
+    <nav class="{% if page.full_width %}nav-wide{% endif %}">
       <a class="site-title" href="{{ '/' | relative_url }}">eboshii</a>
       <div class="nav-links">
         <a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog' or page.url contains '/artificial-life' or page.url contains '/quant' or page.url contains '/travel' %} class="active"{% endif %}>blog</a>
         <a href="{{ '/pre-ipo/' | relative_url }}"{% if page.url contains '/pre-ipo' %} class="active"{% endif %}>pre-ipo</a>
+        <a href="{{ '/news/' | relative_url }}"{% if page.url contains '/news' %} class="active"{% endif %}>news</a>
         <a href="https://eboshii.github.io/predichess/">predichess</a>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main class="{% if page.full_width %}main-wide{% endif %}">
     {{ content }}
   </main>
 

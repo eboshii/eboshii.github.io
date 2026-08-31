@@ -1,0 +1,182 @@
+---
+layout: default
+title: News Wire
+description: High-density minimalist global news aggregator tracking world, tech, markets, science, and ideas.
+full_width: true
+---
+
+<div class="news-app">
+  <header class="news-header">
+    <div class="news-headline-row">
+      <h1 class="news-page-title">News Wire</h1>
+      <div class="news-meta">
+        <span class="meta-pill count-pill"><strong id="visible-count">{{ site.data.news.total_count }}</strong> headlines</span>
+        <span class="meta-pill time-pill" id="last-updated-pill" data-utc="{{ site.data.news.last_updated }}">
+          Updated <time id="last-updated-text">{{ site.data.news.last_updated | date: "%b %d, %H:%M UTC" }}</time>
+        </span>
+      </div>
+    </div>
+
+    <div class="news-controls">
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="news-search" placeholder="Filter headlines across all categories..." autocomplete="off" spellcheck="false">
+        <button id="search-clear" class="search-clear" style="display: none;" title="Clear filter">&times;</button>
+      </div>
+
+      <div class="category-filters" id="category-filters">
+        <button class="filter-btn active" data-cat="all">All</button>
+        {% for cat in site.data.news.categories %}
+        <button class="filter-btn" data-cat="{{ cat.id }}">{{ cat.title | split: " " | first }}</button>
+        {% endfor %}
+      </div>
+    </div>
+  </header>
+
+  <div class="news-grid" id="news-grid">
+    {% for cat in site.data.news.categories %}
+    <section class="news-column" data-category="{{ cat.id }}" id="cat-{{ cat.id }}">
+      <div class="col-header">
+        <h2 class="col-title">{{ cat.title }}</h2>
+        <span class="col-count" id="count-{{ cat.id }}">{{ cat.count }}</span>
+      </div>
+
+      <ul class="headline-list">
+        {% for item in cat.items %}
+        <li class="headline-item" data-title="{{ item.title | downcase | escape }}" data-source="{{ item.source | downcase }}">
+          <a class="headline-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+            <span class="headline-text">{{ item.title }}</span>
+            <span class="headline-sub">
+              <span class="badge-source">{{ item.source_short }}</span>
+              {% if item.time_ago != "" %}<span class="badge-time">{{ item.time_ago }}</span>{% endif %}
+              <span class="badge-domain">{{ item.domain }}</span>
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="col-empty-msg" style="display: none;">No matching headlines</div>
+    </section>
+    {% endfor %}
+  </div>
+
+  <div id="no-results" class="no-results" style="display: none;">
+    <p>No headlines matched your search query.</p>
+    <button class="reset-btn" id="reset-search-btn">Reset Filter</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const searchInput = document.getElementById('news-search');
+  const clearBtn = document.getElementById('search-clear');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const columns = document.querySelectorAll('.news-column');
+  const totalCountEl = document.getElementById('visible-count');
+  const noResultsEl = document.getElementById('no-results');
+  const timeTextEl = document.getElementById('last-updated-text');
+  const timePillEl = document.getElementById('last-updated-pill');
+
+  let activeCategory = 'all';
+
+  // Format relative timestamp for last updated
+  if (timePillEl && timePillEl.dataset.utc) {
+    try {
+      const updatedDate = new Date(timePillEl.dataset.utc);
+      const now = new Date();
+      const diffMins = Math.floor((now - updatedDate) / 60000);
+      if (diffMins >= 0 && diffMins < 60) {
+        timeTextEl.textContent = `${diffMins}m ago`;
+      } else if (diffMins >= 60 && diffMins < 1440) {
+        timeTextEl.textContent = `${Math.floor(diffMins / 60)}h ago`;
+      }
+    } catch(e) {}
+  }
+
+  function filterItems() {
+    const query = (searchInput.value || '').trim().toLowerCase();
+    clearBtn.style.display = query ? 'block' : 'none';
+
+    let totalVisible = 0;
+
+    columns.forEach(col => {
+      const colCat = col.dataset.category;
+      const isColMatch = (activeCategory === 'all' || activeCategory === colCat);
+
+      if (!isColMatch) {
+        col.style.display = 'none';
+        return;
+      }
+
+      col.style.display = '';
+      const items = col.querySelectorAll('.headline-item');
+      let colVisible = 0;
+
+      items.forEach(item => {
+        const title = item.dataset.title || '';
+        const source = item.dataset.source || '';
+        const matchesQuery = !query || title.includes(query) || source.includes(query);
+
+        if (matchesQuery) {
+          item.style.display = '';
+          colVisible++;
+          totalVisible++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      const countBadge = col.querySelector('.col-count');
+      if (countBadge) countBadge.textContent = colVisible;
+
+      const emptyMsg = col.querySelector('.col-empty-msg');
+      if (emptyMsg) {
+        emptyMsg.style.display = (colVisible === 0) ? 'block' : 'none';
+      }
+    });
+
+    if (totalCountEl) totalCountEl.textContent = totalVisible;
+    if (noResultsEl) noResultsEl.style.display = (totalVisible === 0) ? 'block' : 'none';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterItems);
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        filterItems();
+      }
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      searchInput.focus();
+      filterItems();
+    });
+  }
+
+  const resetBtn = document.getElementById('reset-search-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      activeCategory = 'all';
+      filterBtns.forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+      filterItems();
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.cat;
+      filterItems();
+    });
+  });
+})();
+</script>
