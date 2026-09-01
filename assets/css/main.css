@@ -385,6 +385,32 @@ main {
   margin-left: 0.3rem;
 }
 
+.pre-ipo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pre-ipo-header h1 {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.pre-ipo-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
 .table-scroll {
   overflow-x: auto;
 }
@@ -392,43 +418,88 @@ main {
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
 }
 
 .dashboard-table th,
 .dashboard-table td {
   text-align: left;
-  padding: 0.55rem 0.75rem;
+  padding: 0.55rem 0.65rem;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 
 .dashboard-table th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   font-weight: 500;
   color: var(--muted);
-  border-bottom-width: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.dashboard-table .font-bold {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dashboard-table .font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.80rem;
+}
+
+.dashboard-table .text-right {
+  text-align: right;
+}
+
+.dashboard-table .time-muted {
+  color: var(--muted);
+  font-size: 0.75rem;
 }
 
 .dashboard-table tr.new-row {
-  background: color-mix(in srgb, #C0392B 8%, transparent);
+  background: rgba(240, 179, 101, 0.08);
 }
 
-.dashboard-table .pos { color: #4A7A3E; }
-.dashboard-table .neg { color: #C0392B; }
+.dashboard-table tr:hover {
+  background: var(--bg-card);
+}
+
+.dashboard-table .pos { color: #7FD48A; }
+.dashboard-table .neg { color: #F26D6D; }
+
+.badge-accent {
+  background: var(--bg-raised);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  padding: 0.08rem 0.3rem;
+  border-radius: 2px;
+}
 
 .all-markets {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .all-markets summary {
   cursor: pointer;
   color: var(--muted);
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  padding: 0.35rem 0;
+  transition: color 0.15s;
 }
 
 .all-markets summary:hover {
   color: var(--accent);
+}
+
+.all-markets[open] summary {
+  margin-bottom: 0.75rem;
+  color: var(--text);
 }
 
 /* -----------------------------------------------
