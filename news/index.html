@@ -46,13 +46,11 @@ full_width: true
 
       <ul class="headline-list">
         {% for item in cat.items %}
-        <li class="headline-item" data-title="{{ item.title | downcase | escape }}" data-source="{{ item.source | downcase }}" title="{{ item.title | escape }}">
+        <li class="headline-item" data-title="{{ item.title | downcase | escape }}" data-source="{{ item.source | downcase }}" title="{{ item.title | escape }} ({{ item.source }}{% if item.time_ago != '' %} &middot; {{ item.time_ago }}{% endif %})">
           <a class="headline-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+            <span class="source-tag">{{ item.source_short }}</span>
             <span class="headline-title">{{ item.title }}</span>
-            <span class="headline-meta">
-              <span class="badge-source">{{ item.source_short }}</span>
-              {% if item.time_ago != "" %}<span class="badge-time">{{ item.time_ago }}</span>{% endif %}
-            </span>
+            <span class="time-tag">{% if item.time_ago != "" %}{{ item.time_ago }}{% endif %}</span>
           </a>
         </li>
         {% endfor %}
