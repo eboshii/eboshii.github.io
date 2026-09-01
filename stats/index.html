@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Stats
-description: Live site traffic and page view statistics across all sections, games, and blog posts.
+title: stats
+description: Page view statistics for eboshii.
 ---
 
 {% assign all_posts = "" | split: "" %}
@@ -15,317 +15,131 @@ description: Live site traffic and page view statistics across all sections, gam
   {% assign all_posts = all_posts | push: item %}
 {% endfor %}
 
-<div class="stats-page">
-  <div class="stats-header">
-    <div>
-      <div class="stats-badge-row">
-        <span class="live-indicator"><span class="pulse-dot"></span> Live Telemetry</span>
-        <span class="stats-meta-tag" id="last-refreshed">Updated just now</span>
-      </div>
-      <h1 class="stats-title">Site Traffic & Analytics</h1>
-      <p class="stats-subtitle">Real-time page views and visitor engagement across sections, games, and articles.</p>
-    </div>
-    <div class="stats-actions">
-      <button id="refresh-stats-btn" class="stats-btn" title="Refresh live statistics">
-        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
-          <path d="M23 4v6h-6"></path>
-          <path d="M1 20v-6h6"></path>
-          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-        Refresh
-      </button>
-    </div>
-  </div>
+<div class="stats-page-minimal">
+  <h1 class="stats-simple-title">stats</h1>
 
-  <!-- KPI Cards -->
-  <div class="stats-kpi-grid">
-    <div class="stats-kpi-card">
-      <div class="kpi-label">Total Site Visits</div>
-      <div class="kpi-value" id="kpi-total-views"><span class="kpi-loading">--</span></div>
-      <div class="kpi-desc">Aggregate page views across domain</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="kpi-label">Blog & Articles</div>
-      <div class="kpi-value" id="kpi-blog-views"><span class="kpi-loading">--</span></div>
-      <div class="kpi-desc">Reads across all published articles</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="kpi-label">News Wire Hits</div>
-      <div class="kpi-value" id="kpi-news-views"><span class="kpi-loading">--</span></div>
-      <div class="kpi-desc">Global headlines dashboard</div>
-    </div>
-    <div class="stats-kpi-card">
-      <div class="kpi-label">Games Engagements</div>
-      <div class="kpi-value" id="kpi-games-views"><span class="kpi-loading">--</span></div>
-      <div class="kpi-desc">Predichess & Emergence plays</div>
-    </div>
-  </div>
+  <div class="stats-table-wrapper">
+    <table class="stats-minimal-table">
+      <thead>
+        <tr>
+          <th>path</th>
+          <th class="text-right">24h views</th>
+          <th class="text-right">total views</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Home -->
+        <tr data-key="page_home">
+          <td><a href="/" class="stat-path-link">/</a></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
 
-  <!-- Section 1: Main Sections & Games Breakdown -->
-  <div class="stats-section-box">
-    <h2 class="section-box-title">Core Sections & Games</h2>
-    <div class="stats-table-wrapper">
-      <table class="stats-table" id="core-stats-table">
-        <thead>
-          <tr>
-            <th>Route / Destination</th>
-            <th>Type</th>
-            <th class="text-right">Visits</th>
-            <th style="width: 35%;">Traffic Share</th>
-            <th class="text-right">Link</th>
+        <!-- Blog (Expandable) -->
+        <tr data-key="page_blog" class="expandable-row" id="blog-parent-row">
+          <td>
+            <button class="expand-btn" id="blog-expand-btn" aria-expanded="false" title="Click to view individual post views">
+              <span class="expand-caret">▸</span>
+              <a href="/blog/" class="stat-path-link" onclick="event.stopPropagation();">/blog/</a>
+              <span class="post-count-pill">{{ all_posts.size }} posts</span>
+            </button>
+          </td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
+
+        <!-- Nested Individual Blog Post Sub-rows -->
+        {% for post in all_posts %}
+          {% assign post_key = 'post_' | append: post.collection | append: '_' | append: post.slug | replace: '-', '_' %}
+          <tr data-key="{{ post_key }}" class="sub-post-row" style="display: none;">
+            <td class="sub-post-cell">
+              <span class="sub-tree-branch">└─</span>
+              <a href="{{ post.url | relative_url }}" class="stat-path-link sub-link">{{ post.url }}</a>
+            </td>
+            <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+            <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
           </tr>
-        </thead>
-        <tbody>
-          <!-- Homepage -->
-          <tr data-key="page_home">
-            <td>
-              <span class="route-name">Home</span>
-              <span class="route-path">/</span>
-            </td>
-            <td><span class="type-pill pill-core">Core</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="/" class="table-action-link">Visit &rarr;</a></td>
-          </tr>
+        {% endfor %}
 
-          <!-- Blog -->
-          <tr data-key="page_blog">
-            <td>
-              <span class="route-name">Blog Directory</span>
-              <span class="route-path">/blog/</span>
-            </td>
-            <td><span class="type-pill pill-core">Core</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="/blog/" class="table-action-link">Visit &rarr;</a></td>
-          </tr>
+        <!-- Pre-IPO -->
+        <tr data-key="page_pre_ipo">
+          <td><a href="/pre-ipo/" class="stat-path-link">/pre-ipo/</a></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
 
-          <!-- Pre-IPO -->
-          <tr data-key="page_pre_ipo">
-            <td>
-              <span class="route-name">Pre-IPO Dashboard</span>
-              <span class="route-path">/pre-ipo/</span>
-            </td>
-            <td><span class="type-pill pill-core">Core</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="/pre-ipo/" class="table-action-link">Visit &rarr;</a></td>
-          </tr>
+        <!-- News -->
+        <tr data-key="page_news">
+          <td><a href="/news/" class="stat-path-link">/news/</a></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
 
-          <!-- News -->
-          <tr data-key="page_news">
-            <td>
-              <span class="route-name">News Wire</span>
-              <span class="route-path">/news/</span>
-            </td>
-            <td><span class="type-pill pill-core">Core</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="/news/" class="table-action-link">Visit &rarr;</a></td>
-          </tr>
+        <!-- Games: Predichess -->
+        <tr data-key="game_predichess">
+          <td><a href="https://eboshii.github.io/predichess/" class="stat-path-link">/games/predichess</a></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
 
-          <!-- Predichess -->
-          <tr data-key="game_predichess">
-            <td>
-              <span class="route-name">Predichess</span>
-              <span class="route-path">https://eboshii.github.io/predichess/</span>
-            </td>
-            <td><span class="type-pill pill-game">Game</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="https://eboshii.github.io/predichess/" class="table-action-link">Play &rarr;</a></td>
-          </tr>
-
-          <!-- Emergence -->
-          <tr data-key="game_emergence">
-            <td>
-              <span class="route-name">Emergence</span>
-              <span class="route-path">https://eboshiidev.itch.io/emergence</span>
-            </td>
-            <td><span class="type-pill pill-game">Game</span></td>
-            <td class="text-right count-cell font-mono"><span class="view-num">--</span></td>
-            <td>
-              <div class="share-bar-container">
-                <div class="share-bar" style="width: 0%;"></div>
-                <span class="share-pct font-mono">0%</span>
-              </div>
-            </td>
-            <td class="text-right"><a href="https://eboshiidev.itch.io/emergence" target="_blank" rel="noopener noreferrer" class="table-action-link">Play &rarr;</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Section 2: Per-Blogpost Analytics Table -->
-  <div class="stats-section-box">
-    <div class="blog-stats-header-row">
-      <div>
-        <h2 class="section-box-title" style="margin-bottom: 0.2rem;">Individual Blog Posts</h2>
-        <p class="stats-card-desc">Detailed visitor traffic broken down by individual articles.</p>
-      </div>
-      <div class="table-filter-wrap">
-        <input type="text" id="post-search-input" placeholder="Search posts..." class="table-search-box">
-      </div>
-    </div>
-
-    <div class="stats-table-wrapper">
-      <table class="stats-table" id="posts-stats-table">
-        <thead>
-          <tr>
-            <th>Article Title</th>
-            <th>Category</th>
-            <th>Published Date</th>
-            <th class="text-right">Reads</th>
-            <th style="width: 25%;">Share</th>
-            <th class="text-right">Link</th>
-          </tr>
-        </thead>
-        <tbody id="posts-table-body">
-          {% for post in all_posts %}
-            {% assign post_path = post.url | remove_first: '/' | split: '/' %}
-            {% assign post_key = 'post_' | append: post.collection | append: '_' | append: post.slug | replace: '-', '_' %}
-            <tr data-key="{{ post_key }}" data-title="{{ post.title | downcase }}" data-cat="{{ post.collection }}">
-              <td>
-                <span class="post-table-title">{{ post.title }}</span>
-              </td>
-              <td>
-                <span class="type-pill pill-cat">{{ post.collection | replace: '_', ' ' }}</span>
-              </td>
-              <td class="font-mono post-date-cell">
-                {{ post.date | date: "%b %d, %Y" }}
-              </td>
-              <td class="text-right count-cell font-mono">
-                <span class="view-num">--</span>
-              </td>
-              <td>
-                <div class="share-bar-container">
-                  <div class="share-bar" style="width: 0%;"></div>
-                  <span class="share-pct font-mono">0%</span>
-                </div>
-              </td>
-              <td class="text-right">
-                <a href="{{ post.url | relative_url }}" class="table-action-link">Read &rarr;</a>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+        <!-- Games: Emergence -->
+        <tr data-key="game_emergence">
+          <td><a href="https://eboshiidev.itch.io/emergence" target="_blank" rel="noopener noreferrer" class="stat-path-link">/games/emergence</a></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', async function () {
-  const refreshBtn = document.getElementById('refresh-stats-btn');
-  const searchInput = document.getElementById('post-search-input');
+  const expandBtn = document.getElementById('blog-expand-btn');
+  const parentRow = document.getElementById('blog-parent-row');
+  const subRows = document.querySelectorAll('.sub-post-row');
 
-  async function loadStatistics() {
-    if (!window.EboshiiTracker) return;
+  // Toggle Blog Child Rows
+  if (expandBtn && parentRow) {
+    function toggleBlogExpand() {
+      const isExpanded = expandBtn.getAttribute('aria-expanded') === 'true';
+      const newExpanded = !isExpanded;
+      expandBtn.setAttribute('aria-expanded', newExpanded.toString());
+      const caret = expandBtn.querySelector('.expand-caret');
+      if (caret) caret.textContent = newExpanded ? '▾' : '▸';
 
-    const rows = document.querySelectorAll('#core-stats-table tr[data-key], #posts-stats-table tr[data-key]');
-    const totalSiteViews = await window.EboshiiTracker.fetchCount('total_site_views');
-    
-    let coreTotal = 0;
-    let blogTotal = 0;
-    let newsTotal = 0;
-    let gamesTotal = 0;
-    let sumViews = 0;
-
-    const counts = {};
-
-    // Fetch counts for each row
-    for (const row of rows) {
-      const key = row.dataset.key;
-      const count = await window.EboshiiTracker.fetchCount(key);
-      counts[key] = count;
-      sumViews += count;
-
-      if (key === 'page_news') newsTotal += count;
-      if (key.startsWith('game_')) gamesTotal += count;
-      if (key.startsWith('post_') || key === 'page_blog') blogTotal += count;
+      subRows.forEach(row => {
+        row.style.display = newExpanded ? 'table-row' : 'none';
+      });
     }
 
-    const grandTotal = Math.max(totalSiteViews, sumViews, 1);
+    expandBtn.addEventListener('click', toggleBlogExpand);
+    parentRow.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'A') {
+        toggleBlogExpand();
+      }
+    });
+  }
 
-    // Update KPI cards
-    document.getElementById('kpi-total-views').textContent = grandTotal.toLocaleString();
-    document.getElementById('kpi-blog-views').textContent = blogTotal.toLocaleString();
-    document.getElementById('kpi-news-views').textContent = newsTotal.toLocaleString();
-    document.getElementById('kpi-games-views').textContent = gamesTotal.toLocaleString();
-
-    // Update Table rows
-    rows.forEach(row => {
+  // Load 24h and Total Views
+  if (window.EboshiiTracker) {
+    const allRows = document.querySelectorAll('table.stats-minimal-table tr[data-key]');
+    
+    for (const row of allRows) {
       const key = row.dataset.key;
-      const count = counts[key] || 0;
-      const pct = ((count / grandTotal) * 100).toFixed(1);
+      if (!key) continue;
 
-      const numEl = row.querySelector('.view-num');
-      const barEl = row.querySelector('.share-bar');
-      const pctEl = row.querySelector('.share-pct');
+      // 24h count
+      const c24 = window.EboshiiTracker.get24hCount(key);
+      const el24 = row.querySelector('.count-24h .view-num');
+      if (el24) el24.textContent = c24.toLocaleString();
 
-      if (numEl) numEl.textContent = count.toLocaleString();
-      if (barEl) barEl.style.width = Math.min(pct * 1.5 + (count > 0 ? 5 : 0), 100) + '%';
-      if (pctEl) pctEl.textContent = pct + '%';
-    });
-
-    const now = new Date();
-    document.getElementById('last-refreshed').textContent = 'Updated at ' + now.toLocaleTimeString();
-  }
-
-  loadStatistics();
-
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', function () {
-      refreshBtn.disabled = true;
-      refreshBtn.textContent = 'Updating...';
-      loadStatistics().then(() => {
-        refreshBtn.disabled = false;
-        refreshBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> Refresh';
+      // Total count
+      window.EboshiiTracker.getTotalCount(key).then(total => {
+        const elTotal = row.querySelector('.count-total .view-num');
+        if (elTotal) elTotal.textContent = (total || c24 || 0).toLocaleString();
       });
-    });
-  }
-
-  // Client-side search filter for blog post table
-  if (searchInput) {
-    searchInput.addEventListener('input', function () {
-      const q = this.value.trim().toLowerCase();
-      const postRows = document.querySelectorAll('#posts-table-body tr');
-      postRows.forEach(row => {
-        const title = row.dataset.title || '';
-        const cat = row.dataset.cat || '';
-        if (title.includes(q) || cat.includes(q)) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      });
-    });
+    }
   }
 });
 </script>
