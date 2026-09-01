@@ -1,21 +1,76 @@
 ---
 layout: default
 title: tip jar
-description: Support eboshii's open source projects, writings, and experiments.
+description: Support eboshii.
+full_width: true
 ---
 
-<div class="stats-page-minimal">
-  <h1 class="stats-simple-title">tip jar</h1>
-
-  <p class="tip-desc">
-    If you enjoy the articles, models, tools, or games here, dropping a coin in the jar directly fuels independent research, server compute, and future projects.
-  </p>
-
-  <div class="kofi-page-container">
+<div class="tip-page-centered">
+  <div class="kofi-dither-wrapper">
     <iframe id="kofi-page-iframe" src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true" class="kofi-page-iframe" title="Support eboshii on Ko-fi"></iframe>
-  </div>
-
-  <div class="tip-alt-footer">
-    <span>Direct link: <a href="https://ko-fi.com/eboshii" target="_blank" rel="noopener noreferrer">ko-fi.com/eboshii</a></span>
+    <canvas id="kofi-dither-canvas" class="kofi-dither-canvas" aria-hidden="true"></canvas>
   </div>
 </div>
+
+<script>
+(function() {
+  function initDither() {
+    const canvas = document.getElementById('kofi-dither-canvas');
+    const wrapper = document.querySelector('.kofi-dither-wrapper');
+    if (!canvas || !wrapper) return;
+
+    const ctx = canvas.getContext('2d');
+    const PIXEL_SCALE = 3; // 3px resolution matching nebula background
+
+    // 4x4 Bayer Matrix
+    const BAYER_4X4 = [
+      [ 0/16,  8/16,  2/16, 10/16],
+      [12/16,  4/16, 14/16,  6/16],
+      [ 3/16, 11/16,  1/16,  9/16],
+      [15/16,  7/16, 13/16,  5/16]
+    ];
+
+    function renderDitherEdge() {
+      const rect = wrapper.getBoundingClientRect();
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+
+      canvas.width = w;
+      canvas.height = h;
+
+      const cols = Math.ceil(w / PIXEL_SCALE);
+      const rows = Math.ceil(h / PIXEL_SCALE);
+      const fadeBorder = 14; // ~42px dithered perimeter dissolve
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#05030a'; // Cosmic space backdrop color
+
+      for (let gy = 0; gy < rows; gy++) {
+        for (let gx = 0; gx < cols; gx++) {
+          const distX = Math.min(gx, cols - 1 - gx);
+          const distY = Math.min(gy, rows - 1 - gy);
+          const dist = Math.min(distX, distY);
+
+          if (dist < fadeBorder) {
+            const t = 1.0 - (dist / fadeBorder);
+            const threshold = BAYER_4X4[gy % 4][gx % 4];
+
+            if (t > threshold) {
+              ctx.fillRect(gx * PIXEL_SCALE, gy * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
+            }
+          }
+        }
+      }
+    }
+
+    window.addEventListener('resize', renderDitherEdge);
+    renderDitherEdge();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDither);
+  } else {
+    initDither();
+  }
+})();
+</script>
