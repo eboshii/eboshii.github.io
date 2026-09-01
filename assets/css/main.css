@@ -265,17 +265,20 @@ main {
 }
 
 .section-card {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--bg-card);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 1.4rem 1.5rem;
+  padding: 1.15rem 1.25rem;
   text-decoration: none;
   color: var(--text);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  text-align: center;
 }
 
 .section-card:hover {
@@ -289,13 +292,7 @@ main {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--accent);
-  margin-bottom: 0.4rem;
-}
-
-.section-card p {
-  font-size: 0.875rem;
-  color: var(--muted);
-  line-height: 1.5;
+  margin: 0;
 }
 
 /* -----------------------------------------------
