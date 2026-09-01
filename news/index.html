@@ -42,8 +42,8 @@ full_width: true
             <div class="settings-group">
               <label class="settings-label">Layout Columns</label>
               <div class="cols-toggle-bar">
-                <button type="button" class="cols-btn" data-cols="3">3 Columns</button>
-                <button type="button" class="cols-btn active" data-cols="4">4 Columns</button>
+                <button type="button" class="cols-btn active" data-cols="3">3 Columns</button>
+                <button type="button" class="cols-btn" data-cols="4">4 Columns</button>
               </div>
             </div>
 
@@ -79,7 +79,7 @@ full_width: true
   </div>
 
   <!-- News Grid Layout -->
-  <div class="news-grid cols-4" id="news-grid">
+  <div class="news-grid cols-3" id="news-grid">
     {% for cat in site.data.news.categories %}
     <section class="news-column" data-category="{{ cat.id }}" id="cat-{{ cat.id }}">
       <div class="col-header">
@@ -138,7 +138,7 @@ full_width: true
     return match ? decodeURIComponent(match[2]) : null;
   }
 
-  let selectedCols = 4;
+  let selectedCols = 3;
   const DEFAULT_ACTIVE_CATS = ['world', 'politics', 'science', 'tech', 'markets', 'ai', 'culture', 'movies', 'music', 'gaming'];
   let activeCategories = new Set(DEFAULT_ACTIVE_CATS);
 
@@ -349,7 +349,7 @@ full_width: true
   const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
   if (resetDefaultsBtn) {
     resetDefaultsBtn.addEventListener('click', () => {
-      selectedCols = 4;
+      selectedCols = 3;
       activeCategories = new Set(DEFAULT_ACTIVE_CATS);
       applyLayout();
       setCookie('eboshii_news_prefs', '', -1);
