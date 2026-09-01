@@ -280,8 +280,8 @@
     oCtx.fill();
     oCtx.stroke();
 
-    // --- Subtle Lapping Wave Meniscus along the Waterline ---
-    oCtx.strokeStyle = 'rgba(127, 212, 138, 0.38)';
+    // --- Subtle Lapping Wave White Froth Meniscus along the Waterline ---
+    oCtx.strokeStyle = 'rgba(255, 255, 255, 0.48)';
     oCtx.lineWidth = 0.6;
     oCtx.beginPath();
     if (dirKey === 1) {
@@ -422,34 +422,45 @@
   }
 
   function addFoam(lx, ly, vx, vy, count = 1, isWhite = false, isSplash = false) {
-    for (let i = 0; i < count; i++) {
-      let speedFactor = 0.15 + Math.random() * 0.35;
-      let angle = Math.atan2(vy, vx) + Math.PI + (Math.random() - 0.5) * (isSplash ? Math.PI * 2 : 1.2);
-      let pVx = Math.cos(angle) * (Math.hypot(vx, vy) * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
-      let pVy = Math.sin(angle) * (Math.hypot(vx, vy) * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
+    const speed = Math.hypot(vx, vy);
+    const isStationary = speed < 0.05 && !isSplash;
 
-      // Wide distribution of lifespans & decay rates so spray disappears at varied lengths behind the boat
-      let decayRate;
-      let randType = Math.random();
-      if (randType < 0.25) {
-        decayRate = 0.045 + Math.random() * 0.035; // Short flecks (disappear near boat)
-      } else if (randType < 0.70) {
-        decayRate = 0.018 + Math.random() * 0.02;  // Medium trail
+    for (let i = 0; i < count; i++) {
+      let pVx, pVy, size, life, decayRate;
+
+      if (isStationary) {
+        pVx = (Math.random() - 0.5) * 0.06;
+        pVy = (Math.random() - 0.5) * 0.06;
+        size = 0.7 + Math.random() * 0.5;
+        life = 0.35 + Math.random() * 0.25;
+        decayRate = 0.025 + Math.random() * 0.02;
       } else {
-        decayRate = 0.006 + Math.random() * 0.01;  // Long lingering wake foam (disappears far behind)
+        let speedFactor = 0.15 + Math.random() * 0.35;
+        let angle = Math.atan2(vy, vx) + Math.PI + (Math.random() - 0.5) * (isSplash ? Math.PI * 2 : 1.2);
+        pVx = Math.cos(angle) * (speed * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
+        pVy = Math.sin(angle) * (speed * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
+        size = 0.8 + Math.random() * (isSplash ? 2.0 : 1.4);
+        life = 0.7 + Math.random() * 0.3;
+
+        let randType = Math.random();
+        if (randType < 0.25) {
+          decayRate = 0.045 + Math.random() * 0.035;
+        } else if (randType < 0.70) {
+          decayRate = 0.018 + Math.random() * 0.02;
+        } else {
+          decayRate = 0.006 + Math.random() * 0.01;
+        }
       }
 
-      const isParticleWhite = isWhite || (Math.random() < 0.65);
-
       boat.foamParticles.push({
-        x: lx + (Math.random() - 0.5) * (isSplash ? 12 : 5),
-        y: ly + (Math.random() - 0.5) * (isSplash ? 8 : 4) + (isSplash ? 0 : 2),
+        x: lx + (Math.random() - 0.5) * (isSplash ? 12 : (isStationary ? 14 : 5)),
+        y: ly + (Math.random() - 0.5) * (isSplash ? 8 : (isStationary ? 9 : 4)) + (isSplash ? 0 : 2),
         vx: pVx,
         vy: pVy,
-        size: 0.8 + Math.random() * (isSplash ? 2.0 : 1.4),
-        life: 0.7 + Math.random() * 0.3,
+        size: size,
+        life: life,
         decay: decayRate,
-        isWhite: isParticleWhite
+        isStationary: isStationary
       });
     }
     if (boat.foamParticles.length > 200) {
@@ -627,6 +638,11 @@
           boat.speed = 0;
           boat.vx = 0;
           boat.vy = 0;
+
+          // Very subtle white froth around stationary boat
+          if (canControl && Math.random() < 0.18) {
+            addFoam(lx, ly, 0, 0, 1, true, false);
+          }
         }
 
         targetStretch = 1.0;
@@ -685,7 +701,8 @@
           continue;
         }
 
-        const alpha = Math.max(0, Math.min(1, p.life * 0.95));
+        const maxAlpha = p.isStationary ? 0.38 : 0.95;
+        const alpha = Math.max(0, Math.min(1, p.life * maxAlpha));
         offCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
 
         offCtx.fillRect(
