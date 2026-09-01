@@ -32,7 +32,6 @@
     uniform vec4 u_kofi_box;      // x, y (center in screen pixels), half_w, half_h
     uniform float u_kofi_radius;
     uniform float u_kofi_fade;
-    uniform float u_transition;   // 0.0 = normal, 1.0 = peak chunky pixelation / dither crunch
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -202,8 +201,8 @@
     }
 
     void main() {
-      // Dynamic retro pixelation: 3.0px normal -> up to 24.0px chunky blocks during page transitions
-      float pixelSize = 3.0 + u_transition * 21.0;
+      // Retro pixelation (3.0 physical pixels per cell)
+      float pixelSize = 3.0;
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
@@ -305,8 +304,8 @@
 
       vec3 dithered = col + stars + (dither * 0.085) + shadowNoise;
 
-      // Discrete retro quantization (crushes down to 3 levels during transition for intense dither crunch)
-      float levels = mix(14.0, 3.0, u_transition);
+      // Discrete retro quantization
+      float levels = 14.0;
       vec3 finalCol = floor(clamp(dithered, 0.0, 1.0) * levels + 0.5) / levels;
 
       gl_FragColor = vec4(finalCol, 1.0);
@@ -366,7 +365,6 @@
   const uKofiBox = gl.getUniformLocation(program, 'u_kofi_box');
   const uKofiRadius = gl.getUniformLocation(program, 'u_kofi_radius');
   const uKofiFade = gl.getUniformLocation(program, 'u_kofi_fade');
-  const uTransition = gl.getUniformLocation(program, 'u_transition');
 
   // Session Anchor Time & Seed
   let sessionStartTime = parseFloat(sessionStorage.getItem('nebula_session_start'));
@@ -464,18 +462,10 @@
       }
     }
 
-    if (uTransition) {
-      gl.uniform1f(uTransition, window._nebulaTransitionVal || 0.0);
-    }
-
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     requestAnimationFrame(render);
   }
-
-  window.setNebulaTransition = function (val) {
-    window._nebulaTransitionVal = Math.max(0.0, Math.min(1.0, val));
-  };
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
