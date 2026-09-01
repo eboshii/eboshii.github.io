@@ -34,7 +34,7 @@ img, video { max-width: 100%; height: auto; display: block; }
   pointer-events: none;
   display: block;
   opacity: 0;
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s ease-out;
 }
 
 #nebula-bg.loaded {
@@ -58,7 +58,7 @@ img, video { max-width: 100%; height: auto; display: block; }
 html {
   font-size: 18px;
   -webkit-text-size-adjust: 100%;
-  background: #05030a;
+  background: #05030a url('../images/nebula-poster.webp') center / cover no-repeat fixed;
 }
 
 body {

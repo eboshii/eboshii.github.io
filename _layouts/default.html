@@ -8,6 +8,8 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="{{ '/assets/images/nebula-poster.webp' | relative_url }}" as="image" type="image/webp">
+  <link rel="preload" href="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}" as="script">
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://ko-fi.com">
   <link rel="dns-prefetch" href="https://ko-fi.com">
@@ -57,6 +59,7 @@
 </head>
 <body>
   <canvas id="nebula-bg"></canvas>
+  <script src="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 
   <header>
     <nav class="{% if page.full_width %}nav-wide{% endif %}">
@@ -104,6 +107,5 @@
   <script src="{{ '/assets/js/tracker.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   <script src="{{ '/assets/js/instant-nav.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   <script src="{{ '/assets/js/boat-easter-egg.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
-  <script src="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>

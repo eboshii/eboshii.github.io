@@ -372,7 +372,7 @@
 
   if (isNaN(sessionStartTime) || isNaN(sessionSeed)) {
     sessionStartTime = Date.now();
-    sessionSeed = (sessionStartTime % 1000000) * 0.00137;
+    sessionSeed = 0.0;
     sessionStorage.setItem('nebula_session_start', sessionStartTime.toString());
     sessionStorage.setItem('nebula_session_seed', sessionSeed.toString());
   }
@@ -476,11 +476,7 @@
     }
   });
 
-  // Start WebGL render loop & smoothly fade/fizzle in canvas after initial frame paint
-  requestAnimationFrame(function () {
-    render();
-    requestAnimationFrame(function () {
-      canvas.classList.add('loaded');
-    });
-  });
+  // Render initial frame synchronously and reveal canvas immediately
+  render();
+  canvas.classList.add('loaded');
 })();
