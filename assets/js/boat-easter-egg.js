@@ -685,12 +685,8 @@
           continue;
         }
 
-        const alpha = Math.max(0, Math.min(1, p.life * 0.9));
-        if (p.isWhite) {
-          offCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        } else {
-          offCtx.fillStyle = `rgba(160, 235, 185, ${alpha * 0.85})`;
-        }
+        const alpha = Math.max(0, Math.min(1, p.life * 0.95));
+        offCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
 
         offCtx.fillRect(
           Math.floor(p.x),
@@ -703,9 +699,8 @@
       // Draw sailboat with squash & stretch + heel lean + plop emergence
       drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.stretch, boat.heelAngle, plopProgress, timeSec);
 
-      // Apply 4x4 Bayer dithering
-      const boxPad = 28;
-      applyBayerDither(offCtx, lx - boxPad, ly - boxPad, boxPad * 2, boxPad * 2);
+      // Apply 4x4 Bayer dithering across full offscreen canvas so all wake particles are dithered consistently without threshold boundaries
+      applyBayerDither(offCtx, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
 
       // Blit to screen canvas
       ctx.imageSmoothingEnabled = false;
