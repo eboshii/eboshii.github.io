@@ -20,13 +20,15 @@ full_width: true
 
     if (!wrapper || !canvas) return;
 
-    // Mount preloaded Ko-fi iframe instantly
+    // Mount preloaded Ko-fi iframe
     if (preloaded && preloaded.parentElement !== wrapper) {
-      wrapper.insertBefore(preloaded, canvas);
+      wrapper.appendChild(preloaded);
     }
 
     const ctx = canvas.getContext('2d');
     const PIXEL_SCALE = 3; // 3px resolution matching nebula background
+    const FADE_PIXELS = 192; // 12pc = 192px exterior dither aura
+    const FADE_CELLS = 64;   // 192 / 3 = 64 cells
 
     // 4x4 Bayer Matrix
     const BAYER_4X4 = [
@@ -38,30 +40,44 @@ full_width: true
 
     function renderDitherEdge() {
       const rect = wrapper.getBoundingClientRect();
-      const w = Math.round(rect.width);
-      const h = Math.round(rect.height);
+      const wBox = Math.round(rect.width);
+      const hBox = Math.round(rect.height);
 
-      canvas.width = w;
-      canvas.height = h;
+      const wTotal = wBox + FADE_PIXELS * 2;
+      const hTotal = hBox + FADE_PIXELS * 2;
 
-      const cols = Math.ceil(w / PIXEL_SCALE);
-      const rows = Math.ceil(h / PIXEL_SCALE);
-      const fadeBorder = 64; // ~192px (12pc) wide dithered dissolve
+      canvas.width = wTotal;
+      canvas.height = hTotal;
+      canvas.style.width = wTotal + 'px';
+      canvas.style.height = hTotal + 'px';
 
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#05030a'; // Deep space backdrop tone
+      const cols = Math.ceil(wTotal / PIXEL_SCALE);
+      const rows = Math.ceil(hTotal / PIXEL_SCALE);
+
+      const padCells = Math.round(FADE_PIXELS / PIXEL_SCALE);
+      const innerX0 = padCells;
+      const innerY0 = padCells;
+      const innerX1 = cols - padCells;
+      const innerY1 = rows - padCells;
+
+      ctx.clearRect(0, 0, wTotal, hTotal);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.88)'; // Exact matching translucent white tone
 
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
-          const distX = Math.min(gx, cols - 1 - gx);
-          const distY = Math.min(gy, rows - 1 - gy);
-          const dist = Math.min(distX, distY);
+          const dx = Math.max(0, innerX0 - gx, gx - innerX1);
+          const dy = Math.max(0, innerY0 - gy, gy - innerY1);
 
-          if (dist < fadeBorder) {
-            const t = 1.0 - (dist / fadeBorder);
+          // Only render exterior aura outside the iframe
+          if (dx === 0 && dy === 0) continue;
+
+          const dist = Math.hypot(dx, dy);
+
+          if (dist <= FADE_CELLS) {
+            const density = 1.0 - (dist / FADE_CELLS);
             const threshold = BAYER_4X4[gy % 4][gx % 4];
 
-            if (t > threshold) {
+            if (density > threshold) {
               ctx.fillRect(gx * PIXEL_SCALE, gy * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
             }
           }
