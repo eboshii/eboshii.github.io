@@ -1032,6 +1032,44 @@ main.main-wide {
   margin-top: 0.05rem;
 }
 
+/* 3-Column Mode Typography Scale (1-2 ticks bigger for wider columns) */
+.news-grid.cols-3 .col-title {
+  font-size: 1.5rem;
+}
+
+.news-grid.cols-3 .col-header {
+  padding: 0.4rem 0.65rem;
+}
+
+.news-grid.cols-3 .col-count {
+  font-size: 0.70rem;
+}
+
+.news-grid.cols-3 .headline-link {
+  padding: 0.36rem 0.55rem;
+  gap: 0.45rem;
+}
+
+.news-grid.cols-3 .source-tag {
+  flex: 0 0 32px;
+  width: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  font-size: 0.68rem;
+}
+
+.news-grid.cols-3 .headline-title {
+  font-size: 0.84rem;
+  line-height: 1.38;
+}
+
+.news-grid.cols-3 .time-tag {
+  flex: 0 0 28px;
+  width: 28px;
+  min-width: 28px;
+  font-size: 0.65rem;
+}
+
 .col-empty-msg {
   padding: 1.25rem 0.5rem;
   text-align: center;
