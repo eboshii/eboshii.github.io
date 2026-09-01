@@ -177,79 +177,78 @@
 
     oCtx.scale(flipX, 1);
 
-    // --- Hull Base ---
+    // --- Slim Curved Hydrodynamic Hull Base ---
     oCtx.fillStyle = woodMid;
     oCtx.strokeStyle = woodDark;
-    oCtx.lineWidth = 1.0;
+    oCtx.lineWidth = 0.8;
 
     oCtx.beginPath();
     if (dirKey === 1) {
-      // NE
-      oCtx.moveTo(-9, 3);
-      oCtx.lineTo(10, -5);
-      oCtx.lineTo(12, -4);
-      oCtx.lineTo(-6, 6);
+      // NE (Slender quarter-angle bow pointing up-right)
+      oCtx.moveTo(-11, 4);
+      oCtx.quadraticCurveTo(1, 0, 14, -6);
+      oCtx.quadraticCurveTo(15.5, -5, 13.5, -3.8);
+      oCtx.quadraticCurveTo(2, 4.2, -8, 6.2);
+      oCtx.quadraticCurveTo(-11.8, 5.8, -11, 4);
     } else if (dirKey === 2) {
-      // E
-      oCtx.moveTo(-11, 2);
-      oCtx.lineTo(12, 2);
-      oCtx.lineTo(10, 6);
-      oCtx.lineTo(-9, 6);
+      // E (Streamlined sleek profile heading right)
+      oCtx.moveTo(-13, 2.5);
+      oCtx.quadraticCurveTo(0, 2.8, 15, 2.5);
+      oCtx.quadraticCurveTo(15.8, 3.5, 13.5, 4.8);
+      oCtx.quadraticCurveTo(0, 6.2, -11.5, 5.0);
+      oCtx.quadraticCurveTo(-13.8, 4.0, -13, 2.5);
     } else if (dirKey === 3) {
-      // SE
-      oCtx.moveTo(-10, -3);
-      oCtx.lineTo(9, 5);
-      oCtx.lineTo(6, 7);
-      oCtx.lineTo(-12, -1);
+      // SE (Sleek quarter-angle bow pointing down-right)
+      oCtx.moveTo(-12, -3.5);
+      oCtx.quadraticCurveTo(0, 2.0, 14, 7.5);
+      oCtx.quadraticCurveTo(13.8, 8.8, 11.5, 8.5);
+      oCtx.quadraticCurveTo(-1, 6.5, -13, -1.0);
+      oCtx.quadraticCurveTo(-13.5, -2.8, -12, -3.5);
     } else if (dirKey === 4) {
-      // S
-      oCtx.moveTo(0, 8);
-      oCtx.lineTo(-6, -1);
-      oCtx.lineTo(-4, -3);
-      oCtx.lineTo(0, -2);
-      oCtx.lineTo(4, -3);
-      oCtx.lineTo(6, -1);
+      // S (Fine-entry bow heading down toward viewer)
+      oCtx.moveTo(0, 10.5);
+      oCtx.quadraticCurveTo(-3.8, 4.5, -4.5, -2.0);
+      oCtx.quadraticCurveTo(0, -3.8, 4.5, -2.0);
+      oCtx.quadraticCurveTo(3.8, 4.5, 0, 10.5);
     } else {
-      // N
-      oCtx.moveTo(0, -7);
-      oCtx.lineTo(-6, 2);
-      oCtx.lineTo(-4, 4);
-      oCtx.lineTo(0, 3);
-      oCtx.lineTo(4, 4);
-      oCtx.lineTo(6, 2);
+      // N (Slender hull heading up away from viewer)
+      oCtx.moveTo(0, -9.5);
+      oCtx.quadraticCurveTo(-3.8, -3.5, -4.5, 2.5);
+      oCtx.quadraticCurveTo(0, 4.0, 4.5, 2.5);
+      oCtx.quadraticCurveTo(3.8, -3.5, 0, -9.5);
     }
     oCtx.closePath();
     oCtx.fill();
     oCtx.stroke();
 
-    // Deck planking
+    // --- Slim Curved Inner Deck Planking ---
     oCtx.fillStyle = woodDeck;
     oCtx.beginPath();
     if (dirKey === 1) {
-      oCtx.moveTo(-8, 2);
-      oCtx.lineTo(9, -5);
-      oCtx.lineTo(8, -3);
-      oCtx.lineTo(-7, 4);
+      oCtx.moveTo(-9.5, 3.5);
+      oCtx.quadraticCurveTo(1, 0, 12.5, -5.2);
+      oCtx.quadraticCurveTo(11.0, -4.0, -6.5, 4.8);
+      oCtx.quadraticCurveTo(-9.8, 4.8, -9.5, 3.5);
     } else if (dirKey === 2) {
-      oCtx.moveTo(-10, 2);
-      oCtx.lineTo(11, 2);
-      oCtx.lineTo(9, 4);
-      oCtx.lineTo(-8, 4);
+      oCtx.moveTo(-11.5, 2.8);
+      oCtx.quadraticCurveTo(0, 3.0, 13.5, 2.8);
+      oCtx.quadraticCurveTo(11.5, 4.2, -9.5, 4.2);
+      oCtx.quadraticCurveTo(-11.8, 3.8, -11.5, 2.8);
     } else if (dirKey === 3) {
-      oCtx.moveTo(-9, -2);
-      oCtx.lineTo(8, 4);
-      oCtx.lineTo(5, 5);
-      oCtx.lineTo(-10, -1);
+      oCtx.moveTo(-10.5, -2.8);
+      oCtx.quadraticCurveTo(0, 2.0, 12.5, 6.8);
+      oCtx.quadraticCurveTo(10.0, 7.2, -11.0, 0.2);
+      oCtx.quadraticCurveTo(-11.5, -1.8, -10.5, -2.8);
     } else if (dirKey === 4) {
-      oCtx.moveTo(0, 7);
-      oCtx.lineTo(-5, 0);
-      oCtx.lineTo(0, -1);
-      oCtx.lineTo(5, 0);
+      oCtx.moveTo(0, 9.0);
+      oCtx.quadraticCurveTo(-2.8, 3.5, -3.5, -1.2);
+      oCtx.quadraticCurveTo(0, -2.2, 3.5, -1.2);
+      oCtx.quadraticCurveTo(2.8, 3.5, 0, 9.0);
     } else {
-      oCtx.moveTo(0, -6);
-      oCtx.lineTo(-5, 1);
-      oCtx.lineTo(0, 2);
-      oCtx.lineTo(5, 1);
+      oCtx.moveTo(0, -8.0);
+      oCtx.quadraticCurveTo(-2.8, -2.5, -3.5, 1.8);
+      oCtx.quadraticCurveTo(0, 2.8, 3.5, 1.8);
+      oCtx.quadraticCurveTo(2.8, -2.5, 0, -8.0);
     }
     oCtx.closePath();
     oCtx.fill();
@@ -259,7 +258,7 @@
     oCtx.lineWidth = 1.0;
     oCtx.beginPath();
     oCtx.moveTo(0, 1);
-    oCtx.lineTo(0, -16);
+    oCtx.lineTo(0, -17);
     oCtx.stroke();
 
     // --- Two-Part Sails with dynamic billow ---
