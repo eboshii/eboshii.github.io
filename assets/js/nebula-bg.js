@@ -207,18 +207,18 @@
       col = mix(col, c_amber, intersection * 0.92);
 
       // ---------------------------------------------------------
-      // Multi-Pass Poisson-Disk Starfield (2x density on homepage)
+      // Multi-Pass Poisson-Disk Starfield (3x Star Density)
       // ---------------------------------------------------------
       vec3 stars = vec3(0.0);
-      // Pass 1: Faint background micro-pinpoints (double on homepage)
-      float t1 = mix(0.84, 0.68, u_is_home);
-      stars += starLayer(rawUv, 38.0, t1, 0.35, u_time, 0.8);
-      // Pass 2: Medium field stars (double on homepage)
-      float t2 = mix(0.92, 0.84, u_is_home);
-      stars += starLayer(rawUv, 18.0, t2, 0.65, u_time, 1.0);
-      // Pass 3: Rare bright focal stars (double on homepage)
-      float t3 = mix(0.982, 0.964, u_is_home);
-      stars += starLayer(rawUv, 8.0, t3, 0.95, u_time, 1.2);
+      // Pass 1: Faint background micro-pinpoints (dense star dust)
+      float t1 = mix(0.70, 0.38, u_is_home);
+      stars += starLayer(rawUv, 52.0, t1, 0.35, u_time, 0.8);
+      // Pass 2: Medium field stars (frequent delicate points)
+      float t2 = mix(0.82, 0.55, u_is_home);
+      stars += starLayer(rawUv, 26.0, t2, 0.65, u_time, 1.0);
+      // Pass 3: Prominent twinkling focal stars
+      float t3 = mix(0.95, 0.86, u_is_home);
+      stars += starLayer(rawUv, 12.0, t3, 0.95, u_time, 1.2);
 
       // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
       float dither = bayer4x4(gridCoord);
