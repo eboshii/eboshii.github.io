@@ -27,8 +27,9 @@ full_width: true
 
     const ctx = canvas.getContext('2d');
     const PIXEL_SCALE = 3; // 3px resolution matching nebula background
-    const FADE_PIXELS = 192; // 12pc = 192px exterior dither aura
-    const FADE_CELLS = 64;   // 192 / 3 = 64 cells
+    const FADE_PIXELS = 38; // 1/5th size exterior dither gradient (~38px / ~13 cells)
+    const FADE_CELLS = 12.67; 
+    const CORNER_RADIUS = 8; // 8px matching .kofi-page-iframe border-radius
 
     // 4x4 Bayer Matrix
     const BAYER_4X4 = [
@@ -54,26 +55,30 @@ full_width: true
       const cols = Math.ceil(wTotal / PIXEL_SCALE);
       const rows = Math.ceil(hTotal / PIXEL_SCALE);
 
-      const padCells = Math.round(FADE_PIXELS / PIXEL_SCALE);
-      const innerX0 = padCells;
-      const innerY0 = padCells;
-      const innerX1 = cols - padCells;
-      const innerY1 = rows - padCells;
+      const cx = cols / 2.0;
+      const cy = rows / 2.0;
+      const hw = (wBox / 2.0) / PIXEL_SCALE;
+      const hh = (hBox / 2.0) / PIXEL_SCALE;
+      const rCells = CORNER_RADIUS / PIXEL_SCALE; // ~2.67 cells
 
       ctx.clearRect(0, 0, wTotal, hTotal);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.88)'; // Exact matching translucent white tone
+      ctx.fillStyle = 'rgba(250, 250, 252, 0.88)'; // Exact matching translucent off-white Ko-fi tone
 
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
-          const dx = Math.max(0, innerX0 - gx, gx - innerX1);
-          const dy = Math.max(0, innerY0 - gy, gy - innerY1);
+          const px = (gx + 0.5) - cx;
+          const py = (gy + 0.5) - cy;
 
-          // Only render exterior aura outside the iframe
-          if (dx === 0 && dy === 0) continue;
+          // Exact analytical Signed Distance Field (SDF) to rounded rectangle
+          const qx = Math.abs(px) - (hw - rCells);
+          const qy = Math.abs(py) - (hh - rCells);
 
-          const dist = Math.hypot(dx, dy);
+          const extX = Math.max(qx, 0.0);
+          const extY = Math.max(qy, 0.0);
+          const dist = Math.hypot(extX, extY) + Math.min(Math.max(qx, qy), 0.0) - rCells;
 
-          if (dist <= FADE_CELLS) {
+          // Render 1/5th size exterior dither aura strictly outside the rounded card boundary
+          if (dist > 0.0 && dist <= FADE_CELLS) {
             const density = 1.0 - (dist / FADE_CELLS);
             const threshold = BAYER_4X4[gy % 4][gx % 4];
 

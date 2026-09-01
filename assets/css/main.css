@@ -656,8 +656,8 @@ footer {
 .kofi-dither-wrapper {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  height: 650px;
+  max-width: 380px;
+  height: 620px;
   background: transparent;
   display: flex;
   align-items: center;
@@ -674,8 +674,8 @@ footer {
   opacity: 0.88;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 4px;
-  box-shadow: 0 16px 64px rgba(255, 255, 255, 0.08), 0 0 60px rgba(240, 179, 101, 0.06);
+  border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
