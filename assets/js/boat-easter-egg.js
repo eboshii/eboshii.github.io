@@ -24,8 +24,9 @@
   // Emergence / Plop State Machine
   let spawnState = 'hidden'; // 'hidden' | 'rising' | 'ready'
   let spawnElapsed = 0.0;
-  const SPAWN_DURATION = 1.15; // 1.15 seconds emergence animation
-  let spawnSplashed = false;
+  const SPAWN_DURATION = 1.35; // 1.35 seconds buoyant surfacing & splashdown
+  let spawnAscendRippled = false;
+  let spawnSplashdownRippled = false;
 
   const PIXEL_SCALE = 3.0; // Exact 3px cell size matching the WebGL shader
 
@@ -126,7 +127,8 @@
       if (spawnState === 'hidden') {
         spawnState = 'rising';
         spawnElapsed = 0.0;
-        spawnSplashed = false;
+        spawnAscendRippled = false;
+        spawnSplashdownRippled = false;
         initBoat();
         if (boatCanvas) boatCanvas.style.opacity = '1';
       }
@@ -160,17 +162,30 @@
     // Turn lean / heel tilt
     oCtx.rotate(heel);
 
-    // Waterline emergence: boat rises from beneath water surface at 100% scale (no scaling)
+    // Dynamic Surfacing Kinematics:
+    // Starts slow underwater -> accelerates upward -> breaches & overbounces above waterline -> drops back with splashdown settle
     let plopY = 0;
     if (plopProgress < 1.0) {
       const u = Math.max(0.0, Math.min(1.0, plopProgress));
-      const breachOvershoot = Math.sin(u * Math.PI) * 2.5;
-      plopY = (1.0 - u) * 20.0 - breachOvershoot;
+      if (u < 0.70) {
+        // Buoyant acceleration: starts slow, accelerates up to crest (-5.0px)
+        const p = u / 0.70;
+        const ease = Math.pow(p, 1.8);
+        plopY = 22.0 * (1.0 - ease) - 5.0 * Math.sin(p * Math.PI * 0.5);
+      } else {
+        // Falling back into water from -5.0px crest with splashdown harmonic settling
+        const p = (u - 0.70) / 0.30;
+        const fall = Math.cos(p * Math.PI * 0.5);
+        const settle = Math.sin(p * Math.PI * 2.0) * Math.exp(-p * 3.5) * 1.8;
+        plopY = -5.0 * fall + settle;
+      }
 
-      // Clip below the water plane so submerged parts remain under the sea surface
-      oCtx.beginPath();
-      oCtx.rect(-35, -45, 70, 53.5); // Only region above waterline is visible
-      oCtx.clip();
+      // Clip below water surface plane while submerged
+      if (plopY > 0) {
+        oCtx.beginPath();
+        oCtx.rect(-35, -45, 70, 53.5);
+        oCtx.clip();
+      }
     }
     oCtx.translate(0, plopY);
 
@@ -478,12 +493,21 @@
         spawnElapsed += dt;
         plopProgress = Math.min(1.0, spawnElapsed / SPAWN_DURATION);
 
-        // Surfacing splash trigger when hull breaches surface (~60% into emergence)
-        if (plopProgress >= 0.55 && !spawnSplashed) {
-          spawnSplashed = true;
-          addFoam(lx, ly, 0, 0, 14);
+        // 1. Ascending ripple as mast & sails rise through the water surface (~30% into rise)
+        if (plopProgress >= 0.28 && !spawnAscendRippled) {
+          spawnAscendRippled = true;
+          addFoam(lx, ly, 0, 0, 5);
           if (window.addBoatWakeNode) {
-            window.addBoatWakeNode(boat.x, boat.y, 0.85);
+            window.addBoatWakeNode(boat.x, boat.y, 0.45);
+          }
+        }
+
+        // 2. Splashdown ripple & foam burst as hull drops back into the sea (~80% into rise)
+        if (plopProgress >= 0.78 && !spawnSplashdownRippled) {
+          spawnSplashdownRippled = true;
+          addFoam(lx, ly, 0, 0, 16);
+          if (window.addBoatWakeNode) {
+            window.addBoatWakeNode(boat.x, boat.y, 0.95);
           }
         }
 
