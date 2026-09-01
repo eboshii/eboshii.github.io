@@ -28,7 +28,7 @@
     uniform vec2 u_resolution;
     uniform float u_time;
 
-    // Standard 4x4 Bayer Matrix (100% WebGL 1.0 / GLSL ES 1.00 compliant)
+    // Standard 4x4 Bayer Matrix
     float bayer4x4(vec2 p) {
       vec2 b = mod(floor(p), 4.0);
       float x = b.x;
@@ -91,17 +91,67 @@
       return v;
     }
 
+    // Poisson-Disk-Style Star Layer (Jittered Grid)
+    vec3 starLayer(vec2 uv, float gridDensity, float threshold, float brightnessScale, float time, float speedFactor) {
+      vec2 p = uv * gridDensity;
+      vec2 id = floor(p);
+      vec2 gv = fract(p) - 0.5;
+
+      vec3 totalStars = vec3(0.0);
+
+      // Check 3x3 neighborhood for border continuity
+      for (int y = -1; y <= 1; y++) {
+        for (int x = -1; x <= 1; x++) {
+          vec2 offset = vec2(float(x), float(y));
+          vec2 cellId = id + offset;
+
+          float prob = hash(cellId + 0.137);
+          if (prob > threshold) {
+            vec2 jitter = vec2(hash(cellId + 1.71), hash(cellId + 9.33)) - 0.5;
+            vec2 starPos = offset + jitter * 0.75;
+            float dist = length(gv - starPos);
+
+            // Core & glow
+            float starRadius = 0.06 + hash(cellId + 4.19) * 0.06;
+            float core = smoothstep(starRadius, 0.0, dist);
+            float glow = 0.012 / (dist * dist + 0.012);
+
+            // Gentle twinkle over a few seconds (period ~2-5s)
+            float freq = (1.2 + hash(cellId + 5.72) * 1.6) * speedFactor;
+            float phase = hash(cellId + 8.29) * 6.28318;
+            float twinkle = 0.55 + 0.45 * sin(time * freq + phase);
+
+            // Subtle color tint: warm amber, pale blue, soft white
+            float hueRnd = hash(cellId + 2.91);
+            vec3 tint = vec3(1.0, 0.96, 0.92);
+            if (hueRnd < 0.35) {
+              tint = vec3(1.0, 0.80, 0.52); // warm amber
+            } else if (hueRnd < 0.65) {
+              tint = vec3(0.70, 0.88, 1.0); // pale cyan-blue
+            }
+
+            float intensity = (core * 1.4 + glow * 0.35) * twinkle * brightnessScale;
+            totalStars += tint * intensity;
+          }
+        }
+      }
+      return totalStars;
+    }
+
     void main() {
       // Retro pixelation (3.0 physical pixels per cell)
       float pixelSize = 3.0;
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
-      vec2 uv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
+      vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      float t = u_time * 0.06;
+      // Zoom out ~3x for intricate structures
+      vec2 uv = rawUv * 2.8;
+
+      float t = u_time * 0.05;
 
       // --- Layer 1: Far Cosmic Clouds (Muted violet & indigo) ---
-      vec2 uvFar = uv * 1.2 + vec2(t * 0.06, t * 0.03);
-      float swirlFar = fbm(uvFar * 0.3 + t * 0.12) * 6.28318;
+      vec2 uvFar = uv * 1.1 + vec2(t * 0.05, t * 0.025);
+      float swirlFar = fbm(uvFar * 0.3 + t * 0.1) * 6.28318;
       vec2 warpFar = vec2(
         fbm(uvFar + vec2(1.7, 9.2)),
         fbm(uvFar + vec2(8.3, 2.8))
@@ -113,8 +163,8 @@
       float dFar = fbm(uvFar + rWarpFar * 1.6);
 
       // --- Layer 2: Near Swirling Filaments (Teal, magenta, and amber) ---
-      vec2 uvNear = uv * 1.9 + vec2(-t * 0.12, t * 0.08);
-      float swirlNear = fbm(uvNear * 0.4 - t * 0.18) * 6.28318;
+      vec2 uvNear = uv * 1.8 + vec2(-t * 0.10, t * 0.07);
+      float swirlNear = fbm(uvNear * 0.4 - t * 0.15) * 6.28318;
       vec2 warpNear = vec2(
         fbm(uvNear + vec2(5.2, 1.3)),
         fbm(uvNear + vec2(3.1, 7.4))
@@ -140,7 +190,7 @@
       col = mix(col, c_far_gas, maskFar * 0.85);
 
       // Near filament layer
-      float filamentHue = noise(uv * 1.4 + t * 0.1);
+      float filamentHue = noise(uv * 1.4 + t * 0.08);
       vec3 filamentCol = mix(c_teal, c_magenta, filamentHue);
       float maskNear = smoothstep(0.32, 0.78, dNear);
       col = mix(col, filamentCol, maskNear * 0.90);
@@ -149,11 +199,22 @@
       float intersection = smoothstep(0.55, 0.88, dNear) * smoothstep(0.38, 0.78, dFar);
       col = mix(col, c_amber, intersection * 0.90);
 
-      // 4x4 Ordered Bayer Dithering + Subtle Grain
-      float dither = bayer4x4(gridCoord);
-      float shadowNoise = (hash(gridCoord + fract(u_time * 0.2)) - 0.5) * 0.04;
+      // ---------------------------------------------------------
+      // Multi-Pass Poisson-Disk Starfield (Dense Faint -> Sparse Bright)
+      // ---------------------------------------------------------
+      vec3 stars = vec3(0.0);
+      // Pass 1: Dense faint background stars
+      stars += starLayer(rawUv, 52.0, 0.30, 0.38, u_time, 0.75);
+      // Pass 2: Medium field stars
+      stars += starLayer(rawUv, 24.0, 0.60, 0.70, u_time, 1.0);
+      // Pass 3: Sparse prominent bright stars
+      stars += starLayer(rawUv, 10.0, 0.78, 1.15, u_time, 1.25);
 
-      vec3 dithered = col + (dither * 0.09) + shadowNoise;
+      // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
+      float dither = bayer4x4(gridCoord);
+      float shadowNoise = (hash(gridCoord + fract(u_time * 0.2)) - 0.5) * 0.035;
+
+      vec3 dithered = col + stars + (dither * 0.085) + shadowNoise;
 
       // Discrete retro quantization
       float levels = 14.0;
