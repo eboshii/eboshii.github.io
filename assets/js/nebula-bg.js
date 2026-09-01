@@ -96,6 +96,28 @@
       return v;
     }
 
+    // Continuous Weierstrass Function + Sin Modulation for Perimeter Extrusion
+    float weierstrassSin(float theta, float time) {
+      float t = time * 0.08;
+      // Multi-harmonic Weierstrass fractal sum (a=0.5, b=2.0)
+      float w = 0.0;
+      w += 1.000 * sin( 1.0 * theta + t * 0.70 + 0.35);
+      w += 0.500 * cos( 2.0 * theta - t * 0.85 + 1.28);
+      w += 0.250 * sin( 4.0 * theta + t * 1.10 + 2.74);
+      w += 0.125 * cos( 8.0 * theta - t * 1.35 + 4.19);
+      w += 0.0625 * sin(16.0 * theta + t * 1.60 + 5.61);
+
+      // Low frequency large-scale sinusoidal sweep
+      float baseSin = sin(theta * 2.0 - t * 0.45) * 0.6;
+
+      // Sum range is approximately [-2.5375, 2.5375]
+      float total = (w + baseSin) / 2.5375;
+      float norm = clamp(0.5 + 0.5 * total, 0.0, 1.0);
+
+      // Map smoothly into [1.0, 3.0] (1x to 3x extrusion)
+      return 1.0 + 2.0 * norm;
+    }
+
     // Poisson-Disk-Style Star Layer (Jittered Grid)
     vec3 starLayer(vec2 uv, float gridDensity, float threshold, float brightnessScale, float time, float speedFactor) {
       vec2 p = uv * gridDensity;
@@ -239,14 +261,20 @@
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
 
-      // --- Dynamic Ko-fi Glow Halo with S-curve Falloff (Direct Background Render) ---
+      // --- Dynamic Ko-fi Glow Halo with Weierstrass-Randomized Extrusion ---
       if (u_kofi_box.z > 0.1) {
         vec2 p = gl_FragCoord.xy;
-        vec2 dBox = abs(p - u_kofi_box.xy) - (u_kofi_box.zw - vec2(u_kofi_radius));
+        vec2 rel = p - u_kofi_box.xy;
+        vec2 dBox = abs(rel) - (u_kofi_box.zw - vec2(u_kofi_radius));
         float dist = length(max(dBox, 0.0)) + min(max(dBox.x, dBox.y), 0.0) - u_kofi_radius;
 
-        if (dist < u_kofi_fade) {
-          float uNorm = clamp(dist / u_kofi_fade, 0.0, 1.0);
+        // Continuous angular parameter around the shape
+        float theta = atan(rel.y, rel.x);
+        float extrudeMult = weierstrassSin(theta, u_time);
+        float dynamicFade = u_kofi_fade * extrudeMult; // Extends between 1.0x and 3.0x
+
+        if (dist < dynamicFade) {
+          float uNorm = clamp(dist / dynamicFade, 0.0, 1.0);
           float inv = 1.0 - uNorm;
           // S-curve: stays high for first few pixels, drops steeply, lingers near transparent
           float sCurve = smoothstep(0.08, 0.92, inv);
