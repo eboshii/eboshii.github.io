@@ -38,10 +38,14 @@ img, video { max-width: 100%; height: auto; display: block; }
 /* -----------------------------------------------
    Base
 ----------------------------------------------- */
-html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+  background: #05030a;
+}
 
 body {
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;

@@ -8,9 +8,12 @@
     depth: false,
     stencil: false,
     powerPreference: 'low-power'
-  });
+  }) || canvas.getContext('experimental-webgl');
 
-  if (!gl) return;
+  if (!gl) {
+    console.warn('WebGL not supported for nebula background');
+    return;
+  }
 
   const vsSource = `
     attribute vec2 a_position;
@@ -25,23 +28,43 @@
     uniform vec2 u_resolution;
     uniform float u_time;
 
+    // Standard 4x4 Bayer Matrix (100% WebGL 1.0 / GLSL ES 1.00 compliant)
     float bayer4x4(vec2 p) {
-      vec2 b = floor(mod(p, 4.0));
-      mat4 m = mat4(
-         0.0, 12.0,  3.0, 15.0,
-         8.0,  4.0, 11.0,  7.0,
-         2.0, 14.0,  1.0, 13.0,
-        10.0,  6.0,  9.0,  5.0
-      );
-      return (m[int(b.x)][int(b.y)] / 16.0) - 0.5;
+      vec2 b = mod(floor(p), 4.0);
+      float x = b.x;
+      float y = b.y;
+
+      if (y < 0.5) {
+        if (x < 0.5) return -0.5000;
+        if (x < 1.5) return  0.0000;
+        if (x < 2.5) return -0.3750;
+        return  0.1250;
+      } else if (y < 1.5) {
+        if (x < 0.5) return  0.2500;
+        if (x < 1.5) return -0.2500;
+        if (x < 2.5) return  0.3750;
+        return -0.1250;
+      } else if (y < 2.5) {
+        if (x < 0.5) return -0.3125;
+        if (x < 1.5) return  0.1875;
+        if (x < 2.5) return -0.4375;
+        return  0.0625;
+      } else {
+        if (x < 0.5) return  0.4375;
+        if (x < 1.5) return -0.0625;
+        if (x < 2.5) return  0.3125;
+        return -0.1875;
+      }
     }
 
+    // Fast 2D Hash
     float hash(vec2 p) {
       p = fract(p * vec2(123.34, 456.21));
       p += dot(p, p + 45.32);
       return fract(p.x * p.y);
     }
 
+    // 2D Value Noise with Hermite Curve
     float noise(vec2 p) {
       vec2 i = floor(p);
       vec2 f = fract(p);
@@ -55,6 +78,7 @@
       return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
     }
 
+    // 3-Octave Lightweight FBM with Rotation
     float fbm(vec2 p) {
       float v = 0.0;
       float a = 0.5;
@@ -68,15 +92,16 @@
     }
 
     void main() {
+      // Retro pixelation (3.0 physical pixels per cell)
       float pixelSize = 3.0;
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 uv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      float t = u_time * 0.07;
+      float t = u_time * 0.06;
 
-      // Layer 1: Far Gas (Slow drift, broad shapes)
-      vec2 uvFar = uv * 1.3 + vec2(t * 0.08, t * 0.04);
-      float swirlFar = fbm(uvFar * 0.35 + t * 0.15) * 6.28318;
+      // --- Layer 1: Far Cosmic Clouds (Muted violet & indigo) ---
+      vec2 uvFar = uv * 1.2 + vec2(t * 0.06, t * 0.03);
+      float swirlFar = fbm(uvFar * 0.3 + t * 0.12) * 6.28318;
       vec2 warpFar = vec2(
         fbm(uvFar + vec2(1.7, 9.2)),
         fbm(uvFar + vec2(8.3, 2.8))
@@ -85,11 +110,11 @@
         warpFar.x * cos(swirlFar) - warpFar.y * sin(swirlFar),
         warpFar.x * sin(swirlFar) + warpFar.y * cos(swirlFar)
       );
-      float dFar = fbm(uvFar + rWarpFar * 1.5);
+      float dFar = fbm(uvFar + rWarpFar * 1.6);
 
-      // Layer 2: Near Gas Filaments (Faster drift, sharper branches)
-      vec2 uvNear = uv * 2.1 + vec2(-t * 0.14, t * 0.09);
-      float swirlNear = fbm(uvNear * 0.45 - t * 0.22) * 6.28318;
+      // --- Layer 2: Near Swirling Filaments (Teal, magenta, and amber) ---
+      vec2 uvNear = uv * 1.9 + vec2(-t * 0.12, t * 0.08);
+      float swirlNear = fbm(uvNear * 0.4 - t * 0.18) * 6.28318;
       vec2 warpNear = vec2(
         fbm(uvNear + vec2(5.2, 1.3)),
         fbm(uvNear + vec2(3.1, 7.4))
@@ -98,35 +123,40 @@
         warpNear.x * cos(swirlNear) - warpNear.y * sin(swirlNear),
         warpNear.x * sin(swirlNear) + warpNear.y * cos(swirlNear)
       );
-      float dNear = fbm(uvNear + rWarpNear * 2.2);
+      float dNear = fbm(uvNear + rWarpNear * 2.0);
 
-      // Deep dark palette
-      vec3 c_space    = vec3(0.0196, 0.0118, 0.0392); // #05030a
-      vec3 c_far_gas  = vec3(0.0941, 0.0549, 0.1569); // #180e28
-      vec3 c_teal     = vec3(0.0392, 0.1569, 0.2196); // #0a2838
-      vec3 c_magenta  = vec3(0.2196, 0.0549, 0.1569); // #380e28
-      vec3 c_amber    = vec3(0.4314, 0.2353, 0.0627); // #6e3c10
+      // --- Color Palette ---
+      vec3 c_space    = vec3(0.027, 0.015, 0.051); // #07040d Deep void
+      vec3 c_far_gas  = vec3(0.125, 0.063, 0.220); // #201038 Deep violet cloud
+      vec3 c_teal     = vec3(0.055, 0.247, 0.322); // #0e3f52 Glowing cyan filament
+      vec3 c_magenta  = vec3(0.318, 0.086, 0.231); // #51163b Rose magenta filament
+      vec3 c_amber    = vec3(0.682, 0.365, 0.114); // #ae5d1d Glowing stellar core
 
+      // Base space
       vec3 col = c_space;
 
-      float maskFar = smoothstep(0.22, 0.78, dFar);
+      // Far gas layer
+      float maskFar = smoothstep(0.20, 0.72, dFar);
       col = mix(col, c_far_gas, maskFar * 0.85);
 
-      float filamentHue = noise(uv * 1.5 + t * 0.12);
+      // Near filament layer
+      float filamentHue = noise(uv * 1.4 + t * 0.1);
       vec3 filamentCol = mix(c_teal, c_magenta, filamentHue);
-      float maskNear = smoothstep(0.36, 0.82, dNear);
-      col = mix(col, filamentCol, maskNear * 0.92);
+      float maskNear = smoothstep(0.32, 0.78, dNear);
+      col = mix(col, filamentCol, maskNear * 0.90);
 
-      float intersection = smoothstep(0.62, 0.92, dNear) * smoothstep(0.42, 0.82, dFar);
-      col = mix(col, c_amber, intersection * 0.85);
+      // Dense intersection highlights
+      float intersection = smoothstep(0.55, 0.88, dNear) * smoothstep(0.38, 0.78, dFar);
+      col = mix(col, c_amber, intersection * 0.90);
 
-      // 4x4 Bayer Dithering + Animated Shadow Noise
+      // 4x4 Ordered Bayer Dithering + Subtle Grain
       float dither = bayer4x4(gridCoord);
-      float shadowNoise = (hash(gridCoord + fract(u_time * 0.25)) - 0.5) * 0.035;
+      float shadowNoise = (hash(gridCoord + fract(u_time * 0.2)) - 0.5) * 0.04;
 
-      vec3 dithered = col + (dither * 0.085) + shadowNoise;
+      vec3 dithered = col + (dither * 0.09) + shadowNoise;
 
-      float levels = 8.0;
+      // Discrete retro quantization
+      float levels = 14.0;
       vec3 finalCol = floor(clamp(dithered, 0.0, 1.0) * levels + 0.5) / levels;
 
       gl_FragColor = vec4(finalCol, 1.0);
@@ -138,6 +168,7 @@
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error('Shader compile error:', gl.getShaderInfoLog(shader));
       gl.deleteShader(shader);
       return null;
     }
@@ -153,7 +184,10 @@
   gl.attachShader(program, fragmentShader);
   gl.linkProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error('Program link error:', gl.getProgramInfoLog(program));
+    return;
+  }
   gl.useProgram(program);
 
   const quadBuffer = gl.createBuffer();
@@ -210,6 +244,7 @@
       isRunning = false;
     } else {
       isRunning = true;
+      startTime = performance.now() - (gl.getUniform(program, uTime) || 0) * 1000;
       requestAnimationFrame(render);
     }
   });
