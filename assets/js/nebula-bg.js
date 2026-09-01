@@ -245,11 +245,11 @@
         vec2 dBox = abs(p - u_kofi_box.xy) - (u_kofi_box.zw - vec2(u_kofi_radius));
         float dist = length(max(dBox, 0.0)) + min(max(dBox.x, dBox.y), 0.0) - u_kofi_radius;
 
-        if (dist > 0.0 && dist < u_kofi_fade) {
-          float uNorm = dist / u_kofi_fade;
+        if (dist < u_kofi_fade) {
+          float uNorm = clamp(dist / u_kofi_fade, 0.0, 1.0);
           float inv = 1.0 - uNorm;
-          // S-curve sigmoid: stays high for first few pixels, drops steeply, lingers near transparent
-          float sCurve = smoothstep(0.12, 0.88, inv);
+          // S-curve: stays high for first few pixels, drops steeply, lingers near transparent
+          float sCurve = smoothstep(0.08, 0.92, inv);
           sCurve = sCurve * sCurve * (3.0 - 2.0 * sCurve);
 
           col = mix(col, vec3(1.0, 1.0, 1.0), sCurve);
@@ -417,8 +417,8 @@
         const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
         const cx = (rect.left + rect.width * 0.5) * dpr;
         const cy = (window.innerHeight - (rect.top + rect.height * 0.5)) * dpr;
-        const hw = (rect.width * 0.5) * dpr;
-        const hh = (rect.height * 0.5) * dpr;
+        const hw = (rect.width * 0.5 - 1.5) * dpr;
+        const hh = (rect.height * 0.5 - 1.5) * dpr;
         gl.uniform4f(uKofiBox, cx, cy, hw, hh);
         gl.uniform1f(uKofiRadius, 8.0 * dpr);
         gl.uniform1f(uKofiFade, 36.0 * dpr); // 36px S-curve halo

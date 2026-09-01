@@ -679,7 +679,8 @@ footer {
   display: block;
   background: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
+  outline: none;
   z-index: 1;
 }
 
