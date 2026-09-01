@@ -32,14 +32,14 @@
       }
     });
 
-    const footerStatsLink = document.querySelector('.footer-stats-link');
-    if (footerStatsLink) {
-      if (url.pathname.includes('/stats')) {
-        footerStatsLink.classList.add('active');
+    document.querySelectorAll('.footer-stats-link').forEach(footerLink => {
+      const href = footerLink.getAttribute('href');
+      if (href && url.pathname.includes(href.replace(/\/+$/, ''))) {
+        footerLink.classList.add('active');
       } else {
-        footerStatsLink.classList.remove('active');
+        footerLink.classList.remove('active');
       }
-    }
+    });
   }
 
   async function navigate(url, pushState = true) {

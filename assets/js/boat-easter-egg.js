@@ -11,10 +11,10 @@
  * - Emergent 2.5D physical wake trail superposition
  */
 (function () {
-  // Only active on the homepage
-  function isHomePage() {
+  // Active on homepage and tip jar page
+  function isBoatSupportedPage() {
     const p = window.location.pathname.replace(/^\/eboshii\.github\.io/, '').replace(/\/+$/, '');
-    return p === '' || p === '/index.html';
+    return p === '' || p === '/index.html' || p === '/tip' || p === '/tip/index.html';
   }
 
   let boatCanvas, ctx;
@@ -70,7 +70,7 @@
   };
 
   function initBoat() {
-    if (isInitialized || !isHomePage()) return;
+    if (isInitialized || !isBoatSupportedPage()) return;
     isInitialized = true;
 
     boatCanvas = document.createElement('canvas');
@@ -114,7 +114,7 @@
 
   // Key listeners
   window.addEventListener('keydown', e => {
-    if (!isHomePage()) return;
+    if (!isBoatSupportedPage()) return;
     const k = e.key.toLowerCase();
 
     let handled = false;
@@ -484,7 +484,12 @@
     lastTime = now;
     const timeSec = now * 0.001;
 
-    if (spawnState !== 'hidden' && isHomePage() && ctx && boatCanvas && offCtx && offscreenCanvas) {
+    const pageSupported = isBoatSupportedPage();
+    if (boatCanvas) {
+      boatCanvas.style.display = pageSupported ? 'block' : 'none';
+    }
+
+    if (spawnState !== 'hidden' && pageSupported && ctx && boatCanvas && offCtx && offscreenCanvas) {
       offCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
       ctx.clearRect(0, 0, boatCanvas.width, boatCanvas.height);
 

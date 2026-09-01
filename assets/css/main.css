@@ -642,85 +642,51 @@ footer {
 }
 
 /* -----------------------------------------------
-   Ko-fi In-Page Donation Modal
+   Tip Jar Page
 ----------------------------------------------- */
-.kofi-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  background: rgba(5, 3, 10, 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+.tip-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  max-width: 580px;
 }
 
-.kofi-modal-card {
+.kofi-page-container {
   width: 100%;
   max-width: 440px;
-  max-height: 90vh;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
   overflow: hidden;
-  animation: kofiModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 1.25rem;
 }
 
-@keyframes kofiModalPop {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.kofi-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.65rem 0.95rem;
-  border-bottom: 1px solid var(--border);
-  background: rgba(14, 9, 22, 0.75);
-}
-
-.kofi-modal-title {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.kofi-modal-close {
-  background: none;
+.kofi-page-iframe {
+  width: 100%;
+  height: 650px;
   border: none;
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0.2rem;
-  transition: color 0.15s;
-}
-
-.kofi-modal-close:hover {
-  color: var(--text);
-}
-
-.kofi-modal-body {
-  flex: 1;
-  overflow: auto;
-  min-height: 600px;
-  background: #ffffff;
-  border-radius: 0 0 7px 7px;
-}
-
-.kofi-modal-body iframe {
   display: block;
+  background: #ffffff;
+}
+
+.tip-alt-footer {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.tip-alt-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.15s;
+}
+
+.tip-alt-footer a:hover {
+  border-bottom-color: var(--accent);
 }
 
 /* -----------------------------------------------
