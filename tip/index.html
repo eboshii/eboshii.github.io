@@ -7,17 +7,23 @@ full_width: true
 
 <div class="tip-page-centered">
   <div class="kofi-dither-wrapper">
-    <iframe id="kofi-page-iframe" src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true" class="kofi-page-iframe" title="Support eboshii on Ko-fi"></iframe>
     <canvas id="kofi-dither-canvas" class="kofi-dither-canvas" aria-hidden="true"></canvas>
   </div>
 </div>
 
 <script>
 (function() {
-  function initDither() {
-    const canvas = document.getElementById('kofi-dither-canvas');
+  function initTipPage() {
     const wrapper = document.querySelector('.kofi-dither-wrapper');
-    if (!canvas || !wrapper) return;
+    const canvas = document.getElementById('kofi-dither-canvas');
+    const preloaded = document.getElementById('global-kofi-iframe');
+
+    if (!wrapper || !canvas) return;
+
+    // Mount preloaded Ko-fi iframe instantly
+    if (preloaded && preloaded.parentElement !== wrapper) {
+      wrapper.insertBefore(preloaded, canvas);
+    }
 
     const ctx = canvas.getContext('2d');
     const PIXEL_SCALE = 3; // 3px resolution matching nebula background
@@ -40,10 +46,10 @@ full_width: true
 
       const cols = Math.ceil(w / PIXEL_SCALE);
       const rows = Math.ceil(h / PIXEL_SCALE);
-      const fadeBorder = 14; // ~42px dithered perimeter dissolve
+      const fadeBorder = 64; // ~192px (12pc) wide dithered dissolve
 
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#05030a'; // Cosmic space backdrop color
+      ctx.fillStyle = '#05030a'; // Deep space backdrop tone
 
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
@@ -68,9 +74,9 @@ full_width: true
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDither);
+    document.addEventListener('DOMContentLoaded', initTipPage);
   } else {
-    initDither();
+    initTipPage();
   }
 })();
 </script>

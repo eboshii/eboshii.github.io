@@ -68,8 +68,21 @@
       // Update main class if wide layout changed
       currentMain.className = newMain.className;
 
+      // Preserve preloaded Ko-fi iframe before swapping DOM
+      const kofiIframe = document.getElementById('global-kofi-iframe');
+      const kofiPool = document.getElementById('kofi-preload-pool');
+      if (kofiIframe && kofiPool && currentMain.contains(kofiIframe)) {
+        kofiPool.appendChild(kofiIframe);
+      }
+
       // Swap main content without touching the WebGL canvas
       currentMain.innerHTML = newMain.innerHTML;
+
+      // Mount preloaded Ko-fi iframe if on tip page
+      const kofiWrapper = currentMain.querySelector('.kofi-dither-wrapper');
+      if (kofiWrapper && kofiIframe) {
+        kofiWrapper.insertBefore(kofiIframe, kofiWrapper.firstChild);
+      }
 
       // Update nav highlights
       updateNav(url);

@@ -669,10 +669,12 @@ footer {
   height: 100%;
   border: none;
   display: block;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.88);
+  opacity: 0.88;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 6px;
-  filter: invert(0.93) hue-rotate(180deg) contrast(1.05) brightness(0.95);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 16px 64px rgba(255, 255, 255, 0.08), 0 0 60px rgba(240, 179, 101, 0.06);
 }
 
 .kofi-dither-canvas {
