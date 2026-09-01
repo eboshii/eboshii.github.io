@@ -720,7 +720,7 @@ main.main-wide {
   grid-template-columns: 24px 1fr 24px;
   align-items: baseline;
   gap: 0.4rem;
-  padding: 0.24rem 0.45rem;
+  padding: 0.28rem 0.45rem;
   text-decoration: none;
   color: var(--text);
   width: 100%;
@@ -739,12 +739,16 @@ main.main-wide {
 
 .headline-title {
   min-width: 0;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-word;
   font-family: var(--font-sans);
   font-size: 0.72rem;
-  line-height: 1.25;
+  line-height: 1.28;
   color: var(--text);
   transition: color 0.1s;
 }
