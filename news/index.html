@@ -52,7 +52,7 @@ full_width: true
               <div class="cat-checklist">
                 {% for cat in site.data.news.categories %}
                 {% assign is_default_disabled = false %}
-                {% if cat.id == 'energy' or cat.id == 'geopolitics' or cat.id == 'europe' or cat.id == 'asia' or cat.id == 'africa' or cat.id == 'startups' or cat.id == 'cybersec' or cat.id == 'crypto' %}
+                {% if cat.id == 'environment' or cat.id == 'geopolitics' or cat.id == 'europe' or cat.id == 'asia' or cat.id == 'africa' or cat.id == 'startups' or cat.id == 'cybersec' or cat.id == 'crypto' %}
                   {% assign is_default_disabled = true %}
                 {% endif %}
                 <label class="cat-check-label">
@@ -134,7 +134,7 @@ full_width: true
   }
 
   let selectedCols = 4;
-  const DEFAULT_ACTIVE_CATS = ['world', 'tech', 'science', 'markets', 'ai', 'politics', 'culture', 'movies', 'music', 'gaming'];
+  const DEFAULT_ACTIVE_CATS = ['world', 'politics', 'science', 'tech', 'markets', 'ai', 'culture', 'movies', 'music', 'gaming'];
   let activeCategories = new Set(DEFAULT_ACTIVE_CATS);
 
   // Format relative timestamp

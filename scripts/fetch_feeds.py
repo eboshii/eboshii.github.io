@@ -42,16 +42,13 @@ FEEDS_CONFIG = [
         ]
     },
     {
-        "category_id": "tech",
-        "category_title": "Tech",
+        "category_id": "politics",
+        "category_title": "Politics",
         "feeds": [
-            {"name": "Hacker News", "short": "HN", "url": "https://news.ycombinator.com/rss", "limit": 25},
-            {"name": "Ars Technica", "short": "ARS", "url": "https://feeds.arstechnica.com/arstechnica/index", "limit": 20},
-            {"name": "The Verge", "short": "VRG", "url": "https://www.theverge.com/rss/index.xml", "limit": 20},
-            {"name": "Lobsters", "short": "LOB", "url": "https://lobste.rs/rss", "limit": 15},
-            {"name": "MIT Tech Review", "short": "MIT", "url": "https://www.technologyreview.com/feed/", "limit": 12},
-            {"name": "Techmeme", "short": "TM", "url": "https://www.techmeme.com/feed.xml", "limit": 20},
-            {"name": "Phoronix", "short": "PHX", "url": "https://www.phoronix.com/phoronix-rss.php", "limit": 15},
+            {"name": "Politico", "short": "POL", "url": "https://rss.politico.com/politics-news.xml", "limit": 18},
+            {"name": "The Hill", "short": "HIL", "url": "https://thehill.com/feed/", "limit": 18},
+            {"name": "BBC Politics", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/politics/rss.xml", "limit": 15},
+            {"name": "Guardian Politics", "short": "GDN", "url": "https://www.theguardian.com/politics/rss", "limit": 15},
         ]
     },
     {
@@ -64,6 +61,19 @@ FEEDS_CONFIG = [
             {"name": "ScienceDaily", "short": "SCI", "url": "https://www.sciencedaily.com/rss/all.xml", "limit": 12},
             {"name": "Space.com", "short": "SPC", "url": "https://www.space.com/feeds/all", "limit": 15},
             {"name": "Yale E360", "short": "YAL", "url": "https://e360.yale.edu/feed.xml", "limit": 10},
+        ]
+    },
+    {
+        "category_id": "tech",
+        "category_title": "Tech",
+        "feeds": [
+            {"name": "Hacker News", "short": "HN", "url": "https://news.ycombinator.com/rss", "limit": 25},
+            {"name": "Ars Technica", "short": "ARS", "url": "https://feeds.arstechnica.com/arstechnica/index", "limit": 20},
+            {"name": "The Verge", "short": "VRG", "url": "https://www.theverge.com/rss/index.xml", "limit": 20},
+            {"name": "Lobsters", "short": "LOB", "url": "https://lobste.rs/rss", "limit": 15},
+            {"name": "MIT Tech Review", "short": "MIT", "url": "https://www.technologyreview.com/feed/", "limit": 12},
+            {"name": "Techmeme", "short": "TM", "url": "https://www.techmeme.com/feed.xml", "limit": 20},
+            {"name": "Phoronix", "short": "PHX", "url": "https://www.phoronix.com/phoronix-rss.php", "limit": 15},
         ]
     },
     {
@@ -87,16 +97,6 @@ FEEDS_CONFIG = [
             {"name": "MIT AI", "short": "MIT", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2", "limit": 12},
             {"name": "The Gradient", "short": "GRD", "url": "https://thegradient.pub/rss/", "limit": 10},
             {"name": "VentureBeat AI", "short": "VBA", "url": "https://venturebeat.com/category/ai/feed/", "limit": 15},
-        ]
-    },
-    {
-        "category_id": "politics",
-        "category_title": "Politics",
-        "feeds": [
-            {"name": "Politico", "short": "POL", "url": "https://rss.politico.com/politics-news.xml", "limit": 18},
-            {"name": "The Hill", "short": "HIL", "url": "https://thehill.com/feed/", "limit": 18},
-            {"name": "BBC Politics", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/politics/rss.xml", "limit": 15},
-            {"name": "Guardian Politics", "short": "GDN", "url": "https://www.theguardian.com/politics/rss", "limit": 15},
         ]
     },
     {
@@ -148,13 +148,15 @@ FEEDS_CONFIG = [
 
     # --- Specialized & Regional Categories (Available in Settings) ---
     {
-        "category_id": "energy",
-        "category_title": "Energy",
+        "category_id": "environment",
+        "category_title": "Environment",
         "feeds": [
+            {"name": "Inside Climate", "short": "ICN", "url": "https://insideclimatenews.org/feed/", "limit": 18},
+            {"name": "Carbon Brief", "short": "CRB", "url": "https://www.carbonbrief.org/feed/", "limit": 15},
+            {"name": "Guardian Envr", "short": "GDN", "url": "https://www.theguardian.com/environment/rss", "limit": 18},
             {"name": "Canary Media", "short": "CNR", "url": "https://www.canarymedia.com/rss", "limit": 15},
             {"name": "CleanTechnica", "short": "CLN", "url": "https://cleantechnica.com/feed/", "limit": 15},
-            {"name": "OilPrice", "short": "OPC", "url": "https://oilprice.com/rss/main", "limit": 15},
-            {"name": "Carbon Brief", "short": "CRB", "url": "https://www.carbonbrief.org/feed/", "limit": 12},
+            {"name": "Yale E360", "short": "YAL", "url": "https://e360.yale.edu/feed.xml", "limit": 12},
         ]
     },
     {
