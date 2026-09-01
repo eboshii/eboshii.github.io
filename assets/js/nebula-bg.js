@@ -28,7 +28,8 @@
     uniform vec2 u_resolution;
     uniform float u_time;
     uniform float u_seed;
-    uniform vec4 u_ripples[6];
+    uniform vec4 u_boat_state; // x, y, headingAngle, speed
+    uniform vec4 u_wake[8];     // x, y, headingAngle, birthTime
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -101,7 +102,6 @@
 
       vec3 totalStars = vec3(0.0);
 
-      // Check 3x3 neighborhood for border continuity
       for (int y = -1; y <= 1; y++) {
         for (int x = -1; x <= 1; x++) {
           vec2 offset = vec2(float(x), float(y));
@@ -113,23 +113,20 @@
             vec2 starPos = offset + jitter * 0.70;
             float dist = length(gv - starPos);
 
-            // Delicate pinpoint star core
             float starRadius = 0.015 + hash(cellId + 4.19) * 0.020;
             float core = smoothstep(starRadius, 0.0, dist);
             float glow = 0.0012 / (dist * dist + 0.0018);
 
-            // Gentle twinkle over a few seconds (period ~2-5s)
             float freq = (1.0 + hash(cellId + 5.72) * 1.5) * speedFactor;
             float phase = hash(cellId + 8.29) * 6.28318;
             float twinkle = 0.55 + 0.45 * sin(time * freq + phase);
 
-            // Subtle color tint: warm amber, pale blue, soft white
             float hueRnd = hash(cellId + 2.91);
             vec3 tint = vec3(1.0, 0.96, 0.92);
             if (hueRnd < 0.35) {
-              tint = vec3(1.0, 0.82, 0.55); // warm amber
+              tint = vec3(1.0, 0.82, 0.55);
             } else if (hueRnd < 0.65) {
-              tint = vec3(0.72, 0.88, 1.0); // pale cyan-blue
+              tint = vec3(0.72, 0.88, 1.0);
             }
 
             float intensity = (core * 1.0 + glow * 0.15) * twinkle * brightnessScale;
@@ -140,41 +137,92 @@
       return totalStars;
     }
 
+    // 2.5D Isometric Kelvin Wake & Dispersive Ripple Distortion Field
+    vec2 get25DWaveDistortion(vec2 rawUv, float time) {
+      vec2 grad = vec2(0.0);
+
+      // 1. Dynamic Kelvin V-Wake from active boat movement
+      if (u_boat_state.w > 0.05) {
+        vec2 bPos = u_boat_state.xy;
+        float bAngle = u_boat_state.z;
+        float bSpeed = u_boat_state.w;
+
+        vec2 delta = rawUv - bPos;
+        // 2.5D Isometric vertical foreshortening
+        delta.y *= 1.8;
+
+        // Rotate into heading frame (parallel vs cross-track)
+        float cosA = cos(-bAngle);
+        float sinA = sin(-bAngle);
+        vec2 local = vec2(
+          delta.x * cosA - delta.y * sinA,
+          delta.x * sinA + delta.y * cosA
+        );
+
+        // Wake forms behind the moving boat (local.x < 0)
+        if (local.x < 0.04 && local.x > -0.55) {
+          float distAlong = -local.x;
+          float distCross = abs(local.y);
+
+          // Kelvin wake envelope (tan ~ 0.36)
+          float wakeArm = distAlong * 0.36 + 0.012;
+          float armDist = abs(distCross - wakeArm);
+
+          // Divergent bow waves (Kelvin V-crest)
+          float bowWave = sin(distAlong * 65.0 - distCross * 120.0) * exp(-armDist * 45.0) * exp(-distAlong * 3.8);
+
+          // Transverse stern oscillations
+          float transWave = sin(distAlong * 80.0) * exp(-distCross * 36.0) * exp(-distAlong * 4.2);
+
+          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.8, 0.0, 1.0);
+
+          vec2 normDir = normalize(vec2(-local.x, local.y * 1.8) + 0.0001);
+          grad += normDir * wakeIntensity * 0.038;
+        }
+      }
+
+      // 2. Dispersive Isometric Expanding Wave Packets
+      for (int i = 0; i < 8; i++) {
+        if (u_wake[i].w > 0.0001) {
+          vec2 nodePos = u_wake[i].xy;
+          float birth = u_wake[i].w;
+          float age = time - birth;
+
+          if (age > 0.0 && age < 2.8) {
+            vec2 d = rawUv - nodePos;
+            // 2.5D perspective ellipse
+            d.y *= 1.75;
+
+            float r = length(d);
+            float waveFront = age * 0.25;
+            float deltaR = r - waveFront;
+
+            // Dispersive water wave packet envelope
+            float envelope = exp(-abs(deltaR) * 20.0) * exp(-age * 1.3);
+            float phase = deltaR * 50.0 - age * 8.0;
+            float wave = sin(phase) * envelope;
+
+            vec2 dir = normalize(vec2(d.x, d.y / 1.75) + 0.0001);
+            grad += dir * wave * 0.026;
+          }
+        }
+      }
+
+      return grad;
+    }
+
     void main() {
       // Retro pixelation (3.0 physical pixels per cell)
       float pixelSize = 3.0;
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      // --- Ripple Wake Displacement & Shimmering Crest ---
-      vec2 rippleDisp = vec2(0.0);
-      float rippleCrest = 0.0;
-
-      for (int i = 0; i < 6; i++) {
-        if (u_ripples[i].w > 0.001) {
-          vec2 rPos = u_ripples[i].xy;
-          float birth = u_ripples[i].z;
-          float str = u_ripples[i].w;
-          float age = u_time - birth;
-
-          if (age > 0.0 && age < 3.2) {
-            float waveRadius = age * 0.32;
-            float dist = length(rawUv - rPos);
-            float delta = dist - waveRadius;
-
-            float envelope = exp(-abs(delta) * 16.0) * exp(-age * 1.1) * str;
-            float wave = sin(delta * 45.0) * envelope;
-
-            vec2 dir = normalize(rawUv - rPos + 0.0001);
-            rippleDisp += dir * wave * 0.07;
-            rippleCrest += smoothstep(0.035, 0.0, abs(delta)) * envelope * 0.55;
-          }
-        }
-      }
+      // --- Pure Refractive 2.5D Wave Distortion (No artificial lighting) ---
+      vec2 waveDistort = get25DWaveDistortion(rawUv, u_time);
 
       // Computer clock seed spatial offset
       vec2 seedOffset = vec2(sin(u_seed * 7.13), cos(u_seed * 11.47)) * 8.0;
-      vec2 uv = (rawUv + rippleDisp) * 2.8 + seedOffset;
+      vec2 uv = (rawUv + waveDistort) * 2.8 + seedOffset;
 
       float t = u_time * 0.05;
 
@@ -228,19 +276,13 @@
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
 
-      // Luminous wake ripple crest tint (cyan-amber cosmic foam)
-      col += vec3(0.25, 0.65, 0.85) * rippleCrest;
-
       // ---------------------------------------------------------
       // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
       // ---------------------------------------------------------
-      vec2 starUv = (rawUv + rippleDisp * 0.4) + seedOffset * 0.3;
+      vec2 starUv = (rawUv + waveDistort * 0.8) + seedOffset * 0.3;
       vec3 stars = vec3(0.0);
-      // Pass 1: Faint background micro-pinpoints
       stars += starLayer(starUv, 70.0, 0.20, 0.35, u_time, 0.8);
-      // Pass 2: Medium field stars
       stars += starLayer(starUv, 36.0, 0.35, 0.65, u_time, 1.0);
-      // Pass 3: Prominent twinkling focal stars
       stars += starLayer(starUv, 18.0, 0.72, 0.95, u_time, 1.2);
 
       // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
@@ -306,15 +348,13 @@
   const uResolution = gl.getUniformLocation(program, 'u_resolution');
   const uTime = gl.getUniformLocation(program, 'u_time');
   const uSeed = gl.getUniformLocation(program, 'u_seed');
-  const uRipples = gl.getUniformLocation(program, 'u_ripples[0]');
+  const uBoatState = gl.getUniformLocation(program, 'u_boat_state');
+  const uWake = gl.getUniformLocation(program, 'u_wake[0]');
 
-  // -------------------------------------------------------------
-  // Session Anchor Time & Seed (Persists seamlessly across tabs/pages)
-  // -------------------------------------------------------------
+  // Session Anchor Time & Seed
   let sessionStartTime = parseFloat(sessionStorage.getItem('nebula_session_start'));
   let sessionSeed = parseFloat(sessionStorage.getItem('nebula_session_seed'));
 
-  // If first visit in this tab, anchor with computer clock time
   if (isNaN(sessionStartTime) || isNaN(sessionSeed)) {
     sessionStartTime = Date.now();
     sessionSeed = (sessionStartTime % 1000000) * 0.00137;
@@ -325,29 +365,44 @@
   gl.uniform1f(uSeed, sessionSeed);
 
   // -------------------------------------------------------------
-  // Dynamic Ripple System
+  // 2.5D Boat Wake & Hydrodynamics State
   // -------------------------------------------------------------
-  const MAX_RIPPLES = 6;
-  const ripples = [];
-  for (let i = 0; i < MAX_RIPPLES; i++) {
-    ripples.push({ x: 0, y: 0, birth: -999, strength: 0 });
+  const boatState = { x: 0, y: 0, angle: 0, speed: 0 };
+  const MAX_WAKE = 8;
+  const wakeNodes = [];
+  for (let i = 0; i < MAX_WAKE; i++) {
+    wakeNodes.push({ x: 0, y: 0, angle: 0, birth: -999 });
   }
-  let nextRippleIdx = 0;
-  const flatRipples = new Float32Array(MAX_RIPPLES * 4);
+  let nextWakeIdx = 0;
+  const flatWake = new Float32Array(MAX_WAKE * 4);
 
-  // Public ripple emitter (transforms screen px to normalized UV)
-  window.addNebulaRipple = function (screenX, screenY, strength = 1.0) {
+  // Convert screen pixels to normalized WebGL UV
+  function toNormUv(screenX, screenY) {
     const minDim = Math.min(window.innerWidth, window.innerHeight);
-    const uvX = (screenX - 0.5 * window.innerWidth) / minDim;
-    // WebGL fragCoord Y is flipped relative to screen Y
-    const uvY = ((window.innerHeight - screenY) - 0.5 * window.innerHeight) / minDim;
+    return {
+      x: (screenX - 0.5 * window.innerWidth) / minDim,
+      y: ((window.innerHeight - screenY) - 0.5 * window.innerHeight) / minDim
+    };
+  }
 
-    const r = ripples[nextRippleIdx];
-    r.x = uvX;
-    r.y = uvY;
-    r.birth = (Date.now() - sessionStartTime) * 0.001;
-    r.strength = strength;
-    nextRippleIdx = (nextRippleIdx + 1) % MAX_RIPPLES;
+  // Public boat hydrodynamics hook
+  window.updateBoatHydrodynamics = function (screenX, screenY, headingAngle, speed) {
+    const uv = toNormUv(screenX, screenY);
+    boatState.x = uv.x;
+    boatState.y = uv.y;
+    // Invert heading angle to match WebGL inverted Y
+    boatState.angle = -headingAngle;
+    boatState.speed = speed;
+  };
+
+  window.addBoatWakeNode = function (screenX, screenY, headingAngle) {
+    const uv = toNormUv(screenX, screenY);
+    const node = wakeNodes[nextWakeIdx];
+    node.x = uv.x;
+    node.y = uv.y;
+    node.angle = -headingAngle;
+    node.birth = (Date.now() - sessionStartTime) * 0.001;
+    nextWakeIdx = (nextWakeIdx + 1) % MAX_WAKE;
   };
 
   function resize() {
@@ -371,19 +426,23 @@
   function render() {
     if (!isRunning) return;
 
-    // Continuous wall-clock time relative to the session start anchor
     const elapsed = (Date.now() - sessionStartTime) * 0.001;
     gl.uniform1f(uTime, elapsed);
 
-    // Update ripples array
-    if (uRipples) {
-      for (let i = 0; i < MAX_RIPPLES; i++) {
-        flatRipples[i * 4 + 0] = ripples[i].x;
-        flatRipples[i * 4 + 1] = ripples[i].y;
-        flatRipples[i * 4 + 2] = ripples[i].birth;
-        flatRipples[i * 4 + 3] = ripples[i].strength;
+    // Update boat active state uniform
+    if (uBoatState) {
+      gl.uniform4f(uBoatState, boatState.x, boatState.y, boatState.angle, boatState.speed);
+    }
+
+    // Update wake trail uniform
+    if (uWake) {
+      for (let i = 0; i < MAX_WAKE; i++) {
+        flatWake[i * 4 + 0] = wakeNodes[i].x;
+        flatWake[i * 4 + 1] = wakeNodes[i].y;
+        flatWake[i * 4 + 2] = wakeNodes[i].angle;
+        flatWake[i * 4 + 3] = wakeNodes[i].birth;
       }
-      gl.uniform4fv(uRipples, flatRipples);
+      gl.uniform4fv(uWake, flatWake);
     }
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);

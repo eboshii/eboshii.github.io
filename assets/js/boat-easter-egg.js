@@ -462,15 +462,20 @@
       const lx = boat.x / PIXEL_SCALE;
       const ly = boat.y / PIXEL_SCALE;
 
-      // Spawn wake foam & emit background WebGL ripples
-      if (boat.speed > 0.3 && riseProgress > 0.4) {
+      // Update background WebGL 2.5D Kelvin wake hydrodynamics
+      if (window.updateBoatHydrodynamics) {
+        const activeSpeed = riseProgress > 0.4 ? boat.speed : 0;
+        window.updateBoatHydrodynamics(boat.x, boat.y, boat.currentAngle, activeSpeed);
+      }
+
+      // Spawn trailing wake nodes for dispersive expanding ripples
+      if (boat.speed > 0.35 && riseProgress > 0.4) {
         addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
 
-        if (now - boat.lastRippleTime > 110) {
+        if (now - boat.lastRippleTime > 140) {
           boat.lastRippleTime = now;
-          if (window.addNebulaRipple) {
-            const rippleStrength = Math.min(1.0, boat.speed / 2.8);
-            window.addNebulaRipple(boat.x, boat.y, rippleStrength);
+          if (window.addBoatWakeNode) {
+            window.addBoatWakeNode(boat.x, boat.y, boat.currentAngle);
           }
         }
       }
