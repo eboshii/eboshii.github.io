@@ -28,8 +28,9 @@
     uniform vec2 u_resolution;
     uniform float u_time;
     uniform float u_seed;
-    uniform vec4 u_boat_state; // x, y, headingAngle, speed
-    uniform vec4 u_wake[8];     // x, y, headingAngle, birthTime
+    uniform vec4 u_boat_state;        // x, y, headingAngle, speed
+    uniform float u_boat_stroke_dist; // distance traveled on current stroke
+    uniform vec4 u_wake[8];            // x, y, headingAngle, birthTime
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -142,7 +143,7 @@
       vec2 grad = vec2(0.0);
 
       // 1. Dynamic Kelvin V-Wake from active boat movement
-      if (u_boat_state.w > 0.05) {
+      if (u_boat_state.w > 0.05 && u_boat_stroke_dist > 0.005) {
         vec2 bPos = u_boat_state.xy;
         float bAngle = u_boat_state.z;
         float bSpeed = u_boat_state.w;
@@ -159,10 +160,14 @@
           delta.x * sinA + delta.y * cosA
         );
 
-        // Wake forms behind the moving boat (local.x < 0)
-        if (local.x < 0.04 && local.x > -0.85) {
+        // Wake strictly bounded by distance traveled on current stroke
+        float maxReach = min(0.85, u_boat_stroke_dist);
+        if (local.x < 0.04 && local.x > -maxReach) {
           float distAlong = -local.x;
           float distCross = abs(local.y);
+
+          // Smooth cutoff at origin where stroke began
+          float strokeFade = smoothstep(0.0, 0.045, maxReach - distAlong);
 
           // Kelvin wake envelope (tan ~ 0.36)
           float wakeArm = distAlong * 0.36 + 0.012;
@@ -174,14 +179,14 @@
           // Transverse stern oscillations
           float transWave = sin(distAlong * 70.0) * exp(-distCross * 30.0) * exp(-distAlong * 2.5);
 
-          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.6, 0.0, 1.0);
+          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.6, 0.0, 1.0) * strokeFade;
 
           vec2 normDir = normalize(vec2(-local.x, local.y * 1.8) + 0.0001);
           grad += normDir * wakeIntensity * 0.058;
         }
       }
 
-      // 2. Dispersive Isometric Expanding Wave Packets (Slower lingering fade)
+      // 2. Dispersive Isometric Expanding Wave Packets
       for (int i = 0; i < 8; i++) {
         if (u_wake[i].w > 0.0001) {
           vec2 nodePos = u_wake[i].xy;
@@ -349,6 +354,7 @@
   const uTime = gl.getUniformLocation(program, 'u_time');
   const uSeed = gl.getUniformLocation(program, 'u_seed');
   const uBoatState = gl.getUniformLocation(program, 'u_boat_state');
+  const uBoatStrokeDist = gl.getUniformLocation(program, 'u_boat_stroke_dist');
   const uWake = gl.getUniformLocation(program, 'u_wake[0]');
 
   // Session Anchor Time & Seed
@@ -367,7 +373,7 @@
   // -------------------------------------------------------------
   // 2.5D Boat Wake & Hydrodynamics State
   // -------------------------------------------------------------
-  const boatState = { x: 0, y: 0, angle: 0, speed: 0 };
+  const boatState = { x: 0, y: 0, angle: 0, speed: 0, strokeDist: 0 };
   const MAX_WAKE = 8;
   const wakeNodes = [];
   for (let i = 0; i < MAX_WAKE; i++) {
@@ -376,7 +382,6 @@
   let nextWakeIdx = 0;
   const flatWake = new Float32Array(MAX_WAKE * 4);
 
-  // Convert screen pixels to normalized WebGL UV
   function toNormUv(screenX, screenY) {
     const minDim = Math.min(window.innerWidth, window.innerHeight);
     return {
@@ -385,14 +390,13 @@
     };
   }
 
-  // Public boat hydrodynamics hook
-  window.updateBoatHydrodynamics = function (screenX, screenY, headingAngle, speed) {
+  window.updateBoatHydrodynamics = function (screenX, screenY, headingAngle, speed, strokeDistUv = 0) {
     const uv = toNormUv(screenX, screenY);
     boatState.x = uv.x;
     boatState.y = uv.y;
-    // Invert heading angle to match WebGL inverted Y
     boatState.angle = -headingAngle;
     boatState.speed = speed;
+    boatState.strokeDist = strokeDistUv;
   };
 
   window.addBoatWakeNode = function (screenX, screenY, headingAngle) {
@@ -429,12 +433,13 @@
     const elapsed = (Date.now() - sessionStartTime) * 0.001;
     gl.uniform1f(uTime, elapsed);
 
-    // Update boat active state uniform
     if (uBoatState) {
       gl.uniform4f(uBoatState, boatState.x, boatState.y, boatState.angle, boatState.speed);
     }
+    if (uBoatStrokeDist) {
+      gl.uniform1f(uBoatStrokeDist, boatState.strokeDist);
+    }
 
-    // Update wake trail uniform
     if (uWake) {
       for (let i = 0; i < MAX_WAKE; i++) {
         flatWake[i * 4 + 0] = wakeNodes[i].x;

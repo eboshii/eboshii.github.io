@@ -422,6 +422,7 @@
         if (!boat.wasMoving) {
           boat.stretch = 1.18; // Forward elongation burst
           boat.stretchVel = 0.8;
+          boat.strokeDist = 0.0; // Reset distance for new stroke
           addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 5);
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, Math.atan2(moveY, moveX));
@@ -444,6 +445,9 @@
         boat.vx = Math.cos(boat.currentAngle) * boat.speed;
         boat.vy = Math.sin(boat.currentAngle) * boat.speed;
 
+        // Accumulate distance traveled on current stroke leg
+        boat.strokeDist = (boat.strokeDist || 0) + Math.hypot(boat.vx, boat.vy);
+
         // Cruise stretch factor
         targetStretch = 1.03 + (boat.speed / maxSpeed) * 0.05;
       } else {
@@ -458,6 +462,7 @@
         boat.speed = 0;
         boat.vx = 0;
         boat.vy = 0;
+        boat.strokeDist = 0.0;
         targetStretch = 1.0;
         targetHeel = 0.0;
       }
@@ -491,10 +496,12 @@
       const lx = boat.x / PIXEL_SCALE;
       const ly = boat.y / PIXEL_SCALE;
 
-      // Hydrodynamics update
+      // Hydrodynamics update with stroke-bounded distance
       if (window.updateBoatHydrodynamics) {
+        const minDim = Math.min(window.innerWidth, window.innerHeight);
+        const strokeDistUv = (boat.strokeDist || 0) / minDim;
         const activeSpeed = riseProgress > 0.4 ? boat.speed : 0;
-        window.updateBoatHydrodynamics(boat.x, boat.y, boat.currentAngle, activeSpeed);
+        window.updateBoatHydrodynamics(boat.x, boat.y, boat.currentAngle, activeSpeed, strokeDistUv);
       }
 
       if (boat.speed > 0.5 && riseProgress > 0.4) {
