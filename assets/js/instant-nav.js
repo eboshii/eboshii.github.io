@@ -203,8 +203,12 @@
 
       // Toggle permanent Ko-fi host visibility without moving/reloading iframe
       const kofiHost = document.getElementById('global-kofi-host');
+      const kofiIframe = document.getElementById('global-kofi-iframe');
       if (kofiHost) {
         const isTip = url.pathname.includes('/tip');
+        if (isTip && kofiIframe && !kofiIframe.getAttribute('src') && kofiIframe.dataset.src) {
+          kofiIframe.src = kofiIframe.dataset.src;
+        }
         kofiHost.classList.toggle('active', isTip);
       }
 
@@ -254,15 +258,32 @@
     }
   }
 
+  function checkKofiPreload(link) {
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+    if (href.includes('/tip')) {
+      const kofiIframe = document.getElementById('global-kofi-iframe');
+      if (kofiIframe && !kofiIframe.getAttribute('src') && kofiIframe.dataset.src) {
+        kofiIframe.src = kofiIframe.dataset.src;
+      }
+    }
+  }
+
   // Hover & touch prefetching: triggers instant fetch right before click
   document.addEventListener('mouseover', e => {
     const link = e.target.closest('a');
-    if (link) prefetchLink(link);
+    if (link) {
+      checkKofiPreload(link);
+      prefetchLink(link);
+    }
   }, { passive: true });
 
   document.addEventListener('touchstart', e => {
     const link = e.target.closest('a');
-    if (link) prefetchLink(link);
+    if (link) {
+      checkKofiPreload(link);
+      prefetchLink(link);
+    }
   }, { passive: true });
 
   // Intercept internal link clicks

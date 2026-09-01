@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://ko-fi.com">
+  <link rel="dns-prefetch" href="https://ko-fi.com">
+  <link rel="preload" href="https://ko-fi.com/Scripts/sections/profile.js?v=534ca" as="script" crossorigin>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <script>
     window.MathJax = {
@@ -95,7 +98,7 @@
 
   <!-- Permanent Global Ko-fi Container (Zero-reparenting to prevent iframe reload) -->
   <div id="global-kofi-host" class="global-kofi-host{% if page.url contains '/tip' %} active{% endif %}" aria-label="Ko-fi donation widget">
-    <iframe id="global-kofi-iframe" src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true" class="kofi-page-iframe" title="Support eboshii on Ko-fi"></iframe>
+    <iframe id="global-kofi-iframe" {% if page.url contains '/tip' %}src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true"{% else %}data-src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true"{% endif %} class="kofi-page-iframe" title="Support eboshii on Ko-fi"></iframe>
   </div>
 
   <script src="{{ '/assets/js/tracker.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
