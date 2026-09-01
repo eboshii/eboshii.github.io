@@ -440,7 +440,7 @@
           boat.strokeDist = 0.0; // Reset distance for new stroke
           addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 5);
           if (window.addBoatWakeNode) {
-            window.addBoatWakeNode(boat.x, boat.y, Math.atan2(moveY, moveX));
+            window.addBoatWakeNode(boat.x, boat.y, 0.7);
           }
         }
 
@@ -521,21 +521,13 @@
       const lx = boat.x / PIXEL_SCALE;
       const ly = boat.y / PIXEL_SCALE;
 
-      // Hydrodynamics update with stroke-bounded distance
-      if (window.updateBoatHydrodynamics) {
-        const minDim = Math.min(window.innerWidth, window.innerHeight);
-        const strokeDistUv = (boat.strokeDist || 0) / minDim;
-        const activeSpeed = riseProgress > 0.4 ? boat.speed : 0;
-        window.updateBoatHydrodynamics(boat.x, boat.y, boat.currentAngle, activeSpeed, strokeDistUv);
-      }
-
-      if (boat.speed > 0.5 && riseProgress > 0.4) {
+      if (boat.speed > 0.35 && riseProgress > 0.4) {
         addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
 
-        if (now - boat.lastRippleTime > 130) {
+        if (now - boat.lastRippleTime > 75) {
           boat.lastRippleTime = now;
           if (window.addBoatWakeNode) {
-            window.addBoatWakeNode(boat.x, boat.y, boat.currentAngle);
+            window.addBoatWakeNode(boat.x, boat.y, boat.speed / maxSpeed);
           }
         }
       }

@@ -28,9 +28,7 @@
     uniform vec2 u_resolution;
     uniform float u_time;
     uniform float u_seed;
-    uniform vec4 u_boat_state;        // x, y, headingAngle, speed
-    uniform float u_boat_stroke_dist; // distance traveled on current stroke
-    uniform vec4 u_wake[8];            // x, y, headingAngle, birthTime
+    uniform vec4 u_wake_nodes[20]; // x, y, birthTime, strength
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -138,77 +136,34 @@
       return totalStars;
     }
 
-    // 2.5D Isometric Kelvin Wake & Dispersive Ripple Distortion Field
+    // 2.5D Pure Physical Dispersive Wavefront Accumulation
+    // The V-wake envelope naturally emerges from the superposition of historical expanding nodes!
     vec2 get25DWaveDistortion(vec2 rawUv, float time) {
       vec2 grad = vec2(0.0);
 
-      // 1. Dynamic Kelvin V-Wake from active boat movement
-      if (u_boat_state.w > 0.05 && u_boat_stroke_dist > 0.005) {
-        vec2 bPos = u_boat_state.xy;
-        float bAngle = u_boat_state.z;
-        float bSpeed = u_boat_state.w;
-
-        vec2 delta = rawUv - bPos;
-        // 2.5D Isometric vertical foreshortening
-        delta.y *= 1.8;
-
-        // Rotate into heading frame (parallel vs cross-track)
-        float cosA = cos(-bAngle);
-        float sinA = sin(-bAngle);
-        vec2 local = vec2(
-          delta.x * cosA - delta.y * sinA,
-          delta.x * sinA + delta.y * cosA
-        );
-
-        // Wake strictly bounded by distance traveled on current stroke
-        float maxReach = min(0.85, u_boat_stroke_dist);
-        if (local.x < 0.04 && local.x > -maxReach) {
-          float distAlong = -local.x;
-          float distCross = abs(local.y);
-
-          // Smooth cutoff at origin where stroke began
-          float strokeFade = smoothstep(0.0, 0.045, maxReach - distAlong);
-
-          // Kelvin wake envelope (tan ~ 0.36)
-          float wakeArm = distAlong * 0.36 + 0.012;
-          float armDist = abs(distCross - wakeArm);
-
-          // Divergent bow waves (Kelvin V-crest)
-          float bowWave = sin(distAlong * 55.0 - distCross * 105.0) * exp(-armDist * 38.0) * exp(-distAlong * 2.2);
-
-          // Transverse stern oscillations
-          float transWave = sin(distAlong * 70.0) * exp(-distCross * 30.0) * exp(-distAlong * 2.5);
-
-          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.6, 0.0, 1.0) * strokeFade;
-
-          vec2 normDir = normalize(vec2(-local.x, local.y * 1.8) + 0.0001);
-          grad += normDir * wakeIntensity * 0.058;
-        }
-      }
-
-      // 2. Dispersive Isometric Expanding Wave Packets
-      for (int i = 0; i < 8; i++) {
-        if (u_wake[i].w > 0.0001) {
-          vec2 nodePos = u_wake[i].xy;
-          float birth = u_wake[i].w;
+      for (int i = 0; i < 20; i++) {
+        if (u_wake_nodes[i].z > 0.0001) {
+          vec2 nodePos = u_wake_nodes[i].xy;
+          float birth = u_wake_nodes[i].z;
+          float strength = u_wake_nodes[i].w;
           float age = time - birth;
 
-          if (age > 0.0 && age < 5.2) {
+          if (age > 0.0 && age < 4.8) {
             vec2 d = rawUv - nodePos;
-            // 2.5D perspective ellipse
+            // 2.5D Isometric perspective flattening
             d.y *= 1.75;
 
             float r = length(d);
-            float waveFront = age * 0.13;
+            float waveFront = age * 0.14;
             float deltaR = r - waveFront;
 
-            // Dispersive water wave packet envelope with gentle lingering decay
-            float envelope = exp(-abs(deltaR) * 18.0) * exp(-age * 0.55);
-            float phase = deltaR * 46.0 - age * 3.8;
+            // Dispersive water wave packet envelope
+            float envelope = exp(-abs(deltaR) * 22.0) * exp(-age * 0.55) * strength;
+            float phase = deltaR * 48.0 - age * 4.0;
             float wave = sin(phase) * envelope;
 
             vec2 dir = normalize(vec2(d.x, d.y / 1.75) + 0.0001);
-            grad += dir * wave * 0.042;
+            grad += dir * wave * 0.038;
           }
         }
       }
@@ -353,9 +308,7 @@
   const uResolution = gl.getUniformLocation(program, 'u_resolution');
   const uTime = gl.getUniformLocation(program, 'u_time');
   const uSeed = gl.getUniformLocation(program, 'u_seed');
-  const uBoatState = gl.getUniformLocation(program, 'u_boat_state');
-  const uBoatStrokeDist = gl.getUniformLocation(program, 'u_boat_stroke_dist');
-  const uWake = gl.getUniformLocation(program, 'u_wake[0]');
+  const uWakeNodes = gl.getUniformLocation(program, 'u_wake_nodes[0]');
 
   // Session Anchor Time & Seed
   let sessionStartTime = parseFloat(sessionStorage.getItem('nebula_session_start'));
@@ -371,16 +324,15 @@
   gl.uniform1f(uSeed, sessionSeed);
 
   // -------------------------------------------------------------
-  // 2.5D Boat Wake & Hydrodynamics State
+  // Dynamic Emergent Wake Trail Nodes (20-node ring buffer)
   // -------------------------------------------------------------
-  const boatState = { x: 0, y: 0, angle: 0, speed: 0, strokeDist: 0 };
-  const MAX_WAKE = 8;
+  const MAX_WAKE_NODES = 20;
   const wakeNodes = [];
-  for (let i = 0; i < MAX_WAKE; i++) {
-    wakeNodes.push({ x: 0, y: 0, angle: 0, birth: -999 });
+  for (let i = 0; i < MAX_WAKE_NODES; i++) {
+    wakeNodes.push({ x: 0, y: 0, birth: -999, strength: 0 });
   }
   let nextWakeIdx = 0;
-  const flatWake = new Float32Array(MAX_WAKE * 4);
+  const flatWake = new Float32Array(MAX_WAKE_NODES * 4);
 
   function toNormUv(screenX, screenY) {
     const minDim = Math.min(window.innerWidth, window.innerHeight);
@@ -390,23 +342,15 @@
     };
   }
 
-  window.updateBoatHydrodynamics = function (screenX, screenY, headingAngle, speed, strokeDistUv = 0) {
-    const uv = toNormUv(screenX, screenY);
-    boatState.x = uv.x;
-    boatState.y = uv.y;
-    boatState.angle = -headingAngle;
-    boatState.speed = speed;
-    boatState.strokeDist = strokeDistUv;
-  };
-
-  window.addBoatWakeNode = function (screenX, screenY, headingAngle) {
+  // Add an expanding wake node at the boat's current position
+  window.addBoatWakeNode = function (screenX, screenY, strength = 1.0) {
     const uv = toNormUv(screenX, screenY);
     const node = wakeNodes[nextWakeIdx];
     node.x = uv.x;
     node.y = uv.y;
-    node.angle = -headingAngle;
     node.birth = (Date.now() - sessionStartTime) * 0.001;
-    nextWakeIdx = (nextWakeIdx + 1) % MAX_WAKE;
+    node.strength = Math.max(0.2, Math.min(1.0, strength));
+    nextWakeIdx = (nextWakeIdx + 1) % MAX_WAKE_NODES;
   };
 
   function resize() {
@@ -433,21 +377,14 @@
     const elapsed = (Date.now() - sessionStartTime) * 0.001;
     gl.uniform1f(uTime, elapsed);
 
-    if (uBoatState) {
-      gl.uniform4f(uBoatState, boatState.x, boatState.y, boatState.angle, boatState.speed);
-    }
-    if (uBoatStrokeDist) {
-      gl.uniform1f(uBoatStrokeDist, boatState.strokeDist);
-    }
-
-    if (uWake) {
-      for (let i = 0; i < MAX_WAKE; i++) {
+    if (uWakeNodes) {
+      for (let i = 0; i < MAX_WAKE_NODES; i++) {
         flatWake[i * 4 + 0] = wakeNodes[i].x;
         flatWake[i * 4 + 1] = wakeNodes[i].y;
-        flatWake[i * 4 + 2] = wakeNodes[i].angle;
-        flatWake[i * 4 + 3] = wakeNodes[i].birth;
+        flatWake[i * 4 + 2] = wakeNodes[i].birth;
+        flatWake[i * 4 + 3] = wakeNodes[i].strength;
       }
-      gl.uniform4fv(uWake, flatWake);
+      gl.uniform4fv(uWakeNodes, flatWake);
     }
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
