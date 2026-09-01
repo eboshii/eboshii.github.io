@@ -44,6 +44,15 @@
 
   async function navigate(url, pushState = true) {
     try {
+      const currentMain = document.querySelector('main');
+
+      // 1. Cosmic Dither Dissolve Out (85ms)
+      if (currentMain) {
+        currentMain.classList.remove('dither-enter');
+        currentMain.classList.add('dither-exit');
+        await new Promise(r => setTimeout(r, 85));
+      }
+
       const res = await fetch(url.href);
       if (!res.ok) {
         window.location.href = url.href;
@@ -55,8 +64,6 @@
       const doc = parser.parseFromString(html, 'text/html');
 
       const newMain = doc.querySelector('main');
-      const currentMain = document.querySelector('main');
-
       if (!newMain || !currentMain) {
         window.location.href = url.href;
         return;
@@ -98,6 +105,14 @@
           window.EboshiiTracker.recordHit(key);
         }
       }
+
+      // 2. Cosmic Dither Crystallize In (130ms)
+      currentMain.classList.remove('dither-exit');
+      currentMain.classList.add('dither-enter');
+      setTimeout(() => {
+        currentMain.classList.remove('dither-enter');
+      }, 130);
+
     } catch (e) {
       window.location.href = url.href;
     }
