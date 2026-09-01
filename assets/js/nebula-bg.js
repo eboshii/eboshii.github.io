@@ -27,6 +27,7 @@
 
     uniform vec2 u_resolution;
     uniform float u_time;
+    uniform float u_seed;
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -144,8 +145,9 @@
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      // Zoom out ~3x for intricate structures
-      vec2 uv = rawUv * 2.8;
+      // Computer clock seed spatial offset
+      vec2 seedOffset = vec2(sin(u_seed * 7.13), cos(u_seed * 11.47)) * 8.0;
+      vec2 uv = rawUv * 2.8 + seedOffset;
 
       float t = u_time * 0.05;
 
@@ -185,11 +187,11 @@
       // Base space
       vec3 col = c_space;
 
-      // Far gas layer (rich and dense across all tabs)
+      // Far gas layer
       float maskFar = smoothstep(0.10, 0.58, dFar);
       col = mix(col, c_far_gas, maskFar * 0.95);
 
-      // Near filament layer (rich and dense across all tabs)
+      // Near filament layer
       float filamentHue = noise(uv * 1.4 + t * 0.08);
       vec3 filamentCol  = mix(c_teal, c_magenta, filamentHue);
       float maskNear    = smoothstep(0.20, 0.65, dNear);
@@ -200,15 +202,16 @@
       col = mix(col, c_amber, intersection * 0.92);
 
       // ---------------------------------------------------------
-      // Multi-Pass Poisson-Disk Starfield (Dense Pinpoint Stars across all tabs)
+      // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
       // ---------------------------------------------------------
+      vec2 starUv = rawUv + seedOffset * 0.3;
       vec3 stars = vec3(0.0);
-      // Pass 1: Faint background micro-pinpoints (dense cosmic star dust)
-      stars += starLayer(rawUv, 70.0, 0.20, 0.35, u_time, 0.8);
-      // Pass 2: Medium field stars (numerous delicate twinkling points)
-      stars += starLayer(rawUv, 36.0, 0.35, 0.65, u_time, 1.0);
+      // Pass 1: Faint background micro-pinpoints
+      stars += starLayer(starUv, 70.0, 0.20, 0.35, u_time, 0.8);
+      // Pass 2: Medium field stars
+      stars += starLayer(starUv, 36.0, 0.35, 0.65, u_time, 1.0);
       // Pass 3: Prominent twinkling focal stars
-      stars += starLayer(rawUv, 18.0, 0.72, 0.95, u_time, 1.2);
+      stars += starLayer(starUv, 18.0, 0.72, 0.95, u_time, 1.2);
 
       // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
       float dither = bayer4x4(gridCoord);
@@ -272,6 +275,24 @@
 
   const uResolution = gl.getUniformLocation(program, 'u_resolution');
   const uTime = gl.getUniformLocation(program, 'u_time');
+  const uSeed = gl.getUniformLocation(program, 'u_seed');
+
+  // -------------------------------------------------------------
+  // Session Anchor Time & Seed (Persists seamlessly across tabs/pages)
+  // -------------------------------------------------------------
+  let sessionStartTime = parseFloat(sessionStorage.getItem('nebula_session_start'));
+  let sessionSeed = parseFloat(sessionStorage.getItem('nebula_session_seed'));
+
+  // If first visit in this tab, anchor with computer clock time
+  if (isNaN(sessionStartTime) || isNaN(sessionSeed)) {
+    sessionStartTime = Date.now();
+    // Computer clock seed (derived from timestamp)
+    sessionSeed = (sessionStartTime % 1000000) * 0.00137;
+    sessionStorage.setItem('nebula_session_start', sessionStartTime.toString());
+    sessionStorage.setItem('nebula_session_seed', sessionSeed.toString());
+  }
+
+  gl.uniform1f(uSeed, sessionSeed);
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
@@ -289,14 +310,16 @@
   window.addEventListener('resize', resize);
   resize();
 
-  let startTime = performance.now();
   let isRunning = true;
 
-  function render(now) {
+  function render() {
     if (!isRunning) return;
-    const elapsed = (now - startTime) * 0.001;
+
+    // Continuous wall-clock time relative to the session start anchor
+    const elapsed = (Date.now() - sessionStartTime) * 0.001;
     gl.uniform1f(uTime, elapsed);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+
     requestAnimationFrame(render);
   }
 
@@ -305,7 +328,6 @@
       isRunning = false;
     } else {
       isRunning = true;
-      startTime = performance.now() - (gl.getUniform(program, uTime) || 0) * 1000;
       requestAnimationFrame(render);
     }
   });
