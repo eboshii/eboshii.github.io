@@ -27,6 +27,7 @@
 
     uniform vec2 u_resolution;
     uniform float u_time;
+    uniform float u_is_home;
 
     // Standard 4x4 Bayer Matrix
     float bayer4x4(vec2 p) {
@@ -185,30 +186,39 @@
       // Base space
       vec3 col = c_space;
 
-      // Far gas layer
-      float maskFar = smoothstep(0.20, 0.72, dFar);
-      col = mix(col, c_far_gas, maskFar * 0.85);
+      // Far gas layer (denser on homepage)
+      float farStart = mix(0.20, 0.10, u_is_home);
+      float farEnd   = mix(0.72, 0.58, u_is_home);
+      float maskFar  = smoothstep(farStart, farEnd, dFar);
+      col = mix(col, c_far_gas, maskFar * mix(0.85, 0.95, u_is_home));
 
-      // Near filament layer
+      // Near filament layer (denser & richer on homepage)
+      float nearStart   = mix(0.32, 0.20, u_is_home);
+      float nearEnd     = mix(0.78, 0.65, u_is_home);
       float filamentHue = noise(uv * 1.4 + t * 0.08);
-      vec3 filamentCol = mix(c_teal, c_magenta, filamentHue);
-      float maskNear = smoothstep(0.32, 0.78, dNear);
-      col = mix(col, filamentCol, maskNear * 0.90);
+      vec3 filamentCol  = mix(c_teal, c_magenta, filamentHue);
+      float maskNear    = smoothstep(nearStart, nearEnd, dNear);
+      col = mix(col, filamentCol, maskNear * mix(0.90, 0.98, u_is_home));
 
       // Dense intersection highlights
-      float intersection = smoothstep(0.55, 0.88, dNear) * smoothstep(0.38, 0.78, dFar);
-      col = mix(col, c_amber, intersection * 0.90);
+      float interStart1   = mix(0.55, 0.42, u_is_home);
+      float interStart2   = mix(0.38, 0.26, u_is_home);
+      float intersection = smoothstep(interStart1, 0.85, dNear) * smoothstep(interStart2, 0.75, dFar);
+      col = mix(col, c_amber, intersection * 0.92);
 
       // ---------------------------------------------------------
-      // Multi-Pass Poisson-Disk Starfield (Sparse Pinpoints)
+      // Multi-Pass Poisson-Disk Starfield (2x density on homepage)
       // ---------------------------------------------------------
       vec3 stars = vec3(0.0);
-      // Pass 1: Faint background micro-pinpoints (sparse)
-      stars += starLayer(rawUv, 38.0, 0.84, 0.35, u_time, 0.8);
-      // Pass 2: Medium field stars (very sparse)
-      stars += starLayer(rawUv, 18.0, 0.92, 0.65, u_time, 1.0);
-      // Pass 3: Rare bright focal stars
-      stars += starLayer(rawUv, 8.0, 0.982, 0.95, u_time, 1.2);
+      // Pass 1: Faint background micro-pinpoints (double on homepage)
+      float t1 = mix(0.84, 0.68, u_is_home);
+      stars += starLayer(rawUv, 38.0, t1, 0.35, u_time, 0.8);
+      // Pass 2: Medium field stars (double on homepage)
+      float t2 = mix(0.92, 0.84, u_is_home);
+      stars += starLayer(rawUv, 18.0, t2, 0.65, u_time, 1.0);
+      // Pass 3: Rare bright focal stars (double on homepage)
+      float t3 = mix(0.982, 0.964, u_is_home);
+      stars += starLayer(rawUv, 8.0, t3, 0.95, u_time, 1.2);
 
       // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
       float dither = bayer4x4(gridCoord);
@@ -272,6 +282,16 @@
 
   const uResolution = gl.getUniformLocation(program, 'u_resolution');
   const uTime = gl.getUniformLocation(program, 'u_time');
+  const uIsHome = gl.getUniformLocation(program, 'u_is_home');
+
+  const isHome = canvas.dataset.isHome === 'true' ||
+                 window.location.pathname === '/' ||
+                 window.location.pathname === '' ||
+                 window.location.pathname.endsWith('/index.html') ||
+                 window.location.pathname === '/eboshii.github.io/' ||
+                 window.location.pathname === '/eboshii.github.io/index.html';
+
+  gl.uniform1f(uIsHome, isHome ? 1.0 : 0.0);
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
