@@ -10,45 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="{{ '/assets/images/nebula-poster.webp' | relative_url }}" as="image" type="image/webp">
   <link rel="preload" href="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}" as="script">
+  <link rel="preload" href="{{ '/assets/js/boat-easter-egg.js' | relative_url }}?v={{ site.time | date: '%s' }}" as="script">
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://ko-fi.com">
-  <link rel="dns-prefetch" href="https://ko-fi.com">
-  <link rel="preload" href="https://ko-fi.com/Scripts/sections/profile.js?v=534ca" as="script" crossorigin>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true
-      },
-      options: {
-        renderActions: {
-          findScript: [10, function (doc) {
-            for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-              const display = !!node.type.match(/mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.input[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            }
-          }, '']
-        }
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.mermaid) {
-        mermaid.initialize({ startOnLoad: true, theme: 'default' });
-      }
-    });
-  </script>
   {% if page.scripts %}
     {% for script in page.scripts %}
   <script src="{{ script }}"></script>
@@ -60,6 +24,9 @@
 <body>
   <canvas id="nebula-bg"></canvas>
   <script src="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+  <script src="{{ '/assets/js/boat-easter-egg.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+  <script src="{{ '/assets/js/instant-nav.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+  <script src="{{ '/assets/js/tracker.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 
   <header>
     <nav class="{% if page.full_width %}nav-wide{% endif %}">
@@ -103,9 +70,5 @@
   <div id="global-kofi-host" class="global-kofi-host{% if page.url contains '/tip' %} active{% endif %}" aria-label="Ko-fi donation widget">
     <iframe id="global-kofi-iframe" {% if page.url contains '/tip' %}src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true"{% else %}data-src="https://ko-fi.com/eboshii/?hidefeed=true&widget=true&embed=true"{% endif %} class="kofi-page-iframe" title="Support eboshii on Ko-fi"></iframe>
   </div>
-
-  <script src="{{ '/assets/js/tracker.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
-  <script src="{{ '/assets/js/instant-nav.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
-  <script src="{{ '/assets/js/boat-easter-egg.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>

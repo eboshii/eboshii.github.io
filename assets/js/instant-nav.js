@@ -164,6 +164,97 @@
     });
   }
 
+  // On-demand lazy loader for MathJax
+  function checkAndRenderMath(container) {
+    const root = container || document.querySelector('main');
+    if (!root) return;
+    const text = root.textContent || '';
+    const hasMath = text.includes('$') || text.includes('\\(') || root.querySelector('script[type^="math/tex"]');
+    if (!hasMath) return;
+
+    if (window.MathJax) {
+      if (typeof window.MathJax.typesetPromise === 'function') {
+        window.MathJax.typesetPromise([root]).catch(function (err) {
+          console.error('MathJax typeset error:', err);
+        });
+      } else if (window.MathJax.startup && window.MathJax.startup.promise) {
+        window.MathJax.startup.promise.then(function () {
+          window.MathJax.typesetPromise([root]);
+        });
+      }
+    } else if (!document.getElementById('mathjax-dynamic-script')) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          renderActions: {
+            findScript: [10, function (doc) {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.input[0], display);
+                const textNode = document.createTextNode('');
+                node.parentNode.replaceChild(textNode, node);
+                math.start = {node: textNode, delim: '', n: 0};
+                math.end = {node: textNode, delim: '', n: 0};
+                doc.math.push(math);
+              }
+            }, '']
+          }
+        },
+        svg: { fontCache: 'global' }
+      };
+      const script = document.createElement('script');
+      script.id = 'mathjax-dynamic-script';
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }
+
+  // On-demand lazy loader for Mermaid
+  function checkAndRenderMermaid(container) {
+    const root = container || document.querySelector('main');
+    if (!root) return;
+    const mermaidCodes = root.querySelectorAll('.language-mermaid, pre code.language-mermaid, .mermaid');
+    if (mermaidCodes.length === 0) return;
+
+    function renderDiagrams() {
+      root.querySelectorAll('.language-mermaid, pre code.language-mermaid').forEach(function (el) {
+        if (el.dataset.mermaidProcessed) return;
+        el.dataset.mermaidProcessed = 'true';
+        const code = el.textContent;
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code;
+        const pre = el.closest('pre');
+        if (pre) {
+          pre.parentNode.replaceChild(div, pre);
+        } else {
+          el.parentNode.replaceChild(div, el);
+        }
+      });
+      if (window.mermaid) {
+        window.mermaid.run({ nodes: root.querySelectorAll('.mermaid') });
+      }
+    }
+
+    if (window.mermaid) {
+      renderDiagrams();
+    } else if (!document.getElementById('mermaid-dynamic-script')) {
+      const script = document.createElement('script');
+      script.id = 'mermaid-dynamic-script';
+      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+      script.onload = function () {
+        window.mermaid.initialize({ startOnLoad: false, theme: 'default' });
+        renderDiagrams();
+      };
+      document.head.appendChild(script);
+    }
+  }
+
   async function navigate(url, pushState = true) {
     try {
       const currentMain = document.querySelector('main');
@@ -225,18 +316,9 @@
       // Run any page-specific scripts (news search, stats expandable table, etc.)
       runScripts(currentMain);
 
-      // Re-trigger MathJax typesetting for equations on new route
-      if (window.MathJax) {
-        if (typeof window.MathJax.typesetPromise === 'function') {
-          window.MathJax.typesetPromise([currentMain]).catch(function (err) {
-            console.error('MathJax typeset error:', err);
-          });
-        } else if (window.MathJax.startup && window.MathJax.startup.promise) {
-          window.MathJax.startup.promise.then(function () {
-            window.MathJax.typesetPromise([currentMain]);
-          });
-        }
-      }
+      // Dynamic on-demand MathJax and Mermaid rendering
+      checkAndRenderMath(currentMain);
+      checkAndRenderMermaid(currentMain);
 
       // Trigger tracking on new route
       if (window.EboshiiTracker) {
@@ -306,10 +388,16 @@
     navigate(new URL(window.location.href), false);
   });
 
-  // Initialize gentle idle prefetching after initial load
-  if (document.readyState === 'complete') {
+  // Initialize gentle idle prefetching and check for math/mermaid on initial load
+  function onInitialReady() {
+    checkAndRenderMath();
+    checkAndRenderMermaid();
     queueIdlePrefetches();
+  }
+
+  if (document.readyState === 'complete') {
+    onInitialReady();
   } else {
-    window.addEventListener('load', queueIdlePrefetches);
+    window.addEventListener('load', onInitialReady);
   }
 })();
