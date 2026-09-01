@@ -63,9 +63,14 @@
   </main>
 
   <footer>
-    <p>&copy; {{ site.time | date: '%Y' }} eboshii</p>
+    <div class="footer-inner">
+      <span>&copy; {{ site.time | date: '%Y' }} eboshii</span>
+      <span class="footer-sep">&middot;</span>
+      <a href="{{ '/stats/' | relative_url }}" class="footer-stats-link{% if page.url contains '/stats' %} active{% endif %}">stats</a>
+    </div>
   </footer>
 
+  <script src="{{ '/assets/js/tracker.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   <script src="{{ '/assets/js/nebula-bg.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>
