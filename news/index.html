@@ -6,37 +6,71 @@ full_width: true
 ---
 
 <div class="news-app">
-  <header class="news-header">
-    <div class="news-headline-row">
-      <h1 class="news-page-title">News Wire</h1>
-      <div class="news-meta">
-        <span class="meta-pill count-pill"><strong id="visible-count">{{ site.data.news.total_count }}</strong> headlines</span>
-        <span class="meta-pill time-pill" id="last-updated-pill" data-utc="{{ site.data.news.last_updated }}">
-          Updated <time id="last-updated-text">{{ site.data.news.last_updated | date: "%b %d, %H:%M UTC" }}</time>
-        </span>
-      </div>
+  <!-- Minimalist News Toolbar -->
+  <div class="news-top-bar">
+    <div class="news-search-box">
+      <svg class="search-icon" viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="news-search" placeholder="Filter headlines..." autocomplete="off" spellcheck="false">
+      <button id="search-clear" class="search-clear" style="display: none;" title="Clear filter">&times;</button>
     </div>
 
-    <div class="news-controls">
-      <div class="search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="news-search" placeholder="Filter headlines across all categories..." autocomplete="off" spellcheck="false">
-        <button id="search-clear" class="search-clear" style="display: none;" title="Clear filter">&times;</button>
-      </div>
+    <div class="news-bar-right">
+      <span class="news-time-tag" id="last-updated-pill" data-utc="{{ site.data.news.last_updated }}">
+        Updated <time id="last-updated-text">{{ site.data.news.last_updated | date: "%b %d, %H:%M UTC" }}</time>
+      </span>
 
-      <div class="category-filters" id="category-filters">
-        <button class="filter-btn active" data-cat="all">All</button>
-        {% for cat in site.data.news.categories %}
-        <button class="filter-btn" data-cat="{{ cat.id }}">{{ cat.title }}</button>
-        {% endfor %}
+      <div class="news-settings-wrapper">
+        <button id="news-settings-btn" class="news-settings-btn" aria-haspopup="dialog" aria-expanded="false" title="Display settings">
+          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>settings</span>
+        </button>
+
+        <!-- Settings Modal / Subwindow -->
+        <div id="news-settings-modal" class="news-settings-modal" style="display: none;">
+          <div class="settings-modal-header">
+            <span class="settings-modal-title">Settings</span>
+            <button id="modal-close-btn" class="settings-close-btn" title="Close">&times;</button>
+          </div>
+
+          <div class="settings-modal-body">
+            <div class="settings-group">
+              <label class="settings-label">Layout Columns</label>
+              <div class="cols-toggle-bar">
+                <button type="button" class="cols-btn" data-cols="3">3 Columns</button>
+                <button type="button" class="cols-btn active" data-cols="4">4 Columns</button>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <label class="settings-label">Categories</label>
+              <div class="cat-checklist">
+                {% for cat in site.data.news.categories %}
+                <label class="cat-check-label">
+                  <input type="checkbox" class="cat-checkbox" value="{{ cat.id }}" checked>
+                  <span>{{ cat.title }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="settings-footer">
+              <button id="save-cookies-btn" class="settings-save-btn">Save into cookies</button>
+              <span id="save-feedback" class="save-feedback" style="display: none;">Saved!</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
+  </div>
 
-  <div class="news-grid" id="news-grid">
+  <!-- News Grid Layout -->
+  <div class="news-grid cols-4" id="news-grid">
     {% for cat in site.data.news.categories %}
     <section class="news-column" data-category="{{ cat.id }}" id="cat-{{ cat.id }}">
       <div class="col-header">
@@ -70,16 +104,35 @@ full_width: true
 (function() {
   const searchInput = document.getElementById('news-search');
   const clearBtn = document.getElementById('search-clear');
-  const filterBtns = document.querySelectorAll('.filter-btn');
   const columns = document.querySelectorAll('.news-column');
-  const totalCountEl = document.getElementById('visible-count');
+  const gridEl = document.getElementById('news-grid');
   const noResultsEl = document.getElementById('no-results');
   const timeTextEl = document.getElementById('last-updated-text');
   const timePillEl = document.getElementById('last-updated-pill');
 
-  let activeCategory = 'all';
+  // Settings elements
+  const settingsBtn = document.getElementById('news-settings-btn');
+  const settingsModal = document.getElementById('news-settings-modal');
+  const closeBtn = document.getElementById('modal-close-btn');
+  const colsBtns = document.querySelectorAll('.cols-btn');
+  const catCheckboxes = document.querySelectorAll('.cat-checkbox');
+  const saveCookiesBtn = document.getElementById('save-cookies-btn');
+  const saveFeedback = document.getElementById('save-feedback');
 
-  // Format relative timestamp for last updated
+  // Cookie helpers
+  function setCookie(name, val, days = 365) {
+    document.cookie = name + "=" + encodeURIComponent(val) + "; path=/; max-age=" + (days * 86400) + "; SameSite=Lax";
+  }
+
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+  let selectedCols = 4;
+  let activeCategories = new Set(['world', 'tech', 'markets', 'science_ideas']);
+
+  // Format relative timestamp
   if (timePillEl && timePillEl.dataset.utc) {
     try {
       const updatedDate = new Date(timePillEl.dataset.utc);
@@ -93,6 +146,37 @@ full_width: true
     } catch(e) {}
   }
 
+  // Load saved preferences from cookie if present
+  try {
+    const saved = getCookie('eboshii_news_prefs');
+    if (saved) {
+      const prefs = JSON.parse(saved);
+      if (prefs.cols === 3 || prefs.cols === 4) {
+        selectedCols = prefs.cols;
+      }
+      if (Array.isArray(prefs.categories)) {
+        activeCategories = new Set(prefs.categories);
+      }
+    }
+  } catch(e) {}
+
+  // Apply column layout
+  function applyLayout() {
+    gridEl.classList.toggle('cols-3', selectedCols === 3);
+    gridEl.classList.toggle('cols-4', selectedCols === 4);
+
+    colsBtns.forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.dataset.cols) === selectedCols);
+    });
+
+    catCheckboxes.forEach(cb => {
+      cb.checked = activeCategories.has(cb.value);
+    });
+
+    filterItems();
+  }
+
+  // Filter headlines and visible columns
   function filterItems() {
     const query = (searchInput.value || '').trim().toLowerCase();
     clearBtn.style.display = query ? 'block' : 'none';
@@ -101,9 +185,9 @@ full_width: true
 
     columns.forEach(col => {
       const colCat = col.dataset.category;
-      const isColMatch = (activeCategory === 'all' || activeCategory === colCat);
+      const isEnabled = activeCategories.has(colCat);
 
-      if (!isColMatch) {
+      if (!isEnabled) {
         col.style.display = 'none';
         return;
       }
@@ -115,9 +199,9 @@ full_width: true
       items.forEach(item => {
         const title = item.dataset.title || '';
         const source = item.dataset.source || '';
-        const matchesQuery = !query || title.includes(query) || source.includes(query);
+        const matches = !query || title.includes(query) || source.includes(query);
 
-        if (matchesQuery) {
+        if (matches) {
           item.style.display = '';
           colVisible++;
           totalVisible++;
@@ -135,13 +219,13 @@ full_width: true
       }
     });
 
-    if (totalCountEl) totalCountEl.textContent = totalVisible;
     if (noResultsEl) noResultsEl.style.display = (totalVisible === 0) ? 'block' : 'none';
   }
 
+  // Search input events
   if (searchInput) {
     searchInput.addEventListener('input', filterItems);
-    searchInput.addEventListener('keydown', function(e) {
+    searchInput.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         searchInput.value = '';
         filterItems();
@@ -150,7 +234,7 @@ full_width: true
   }
 
   if (clearBtn) {
-    clearBtn.addEventListener('click', function() {
+    clearBtn.addEventListener('click', () => {
       searchInput.value = '';
       searchInput.focus();
       filterItems();
@@ -159,21 +243,76 @@ full_width: true
 
   const resetBtn = document.getElementById('reset-search-btn');
   if (resetBtn) {
-    resetBtn.addEventListener('click', function() {
+    resetBtn.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
-      activeCategory = 'all';
-      filterBtns.forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
       filterItems();
     });
   }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCategory = btn.dataset.cat;
-      filterItems();
+  // Settings modal toggle
+  function toggleModal(open) {
+    const show = (typeof open === 'boolean') ? open : settingsModal.style.display === 'none';
+    settingsModal.style.display = show ? 'block' : 'none';
+    settingsBtn.setAttribute('aria-expanded', show.toString());
+  }
+
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleModal();
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => toggleModal(false));
+  }
+
+  document.addEventListener('click', e => {
+    if (settingsModal && !settingsModal.contains(e.target) && e.target !== settingsBtn) {
+      toggleModal(false);
+    }
+  });
+
+  // Column toggle buttons in modal
+  colsBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedCols = parseInt(btn.dataset.cols);
+      applyLayout();
     });
   });
+
+  // Category checkbox toggles
+  catCheckboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        activeCategories.add(cb.value);
+      } else {
+        // Prevent unchecking all categories
+        if (activeCategories.size > 1) {
+          activeCategories.delete(cb.value);
+        } else {
+          cb.checked = true;
+        }
+      }
+      applyLayout();
+    });
+  });
+
+  // Save layout preferences to cookie
+  if (saveCookiesBtn) {
+    saveCookiesBtn.addEventListener('click', () => {
+      const prefs = {
+        cols: selectedCols,
+        categories: Array.from(activeCategories)
+      };
+      setCookie('eboshii_news_prefs', JSON.stringify(prefs));
+      saveFeedback.style.display = 'inline';
+      setTimeout(() => {
+        saveFeedback.style.display = 'none';
+      }, 2500);
+    });
+  }
+
+  applyLayout();
 })();
 </script>
