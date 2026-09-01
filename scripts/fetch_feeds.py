@@ -319,10 +319,85 @@ def format_time_relative(seconds: int, dt: datetime.datetime) -> str:
         return f"{hours}h"
     return dt.strftime("%b %d")
 
-def extract_keywords(title: str) -> set:
-    """Extracts meaningful entity keywords from a title."""
+def simple_stem(word: str) -> str:
+    """Strips common English inflections/suffixes so standing/stands/stand, announced/announces, etc. match."""
+    w = word.lower().strip()
+    if len(w) <= 3:
+        return w
+    suffixes = [
+        "ation", "tions", "tion", "ising", "izing", "ised", "ized",
+        "ness", "ment", "ments", "able", "ible", "ings", "ing",
+        "ians", "ian", "ies", "ied", "ers", "er", "est", "ous",
+        "ed", "es", "ly", "al", "ic", "s"
+    ]
+    for s in suffixes:
+        if len(w) > len(s) + 2 and w.endswith(s):
+            w = w[:-len(s)]
+            break
+    return w
+
+def extract_keywords(title: str) -> list:
+    """Extracts meaningful entity words in order from a title."""
     words = re.findall(r"[a-z0-9]+", title.lower())
-    return {w for w in words if len(w) > 2 and w not in STOPWORDS}
+    return [w for w in words if len(w) > 2 and w not in STOPWORDS]
+
+def are_titles_similar(t1: str, t2: str) -> bool:
+    """Detects if two headlines are describing the same underlying event or story."""
+    # 1. Exact or substring normalized match
+    norm1 = re.sub(r"[^a-z0-9]", "", t1.lower())
+    norm2 = re.sub(r"[^a-z0-9]", "", t2.lower())
+    if not norm1 or not norm2:
+        return False
+    if norm1 == norm2 or norm1 in norm2 or norm2 in norm1:
+        return True
+
+    words1 = extract_keywords(t1)
+    words2 = extract_keywords(t2)
+    if not words1 or not words2:
+        return False
+
+    stems1 = set(simple_stem(w) for w in words1)
+    stems2 = set(simple_stem(w) for w in words2)
+
+    shared_stems = stems1.intersection(stems2)
+    min_len = min(len(stems1), len(stems2))
+    union_len = len(stems1.union(stems2))
+
+    if union_len == 0 or min_len == 0:
+        return False
+
+    jaccard = len(shared_stems) / union_len
+    overlap = len(shared_stems) / min_len
+
+    # Overlap >= 45% with 3+ shared stems (e.g. "Keir Starmer to stand down as MP" vs "Starmer standing down as MP")
+    if len(shared_stems) >= 3 and overlap >= 0.45:
+        return True
+
+    # 2 shared stems on short titles with >= 55% overlap
+    if len(shared_stems) >= 2 and overlap >= 0.55 and min_len <= 5:
+        return True
+
+    # High Jaccard similarity across the whole headline
+    if jaccard >= 0.35:
+        return True
+
+    # Check for consecutive 2-word phrase matches (bigrams) + at least 1 other shared stem
+    bigrams1 = set(zip(words1[:-1], words1[1:]))
+    bigrams2 = set(zip(words2[:-1], words2[1:]))
+    shared_bigrams = bigrams1.intersection(bigrams2)
+    if shared_bigrams and (len(shared_stems) >= 2 or overlap >= 0.35):
+        return True
+
+    # Stem bigrams (handles inflection inside named entities/phrases, e.g. "standing down" vs "stand down")
+    stem_list1 = [simple_stem(w) for w in words1]
+    stem_list2 = [simple_stem(w) for w in words2]
+    stem_bigrams1 = set(zip(stem_list1[:-1], stem_list1[1:]))
+    stem_bigrams2 = set(zip(stem_list2[:-1], stem_list2[1:]))
+    shared_stem_bigrams = stem_bigrams1.intersection(stem_bigrams2)
+    if shared_stem_bigrams and len(shared_stems) >= 2:
+        return True
+
+    return False
 
 def fetch_feed(feed_meta: dict):
     """Fetches a single feed and returns normalized items from the last 24 hours."""
@@ -390,11 +465,12 @@ def fetch_feed(feed_meta: dict):
     return items
 
 def score_and_curate_items(items: list, max_count: int = MAX_HEADLINES_PER_SECTION) -> list:
-    """Ranks headlines by editorial lead position, cross-source clustering, and recency."""
+    """Ranks headlines by editorial lead position, cross-source clustering, and recency,
+    and applies strict semantic deduplication so each event is represented only once by its best headline."""
     if not items:
         return []
 
-    # Map keywords for cross-source cluster detection
+    # Map cross-source coverage for significance boost
     for item in items:
         pos = item.get("feed_pos", 0)
         pos_score = 1.0 / (1.0 + 0.15 * pos)
@@ -402,14 +478,11 @@ def score_and_curate_items(items: list, max_count: int = MAX_HEADLINES_PER_SECTI
         recency_score = max(0.65, 1.20 - (age_hours / 30.0))
 
         # Detect cross-source coverage of the same event
-        item_kw = extract_keywords(item["title"])
         corroborating_sources = set()
-
         for other in items:
             if other["source"] == item["source"]:
                 continue
-            other_kw = extract_keywords(other["title"])
-            if len(item_kw.intersection(other_kw)) >= 2:
+            if are_titles_similar(item["title"], other["title"]):
                 corroborating_sources.add(other["source"])
 
         cluster_mult = 1.0 + (0.50 * len(corroborating_sources))
@@ -423,8 +496,17 @@ def score_and_curate_items(items: list, max_count: int = MAX_HEADLINES_PER_SECTI
     # Sort by composite importance score descending
     items.sort(key=lambda x: (x.get("score", 0), x.get("published_iso", "")), reverse=True)
 
-    # Return top curated items
-    return items[:max_count]
+    # Curate top items, filtering out duplicate/near-duplicate stories
+    curated = []
+    for candidate in items:
+        if len(curated) >= max_count:
+            break
+        # Skip candidate if it matches any story already selected
+        if any(are_titles_similar(candidate["title"], accepted["title"]) for accepted in curated):
+            continue
+        curated.append(candidate)
+
+    return curated
 
 def main():
     print(f"Starting news aggregation at {datetime.datetime.now(datetime.timezone.utc).isoformat()} UTC")
