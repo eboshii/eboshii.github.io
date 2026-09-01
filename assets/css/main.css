@@ -30,6 +30,17 @@ img, video { max-width: 100%; height: auto; display: block; }
   inset: 0;
   width: 100vw;
   height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  display: block;
+}
+
+/* Sailboat Easter Egg (Between background and page content) */
+#boat-easter-egg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
   pointer-events: none;
   display: block;
@@ -197,6 +208,8 @@ nav {
    Main content wrapper
 ----------------------------------------------- */
 main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   width: 100%;
   max-width: var(--max-w);

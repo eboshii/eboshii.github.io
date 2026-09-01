@@ -70,7 +70,7 @@
     boatCanvas.style.width = '100%';
     boatCanvas.style.height = '100%';
     boatCanvas.style.pointerEvents = 'none';
-    boatCanvas.style.zIndex = '1';
+    boatCanvas.style.zIndex = '-1';
     boatCanvas.style.opacity = '0';
     boatCanvas.style.transition = 'opacity 0.4s ease';
     document.body.appendChild(boatCanvas);
