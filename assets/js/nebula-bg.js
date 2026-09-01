@@ -444,9 +444,9 @@
     }
 
     if (uKofiBox) {
-      const kofiWrapper = document.querySelector('.kofi-dither-wrapper');
-      if (kofiWrapper && window.location.pathname.includes('/tip')) {
-        const rect = kofiWrapper.getBoundingClientRect();
+      const kofiHost = document.getElementById('global-kofi-host');
+      if (kofiHost && kofiHost.classList.contains('active')) {
+        const rect = kofiHost.getBoundingClientRect();
         const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
         const cx = (rect.left + rect.width * 0.5) * dpr;
         const cy = (window.innerHeight - (rect.top + rect.height * 0.5)) * dpr;

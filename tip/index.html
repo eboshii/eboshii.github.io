@@ -5,24 +5,4 @@ description: Support eboshii.
 full_width: true
 ---
 
-<div class="tip-page-centered">
-  <div class="kofi-dither-wrapper"></div>
-</div>
-
-<script>
-(function() {
-  function mountKofi() {
-    const wrapper = document.querySelector('.kofi-dither-wrapper');
-    const preloaded = document.getElementById('global-kofi-iframe');
-    if (wrapper && preloaded && preloaded.parentElement !== wrapper) {
-      wrapper.appendChild(preloaded);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mountKofi);
-  } else {
-    mountKofi();
-  }
-})();
-</script>
+<div class="tip-page-centered"></div>

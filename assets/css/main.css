@@ -651,24 +651,37 @@ footer {
   justify-content: center;
 }
 
-.tip-page-centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: auto;
-  box-sizing: border-box;
+/* -----------------------------------------------
+   Permanent Global Ko-fi Host (Zero-Reload / Instant Preload)
+----------------------------------------------- */
+.global-kofi-host {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  width: 400px;
+  height: 650px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 8px;
+  box-shadow: none;
 }
 
-.kofi-dither-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: 650px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.global-kofi-host.active {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (max-width: 440px) {
+  .global-kofi-host {
+    width: calc(100vw - 2rem);
+    max-width: 400px;
+  }
 }
 
 .kofi-page-iframe {
@@ -681,7 +694,6 @@ footer {
   border-radius: 8px;
   box-shadow: none;
   outline: none;
-  z-index: 1;
 }
 
 /* -----------------------------------------------
