@@ -96,26 +96,30 @@
       return v;
     }
 
-    // Continuous Weierstrass Function + Sin Modulation for Perimeter Extrusion
+    // Sharply Varying Continuous Weierstrass + Sine Modulation for Perimeter Extrusion
     float weierstrassSin(float theta, float time) {
-      float t = time * 0.08;
-      // Multi-harmonic Weierstrass fractal sum (a=0.5, b=2.0)
+      float t = time * 0.09;
+      // High-contrast, multi-harmonic Weierstrass fractal synthesis
       float w = 0.0;
-      w += 1.000 * sin( 1.0 * theta + t * 0.70 + 0.35);
-      w += 0.500 * cos( 2.0 * theta - t * 0.85 + 1.28);
-      w += 0.250 * sin( 4.0 * theta + t * 1.10 + 2.74);
-      w += 0.125 * cos( 8.0 * theta - t * 1.35 + 4.19);
-      w += 0.0625 * sin(16.0 * theta + t * 1.60 + 5.61);
+      w += 1.00 * sin( 1.0 * theta + t * 0.60 + 0.35);
+      w += 0.70 * cos( 3.0 * theta - t * 0.75 + 1.28);
+      w += 0.48 * sin( 7.0 * theta + t * 0.95 + 2.74);
+      w += 0.32 * cos(15.0 * theta - t * 1.20 + 4.19);
+      w += 0.20 * sin(31.0 * theta + t * 1.50 + 5.61);
+      w += 0.12 * cos(63.0 * theta - t * 1.85 + 1.83);
 
-      // Low frequency large-scale sinusoidal sweep
-      float baseSin = sin(theta * 2.0 - t * 0.45) * 0.6;
+      // Low frequency sinusoidal modulation
+      float baseSin = sin(theta * 2.0 - t * 0.40) * 0.85;
 
-      // Sum range is approximately [-2.5375, 2.5375]
-      float total = (w + baseSin) / 2.5375;
-      float norm = clamp(0.5 + 0.5 * total, 0.0, 1.0);
+      float raw = (w + baseSin) / 3.67; // Normalized [-1.0, 1.0]
+      // Sharpen peaks and troughs with non-linear power curve
+      float signW = sign(raw);
+      float sharp = signW * pow(abs(raw), 1.45);
 
-      // Map smoothly into [1.0, 3.0] (1x to 3x extrusion)
-      return 1.0 + 2.0 * norm;
+      float norm = clamp(0.5 + 0.5 * sharp, 0.0, 1.0);
+
+      // Extends between 1.0x and 3.2x with dramatic fractal undulations
+      return 1.0 + 2.2 * norm;
     }
 
     // Poisson-Disk-Style Star Layer (Jittered Grid)
@@ -276,9 +280,10 @@
         if (dist < dynamicFade) {
           float uNorm = clamp(dist / dynamicFade, 0.0, 1.0);
           float inv = 1.0 - uNorm;
-          // S-curve: stays high for first few pixels, drops steeply, lingers near transparent
-          float sCurve = smoothstep(0.08, 0.92, inv);
-          sCurve = sCurve * sCurve * (3.0 - 2.0 * sCurve);
+          // Shifted S-curve: solid white drops off within the first 10-15%, lingering as a wide translucent veil
+          float core = pow(inv, 7.0);       // Ultra-tight solid core at the immediate boundary
+          float tail = pow(inv, 2.4) * 0.38; // Long ethereal near-translucent tail
+          float sCurve = clamp(core * 0.62 + tail, 0.0, 1.0);
 
           col = mix(col, vec3(1.0, 1.0, 1.0), sCurve);
         }
