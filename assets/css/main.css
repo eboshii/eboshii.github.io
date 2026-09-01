@@ -69,6 +69,7 @@ nav {
 .nav-links {
   display: flex;
   gap: 1.75rem;
+  align-items: center;
 }
 
 .nav-links a {
@@ -85,6 +86,86 @@ nav {
 .nav-links a.active {
   color: var(--accent);
   border-bottom-color: var(--accent-dim);
+}
+
+/* Nav Dropdown */
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-dropdown-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  padding: 0;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.15s;
+}
+
+.nav-dropdown:hover .nav-dropdown-trigger,
+.nav-dropdown-trigger:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent-dim);
+}
+
+.dropdown-chevron {
+  transition: transform 0.15s ease;
+  opacity: 0.7;
+}
+
+.nav-dropdown:hover .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 140px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 0.35rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.45rem 1rem;
+  font-size: 0.825rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  border: none;
+  transition: background 0.12s, color 0.12s;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--bg-raised);
+  color: var(--accent);
+  border: none;
 }
 
 /* -----------------------------------------------
@@ -830,6 +911,18 @@ main.main-wide {
   footer { padding: 1.25rem; }
 
   nav { height: auto; padding: 0.75rem 0; flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: auto;
+  }
 
   .section-grid { grid-template-columns: 1fr; }
   .post-header h1 { font-size: 1.75rem; }
