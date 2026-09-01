@@ -716,28 +716,32 @@ main.main-wide {
 }
 
 .headline-link {
-  display: grid;
-  grid-template-columns: 24px 1fr 24px;
-  align-items: start;
-  gap: 0.4rem;
-  padding: 0.28rem 0.45rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.28rem 0.4rem;
   text-decoration: none;
   color: var(--text);
   width: 100%;
 }
 
 .source-tag {
+  flex: 0 0 28px;
+  width: 28px;
+  min-width: 28px;
+  max-width: 28px;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 600;
   color: var(--accent);
   text-align: left;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
   line-height: 1.35;
+  white-space: nowrap;
+  margin-top: 0.05rem;
 }
 
 .headline-title {
+  flex: 1 1 auto;
   min-width: 0;
   white-space: normal;
   display: -webkit-box;
@@ -750,7 +754,6 @@ main.main-wide {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   line-height: 1.35;
-  max-height: 2.7em;
   color: var(--text);
   transition: color 0.1s;
 }
@@ -760,12 +763,16 @@ main.main-wide {
 }
 
 .time-tag {
+  flex: 0 0 24px;
+  width: 24px;
+  min-width: 24px;
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.56rem;
   color: var(--muted);
   text-align: right;
-  white-space: nowrap;
   line-height: 1.35;
+  white-space: nowrap;
+  margin-top: 0.05rem;
 }
 
 .col-empty-msg {
