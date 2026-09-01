@@ -29,6 +29,9 @@
     uniform float u_time;
     uniform float u_seed;
     uniform vec4 u_wake_nodes[20]; // x, y, birthTime, strength
+    uniform vec4 u_kofi_box;      // x, y (center in screen pixels), half_w, half_h
+    uniform float u_kofi_radius;
+    uniform float u_kofi_fade;
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -236,6 +239,23 @@
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
 
+      // --- Dynamic Ko-fi Glow Halo with S-curve Falloff (Direct Background Render) ---
+      if (u_kofi_box.z > 0.1) {
+        vec2 p = gl_FragCoord.xy;
+        vec2 dBox = abs(p - u_kofi_box.xy) - (u_kofi_box.zw - vec2(u_kofi_radius));
+        float dist = length(max(dBox, 0.0)) + min(max(dBox.x, dBox.y), 0.0) - u_kofi_radius;
+
+        if (dist > 0.0 && dist < u_kofi_fade) {
+          float uNorm = dist / u_kofi_fade;
+          float inv = 1.0 - uNorm;
+          // S-curve sigmoid: stays high for first few pixels, drops steeply, lingers near transparent
+          float sCurve = smoothstep(0.12, 0.88, inv);
+          sCurve = sCurve * sCurve * (3.0 - 2.0 * sCurve);
+
+          col = mix(col, vec3(1.0, 1.0, 1.0), sCurve);
+        }
+      }
+
       // ---------------------------------------------------------
       // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
       // ---------------------------------------------------------
@@ -309,6 +329,9 @@
   const uTime = gl.getUniformLocation(program, 'u_time');
   const uSeed = gl.getUniformLocation(program, 'u_seed');
   const uWakeNodes = gl.getUniformLocation(program, 'u_wake_nodes[0]');
+  const uKofiBox = gl.getUniformLocation(program, 'u_kofi_box');
+  const uKofiRadius = gl.getUniformLocation(program, 'u_kofi_radius');
+  const uKofiFade = gl.getUniformLocation(program, 'u_kofi_fade');
 
   // Session Anchor Time & Seed
   let sessionStartTime = parseFloat(sessionStorage.getItem('nebula_session_start'));
@@ -385,6 +408,25 @@
         flatWake[i * 4 + 3] = wakeNodes[i].strength;
       }
       gl.uniform4fv(uWakeNodes, flatWake);
+    }
+
+    if (uKofiBox) {
+      const kofiWrapper = document.querySelector('.kofi-dither-wrapper');
+      if (kofiWrapper && window.location.pathname.includes('/tip')) {
+        const rect = kofiWrapper.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
+        const cx = (rect.left + rect.width * 0.5) * dpr;
+        const cy = (window.innerHeight - (rect.top + rect.height * 0.5)) * dpr;
+        const hw = (rect.width * 0.5) * dpr;
+        const hh = (rect.height * 0.5) * dpr;
+        gl.uniform4f(uKofiBox, cx, cy, hw, hh);
+        gl.uniform1f(uKofiRadius, 8.0 * dpr);
+        gl.uniform1f(uKofiFade, 36.0 * dpr); // 36px S-curve halo
+      } else {
+        gl.uniform4f(uKofiBox, -9999.0, -9999.0, 0.0, 0.0);
+        gl.uniform1f(uKofiRadius, 0.0);
+        gl.uniform1f(uKofiFade, 0.0);
+      }
     }
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
