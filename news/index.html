@@ -65,8 +65,13 @@ full_width: true
           </div>
 
           <div class="settings-footer">
-            <button id="save-cookies-btn" class="settings-save-btn">Save into cookies</button>
-            <span id="save-feedback" class="save-feedback" style="display: none;">Saved!</span>
+            <div class="settings-footer-left">
+              <button id="reset-defaults-btn" class="settings-reset-btn" title="Reset categories and layout to defaults">Reset to defaults</button>
+            </div>
+            <div class="settings-footer-right">
+              <button id="save-cookies-btn" class="settings-save-btn">Save into cookies</button>
+              <span id="save-feedback" class="save-feedback" style="display: none;">Saved!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -311,9 +316,27 @@ full_width: true
         categories: Array.from(activeCategories)
       };
       setCookie('eboshii_news_prefs', JSON.stringify(prefs));
+      saveFeedback.textContent = 'Saved!';
       saveFeedback.style.display = 'inline';
       setTimeout(() => {
         saveFeedback.style.display = 'none';
+      }, 2500);
+    });
+  }
+
+  // Reset to default categories & layout
+  const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
+  if (resetDefaultsBtn) {
+    resetDefaultsBtn.addEventListener('click', () => {
+      selectedCols = 4;
+      activeCategories = new Set(DEFAULT_ACTIVE_CATS);
+      applyLayout();
+      setCookie('eboshii_news_prefs', '', -1);
+      saveFeedback.textContent = 'Reset to defaults!';
+      saveFeedback.style.display = 'inline';
+      setTimeout(() => {
+        saveFeedback.style.display = 'none';
+        saveFeedback.textContent = 'Saved!';
       }, 2500);
     });
   }

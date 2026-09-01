@@ -879,6 +879,30 @@ main.main-wide {
   border-top: 1px solid var(--border);
 }
 
+.settings-footer-left,
+.settings-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.settings-reset-btn {
+  font-family: var(--font-sans);
+  font-size: 0.70rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.settings-reset-btn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
 .settings-save-btn {
   font-family: var(--font-sans);
   font-size: 0.72rem;
