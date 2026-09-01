@@ -157,10 +157,6 @@
     oCtx.save();
     oCtx.translate(lx, ly);
 
-    // Wave bobbing & buoyancy
-    const bob = Math.sin(time * 2.0) * 0.7;
-    oCtx.translate(0, bob);
-
     // Turn lean / heel tilt
     oCtx.rotate(heel);
 
@@ -199,48 +195,76 @@
 
     oCtx.scale(flipX * widthScale, lenScale);
 
-    // --- 1. Hull Topsides (Wider beam with high curved wooden sides) ---
+    // --- Subtle Wave Lapping & Sea Immersion Modulation ---
+    // The hull gently ascends and descends into the sea water plane
+    const lap = Math.sin(time * 2.4) * 0.65;
+    const lapW1 = Math.sin(time * 2.8 + 1.2) * 0.45;
+    const lapW2 = Math.cos(time * 2.2 + 0.8) * 0.45;
+
+    // --- 1. Hull Topsides with Dynamic Waterline Immersion ---
     oCtx.fillStyle = woodMid;
     oCtx.strokeStyle = woodDark;
     oCtx.lineWidth = 0.8;
 
     oCtx.beginPath();
     if (dirKey === 1) {
-      // True 45° NE Diagonal (Stern at -8, +8 -> Bow at +10.5, -10.5)
+      // True 45° NE Diagonal
       oCtx.moveTo(-9.5, 6.0);
       oCtx.quadraticCurveTo(0.5, -2.5, 10.5, -9.5);
       oCtx.quadraticCurveTo(11.5, -8.0, 9.5, -6.5);
-      oCtx.quadraticCurveTo(3.5, 4.0, -5.5, 9.5);
-      oCtx.quadraticCurveTo(-9.0, 9.0, -9.5, 6.0);
+      oCtx.quadraticCurveTo(3.5, 4.0 - lapW1, -5.5, 9.5 - lap);
+      oCtx.quadraticCurveTo(-9.0, 9.0 - lapW2, -9.5, 6.0);
     } else if (dirKey === 2) {
-      // E Profile (Higher freeboard sides)
+      // E Profile
       oCtx.moveTo(-12.5, 0.5);
       oCtx.quadraticCurveTo(0.0, 1.0, 13.5, 1.0);
       oCtx.quadraticCurveTo(14.5, 2.5, 12.0, 4.5);
-      oCtx.quadraticCurveTo(0.0, 6.8, -10.5, 5.5);
+      oCtx.quadraticCurveTo(0.0, 6.8 - lap, -10.5, 5.5 - lapW1);
       oCtx.quadraticCurveTo(-13.5, 3.5, -12.5, 0.5);
     } else if (dirKey === 3) {
-      // True 45° SE Diagonal (Stern at -8, -8 -> Bow at +10.5, +10.5)
+      // True 45° SE Diagonal
       oCtx.moveTo(-9.5, -6.0);
       oCtx.quadraticCurveTo(0.5, 2.5, 10.5, 9.5);
       oCtx.quadraticCurveTo(11.5, 8.0, 9.5, 6.5);
-      oCtx.quadraticCurveTo(3.5, -4.0, -5.5, -9.5);
-      oCtx.quadraticCurveTo(-9.0, -9.0, -9.5, -6.0);
+      oCtx.quadraticCurveTo(3.5, -4.0 + lapW1, -5.5, -9.5 + lap);
+      oCtx.quadraticCurveTo(-9.0, -9.0 + lapW2, -9.5, -6.0);
     } else if (dirKey === 4) {
-      // S (Bow towards viewer with wider beam)
+      // S (Bow towards viewer)
       oCtx.moveTo(0.0, 11.0);
-      oCtx.quadraticCurveTo(-5.5, 3.5, -6.0, -4.0);
-      oCtx.quadraticCurveTo(0.0, -5.5, 6.0, -4.0);
+      oCtx.quadraticCurveTo(-5.5, 3.5, -6.0, -4.0 + lapW1);
+      oCtx.quadraticCurveTo(0.0, -5.5 + lap, 6.0, -4.0 + lapW2);
       oCtx.quadraticCurveTo(5.5, 3.5, 0.0, 11.0);
     } else {
-      // N (Stern towards viewer with wider beam)
+      // N (Stern towards viewer)
       oCtx.moveTo(0.0, -10.0);
-      oCtx.quadraticCurveTo(-5.5, -3.5, -6.0, 4.0);
-      oCtx.quadraticCurveTo(0.0, 5.5, 6.0, 4.0);
+      oCtx.quadraticCurveTo(-5.5, -3.5, -6.0, 4.0 - lapW1);
+      oCtx.quadraticCurveTo(0.0, 5.5 - lap, 6.0, 4.0 - lapW2);
       oCtx.quadraticCurveTo(5.5, -3.5, 0.0, -10.0);
     }
     oCtx.closePath();
     oCtx.fill();
+    oCtx.stroke();
+
+    // --- Subtle Lapping Wave Meniscus along the Waterline ---
+    oCtx.strokeStyle = 'rgba(127, 212, 138, 0.38)';
+    oCtx.lineWidth = 0.6;
+    oCtx.beginPath();
+    if (dirKey === 1) {
+      oCtx.moveTo(9.5, -6.5);
+      oCtx.quadraticCurveTo(3.5, 4.0 - lapW1, -5.5, 9.5 - lap);
+    } else if (dirKey === 2) {
+      oCtx.moveTo(12.0, 4.5);
+      oCtx.quadraticCurveTo(0.0, 6.8 - lap, -10.5, 5.5 - lapW1);
+    } else if (dirKey === 3) {
+      oCtx.moveTo(9.5, 6.5);
+      oCtx.quadraticCurveTo(3.5, -4.0 + lapW1, -5.5, -9.5 + lap);
+    } else if (dirKey === 4) {
+      oCtx.moveTo(-5.5, 3.5);
+      oCtx.quadraticCurveTo(0.0, -5.5 + lap, 5.5, 3.5);
+    } else {
+      oCtx.moveTo(-5.5, -3.5);
+      oCtx.quadraticCurveTo(0.0, 5.5 - lap, 5.5, -3.5);
+    }
     oCtx.stroke();
 
     // --- 2. Recessed Deck Planking (Framed inside high gunwales) ---
