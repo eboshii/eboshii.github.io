@@ -2,12 +2,13 @@
  * eboshii space sailboat easter egg
  * Controlled via WASD or Arrow keys on the homepage.
  * Features:
- * - Snappy game feel: short punchy acceleration with instant crisp stop on release
+ * - 1.1s buoyant emergence ("plop out of the water") before controls unlock
+ * - Responsive game handling: momentum coasting deceleration on key release
  * - Directional Squash & Stretch spring deformation along heading axis
  * - Elastic settling bounce-back on stop
  * - Turn-leaning / heel dynamics
  * - 3px pixelation and 4x4 Bayer ordered dithering matching the WebGL nebula background
- * - 2.5D Kelvin wake hydrodynamics and pure refraction
+ * - Emergent 2.5D physical wake trail superposition
  */
 (function () {
   // Only active on the homepage
@@ -19,8 +20,12 @@
   let boatCanvas, ctx;
   let offscreenCanvas, offCtx;
   let isInitialized = false;
-  let isRevealed = false;
-  let riseProgress = 0.0;
+
+  // Emergence / Plop State Machine
+  let spawnState = 'hidden'; // 'hidden' | 'rising' | 'ready'
+  let spawnElapsed = 0.0;
+  const SPAWN_DURATION = 1.15; // 1.15 seconds emergence animation
+  let spawnSplashed = false;
 
   const PIXEL_SCALE = 3.0; // Exact 3px cell size matching the WebGL shader
 
@@ -43,6 +48,7 @@
     currentAngle: -Math.PI / 4,
     isoDir: 1, // 0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW
     wasMoving: false,
+    strokeDist: 0.0,
     stretch: 1.0,      // Squash & stretch length factor
     stretchVel: 0.0,   // Spring velocity for elastic bounce
     heelAngle: 0.0,    // Leaning tilt during turns
@@ -76,7 +82,7 @@
     boatCanvas.style.pointerEvents = 'none';
     boatCanvas.style.zIndex = '-1';
     boatCanvas.style.opacity = '0';
-    boatCanvas.style.transition = 'opacity 0.4s ease';
+    boatCanvas.style.transition = 'opacity 0.3s ease';
     document.body.appendChild(boatCanvas);
 
     ctx = boatCanvas.getContext('2d');
@@ -117,8 +123,10 @@
     if (k === 'd' || e.key === 'ArrowRight') { keys.d = true; keys.right = true; handled = true; }
 
     if (handled) {
-      if (!isRevealed) {
-        isRevealed = true;
+      if (spawnState === 'hidden') {
+        spawnState = 'rising';
+        spawnElapsed = 0.0;
+        spawnSplashed = false;
         initBoat();
         if (boatCanvas) boatCanvas.style.opacity = '1';
       }
@@ -144,25 +152,34 @@
     return mapping[idx];
   }
 
-  // Draw 8-Direction Isometric Sailboat Sprite with Squash & Stretch + Heel tilt
-  function drawSailboatLowRes(oCtx, lx, ly, isoDir, stretch, heel, rise, time) {
+  // Draw 8-Direction Isometric Sailboat Sprite with Squash & Stretch + Heel tilt + Plop emergence
+  function drawSailboatLowRes(oCtx, lx, ly, isoDir, stretch, heel, plopProgress, time) {
     oCtx.save();
     oCtx.translate(lx, ly);
 
-    // Wave bobbing & buoyancy (slower, gentle ocean motion)
+    // Wave bobbing & buoyancy
     const bob = Math.sin(time * 2.0) * 0.7;
     oCtx.translate(0, bob);
 
     // Turn lean / heel tilt
     oCtx.rotate(heel);
 
+    // 1-second "Plop out of water" emergence animation
+    let plopY = 0;
+    let plopScale = 1.0;
+    if (plopProgress < 1.0) {
+      const u = Math.max(0.0, Math.min(1.0, plopProgress));
+      // Buoyant surfacing overshoot curve: deep underwater -> breach crest -> settle
+      const breachOvershoot = Math.sin(u * Math.PI) * 4.5;
+      plopY = (1.0 - u) * 22.0 - breachOvershoot;
+      plopScale = 0.45 + 0.55 * u + Math.sin(u * Math.PI) * 0.08;
+    }
+    oCtx.translate(0, plopY);
+    oCtx.scale(plopScale, plopScale);
+
     // Directional Squash & Stretch along boat heading frame
     const lenScale = Math.max(0.75, Math.min(1.35, stretch));
     const widthScale = 1.0 / Math.sqrt(lenScale); // Preserve volume
-
-    // Elevation rise progress
-    const riseY = (1.0 - rise) * 12;
-    oCtx.translate(0, riseY);
 
     // Color Palette
     const woodDark  = '#26140b';
@@ -348,10 +365,10 @@
   function addFoam(lx, ly, vx, vy, count = 1) {
     for (let i = 0; i < count; i++) {
       boat.foamParticles.push({
-        x: lx + (Math.random() - 0.5) * 4,
-        y: ly + (Math.random() - 0.5) * 3 + 3,
-        vx: -vx * 0.25 + (Math.random() - 0.5) * 0.4,
-        vy: -vy * 0.25 + (Math.random() - 0.5) * 0.4,
+        x: lx + (Math.random() - 0.5) * 6,
+        y: ly + (Math.random() - 0.5) * 4 + 3,
+        vx: -vx * 0.25 + (Math.random() - 0.5) * 0.5,
+        vy: -vy * 0.25 + (Math.random() - 0.5) * 0.5,
         size: 1.0 + Math.random() * 1.3,
         life: 1.0,
         decay: 0.025 + Math.random() * 0.02
@@ -407,21 +424,48 @@
     lastTime = now;
     const timeSec = now * 0.001;
 
-    if (isRevealed && isHomePage() && ctx && boatCanvas && offCtx && offscreenCanvas) {
+    if (spawnState !== 'hidden' && isHomePage() && ctx && boatCanvas && offCtx && offscreenCanvas) {
       offCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
       ctx.clearRect(0, 0, boatCanvas.width, boatCanvas.height);
 
-      if (riseProgress < 1.0) {
-        riseProgress = Math.min(1.0, riseProgress + dt * 1.5);
+      const lx = boat.x / PIXEL_SCALE;
+      const ly = boat.y / PIXEL_SCALE;
+
+      // --- 1.1s Emergence / Plop State Machine ---
+      let plopProgress = 1.0;
+      let canControl = false;
+
+      if (spawnState === 'rising') {
+        spawnElapsed += dt;
+        plopProgress = Math.min(1.0, spawnElapsed / SPAWN_DURATION);
+
+        // Surfacing splash trigger when hull breaches surface (~60% into emergence)
+        if (plopProgress >= 0.55 && !spawnSplashed) {
+          spawnSplashed = true;
+          addFoam(lx, ly, 0, 0, 14);
+          if (window.addBoatWakeNode) {
+            window.addBoatWakeNode(boat.x, boat.y, 0.85);
+          }
+        }
+
+        if (spawnElapsed >= SPAWN_DURATION) {
+          spawnState = 'ready';
+        }
       }
 
-      // Movement input
+      if (spawnState === 'ready') {
+        canControl = true;
+      }
+
+      // Movement input (only processed after plop emergence completes)
       let moveX = 0;
       let moveY = 0;
-      if (keys.w || keys.up) moveY -= 1;
-      if (keys.s || keys.down) moveY += 1;
-      if (keys.a || keys.left) moveX -= 1;
-      if (keys.d || keys.right) moveX += 1;
+      if (canControl) {
+        if (keys.w || keys.up) moveY -= 1;
+        if (keys.s || keys.down) moveY += 1;
+        if (keys.a || keys.left) moveX -= 1;
+        if (keys.d || keys.right) moveX += 1;
+      }
 
       const isMoving = (moveX !== 0 || moveY !== 0);
 
@@ -437,8 +481,8 @@
         if (!boat.wasMoving) {
           boat.stretch = 1.18; // Forward elongation burst
           boat.stretchVel = 0.8;
-          boat.strokeDist = 0.0; // Reset distance for new stroke
-          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 5);
+          boat.strokeDist = 0.0;
+          addFoam(lx, ly, moveX, moveY, 5);
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, 0.7);
           }
@@ -460,7 +504,6 @@
         boat.vx = Math.cos(boat.currentAngle) * boat.speed;
         boat.vy = Math.sin(boat.currentAngle) * boat.speed;
 
-        // Accumulate distance traveled on current stroke leg
         boat.strokeDist = (boat.strokeDist || 0) + Math.hypot(boat.vx, boat.vy);
 
         // Cruise stretch factor
@@ -472,7 +515,6 @@
         }
 
         if (boat.speed > 0.05) {
-          // Coast down smoothly over a short time
           const coastDrag = 0.89;
           boat.speed *= Math.pow(coastDrag, dt * 60);
           boat.vx = Math.cos(boat.currentAngle) * boat.speed;
@@ -480,7 +522,7 @@
           boat.strokeDist = (boat.strokeDist || 0) + Math.hypot(boat.vx, boat.vy);
 
           if (Math.random() < 0.35) {
-            addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 1);
+            addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 1);
           }
         } else {
           boat.speed = 0;
@@ -498,9 +540,9 @@
       boat.x += boat.vx;
       boat.y += boat.vy;
 
-      // Slower, softer Spring-Damper System for Organic Bounce-back
-      const springK = 75.0; // Slower, relaxed spring frequency
-      const springDamp = 9.5; // Soft damping
+      // Spring-Damper System for Organic Bounce-back
+      const springK = 75.0;
+      const springDamp = 9.5;
       const springForce = -springK * (boat.stretch - targetStretch) - springDamp * boat.stretchVel;
       boat.stretchVel += springForce * dt;
       boat.stretch += boat.stretchVel * dt;
@@ -518,10 +560,8 @@
 
       boat.isoDir = getIsoDirection(boat.currentAngle);
 
-      const lx = boat.x / PIXEL_SCALE;
-      const ly = boat.y / PIXEL_SCALE;
-
-      if (boat.speed > 0.35 && riseProgress > 0.4) {
+      // Wake node deposition while moving
+      if (boat.speed > 0.35 && canControl) {
         addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
 
         if (now - boat.lastRippleTime > 75) {
@@ -548,11 +588,11 @@
         offCtx.fillRect(Math.floor(p.x), Math.floor(p.y), Math.max(1, Math.floor(p.size)), Math.max(1, Math.floor(p.size)));
       }
 
-      // Draw sailboat with squash & stretch + heel lean
-      drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.stretch, boat.heelAngle, riseProgress, timeSec);
+      // Draw sailboat with squash & stretch + heel lean + plop emergence
+      drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.stretch, boat.heelAngle, plopProgress, timeSec);
 
       // Apply 4x4 Bayer dithering
-      const boxPad = 26;
+      const boxPad = 28;
       applyBayerDither(offCtx, lx - boxPad, ly - boxPad, boxPad * 2, boxPad * 2);
 
       // Blit to screen canvas
