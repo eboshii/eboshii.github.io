@@ -24,7 +24,7 @@
   // Emergence / Plop State Machine
   let spawnState = 'hidden'; // 'hidden' | 'rising' | 'ready'
   let spawnElapsed = 0.0;
-  const SPAWN_DURATION = 1.35; // 1.35 seconds buoyant surfacing & splashdown
+  const SPAWN_DURATION = 0.82; // 0.82 seconds snappy buoyant surfacing & gravity splashdown
   let spawnAscendRippled = false;
   let spawnSplashdownRippled = false;
 
@@ -159,25 +159,29 @@
     oCtx.save();
     oCtx.translate(lx, ly);
 
-    // Turn lean / heel tilt
-    oCtx.rotate(heel);
-
-    // Dynamic Surfacing Kinematics:
-    // Starts slow underwater -> accelerates upward -> breaches & overbounces above waterline -> drops back with splashdown settle
+    // Dynamic Surfacing Kinematics with Ballistic Gravity Drop & Nose-High Ascent:
     let plopY = 0;
+    let plopPitch = 0;
+
     if (plopProgress < 1.0) {
       const u = Math.max(0.0, Math.min(1.0, plopProgress));
-      if (u < 0.70) {
-        // Buoyant acceleration: starts slow, accelerates up to crest (-5.0px)
-        const p = u / 0.70;
-        const ease = Math.pow(p, 1.8);
-        plopY = 22.0 * (1.0 - ease) - 5.0 * Math.sin(p * Math.PI * 0.5);
+      if (u < 0.65) {
+        // Phase 1: Buoyant Ascent (starts slow, accelerates upward with nose high)
+        const p = u / 0.65;
+        const ease = Math.pow(p, 1.9);
+        plopY = 22.0 * (1.0 - ease) - 6.0 * Math.sin(p * Math.PI * 0.5);
+        plopPitch = 0.20 * Math.sin(p * Math.PI * 0.5); // Nose high (bow raised)
+      } else if (u < 0.84) {
+        // Phase 2: Apex Hang & Accelerating Gravity Fall
+        const q = (u - 0.65) / 0.19;
+        // Gravity parabola: v=0 at apex -6.0px, accelerating downwards into water
+        plopY = -6.0 + 6.0 * (q * q);
+        plopPitch = 0.20 * (1.0 - q); // Nose levels out as it falls
       } else {
-        // Falling back into water from -5.0px crest with splashdown harmonic settling
-        const p = (u - 0.70) / 0.30;
-        const fall = Math.cos(p * Math.PI * 0.5);
-        const settle = Math.sin(p * Math.PI * 2.0) * Math.exp(-p * 3.5) * 1.8;
-        plopY = -5.0 * fall + settle;
+        // Phase 3: Splashdown Impact & Damped Settling
+        const s = (u - 0.84) / 0.16;
+        plopY = 2.4 * Math.sin(s * Math.PI) * Math.exp(-s * 4.0);
+        plopPitch = -0.05 * Math.sin(s * Math.PI * 2.0) * Math.exp(-s * 4.0);
       }
 
       // Clip below water surface plane while submerged
@@ -187,7 +191,9 @@
         oCtx.clip();
       }
     }
+
     oCtx.translate(0, plopY);
+    oCtx.rotate(heel + plopPitch);
 
     // Color Palette
     const woodDark  = '#26140b';
@@ -502,8 +508,8 @@
           }
         }
 
-        // 2. Splashdown ripple & foam burst as hull drops back into the sea (~80% into rise)
-        if (plopProgress >= 0.78 && !spawnSplashdownRippled) {
+        // 2. Splashdown ripple & foam burst as hull drops back into the sea (~84% into rise)
+        if (plopProgress >= 0.84 && !spawnSplashdownRippled) {
           spawnSplashdownRippled = true;
           addFoam(lx, ly, 0, 0, 16);
           if (window.addBoatWakeNode) {
