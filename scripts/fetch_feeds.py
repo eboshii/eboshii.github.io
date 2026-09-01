@@ -29,7 +29,7 @@ except ImportError:
 FEEDS_CONFIG = [
     {
         "category_id": "world",
-        "category_title": "World & Wire",
+        "category_title": "World",
         "feeds": [
             {"name": "BBC News", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "limit": 20},
             {"name": "The Guardian", "short": "GDN", "url": "https://www.theguardian.com/world/rss", "limit": 20},
@@ -40,7 +40,7 @@ FEEDS_CONFIG = [
     },
     {
         "category_id": "tech",
-        "category_title": "Tech & Computing",
+        "category_title": "Tech",
         "feeds": [
             {"name": "Hacker News", "short": "HN", "url": "https://news.ycombinator.com/rss", "limit": 25},
             {"name": "Ars Technica", "short": "ARS", "url": "https://feeds.arstechnica.com/arstechnica/index", "limit": 20},
@@ -51,7 +51,7 @@ FEEDS_CONFIG = [
     },
     {
         "category_id": "markets",
-        "category_title": "Markets & Finance",
+        "category_title": "Markets",
         "feeds": [
             {"name": "MarketWatch", "short": "MW", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "limit": 20},
             {"name": "Yahoo Finance", "short": "YF", "url": "https://finance.yahoo.com/news/rssindex", "limit": 20},
@@ -60,18 +60,89 @@ FEEDS_CONFIG = [
         ]
     },
     {
-        "category_id": "science_ideas",
-        "category_title": "Science & Ideas",
+        "category_id": "science",
+        "category_title": "Science",
         "feeds": [
             {"name": "Nature", "short": "NAT", "url": "https://www.nature.com/nature.rss", "limit": 15},
             {"name": "Phys.org", "short": "PHY", "url": "https://phys.org/rss-feed/", "limit": 15},
             {"name": "Quanta Magazine", "short": "QNT", "url": "https://api.quantamagazine.org/feed/", "limit": 12},
             {"name": "ScienceDaily", "short": "SCI", "url": "https://www.sciencedaily.com/rss/all.xml", "limit": 12},
             {"name": "Yale E360", "short": "YAL", "url": "https://e360.yale.edu/feed.xml", "limit": 10},
-            {"name": "Aeon", "short": "AEO", "url": "https://aeon.co/feed.rss", "limit": 10},
-            {"name": "Nautilus", "short": "NTL", "url": "https://nautil.us/feed", "limit": 10},
+        ]
+    },
+    {
+        "category_id": "ai",
+        "category_title": "AI",
+        "feeds": [
+            {"name": "Hugging Face", "short": "HF", "url": "https://huggingface.co/blog/feed.xml", "limit": 15},
+            {"name": "MIT AI", "short": "MIT", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2", "limit": 15},
+            {"name": "The Gradient", "short": "GRD", "url": "https://thegradient.pub/rss/", "limit": 12},
+            {"name": "VentureBeat AI", "short": "VBA", "url": "https://venturebeat.com/category/ai/feed/", "limit": 15},
+        ]
+    },
+    {
+        "category_id": "geopolitics",
+        "category_title": "Geopolitics",
+        "feeds": [
+            {"name": "War on the Rocks", "short": "WTR", "url": "https://warontherocks.com/feed/", "limit": 15},
+            {"name": "Defense One", "short": "DEF", "url": "https://www.defenseone.com/rss/all/", "limit": 15},
+            {"name": "Lawfare", "short": "LWF", "url": "https://www.lawfaremedia.org/rss.xml", "limit": 12},
+            {"name": "FP Blogs", "short": "FPB", "url": "https://foreignpolicyblogs.com/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "energy",
+        "category_title": "Energy",
+        "feeds": [
+            {"name": "Canary Media", "short": "CNR", "url": "https://www.canarymedia.com/rss", "limit": 15},
+            {"name": "CleanTechnica", "short": "CLN", "url": "https://cleantechnica.com/feed/", "limit": 15},
+            {"name": "Carbon Brief", "short": "CRB", "url": "https://www.carbonbrief.org/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "culture",
+        "category_title": "Culture",
+        "feeds": [
+            {"name": "Aeon", "short": "AEO", "url": "https://aeon.co/feed.rss", "limit": 12},
+            {"name": "Nautilus", "short": "NTL", "url": "https://nautil.us/feed", "limit": 12},
             {"name": "Noema", "short": "NMA", "url": "https://www.noemamag.com/feed/", "limit": 10},
-            {"name": "BBC Culture", "short": "CUL", "url": "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml", "limit": 10},
+            {"name": "Literary Hub", "short": "LIT", "url": "https://lithub.com/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "gaming",
+        "category_title": "Gaming",
+        "feeds": [
+            {"name": "Rock Paper Shotgun", "short": "RPS", "url": "https://www.rockpapershotgun.com/feed", "limit": 15},
+            {"name": "Eurogamer", "short": "EUR", "url": "https://www.eurogamer.net/feed", "limit": 15},
+            {"name": "Polygon", "short": "PLY", "url": "https://www.polygon.com/rss/index.xml", "limit": 15},
+        ]
+    },
+    {
+        "category_id": "crypto",
+        "category_title": "Crypto",
+        "feeds": [
+            {"name": "CoinDesk", "short": "CDK", "url": "https://www.coindesk.com/arc/outboundfeeds/rss/", "limit": 18},
+            {"name": "Decrypt", "short": "DEC", "url": "https://decrypt.co/feed", "limit": 15},
+            {"name": "The Block", "short": "TBK", "url": "https://www.theblock.co/rss.xml", "limit": 15},
+        ]
+    },
+    {
+        "category_id": "cybersec",
+        "category_title": "Cybersecurity",
+        "feeds": [
+            {"name": "The Hacker News", "short": "THN", "url": "https://feeds.feedburner.com/TheHackersNews", "limit": 15},
+            {"name": "Bleeping Computer", "short": "BLP", "url": "https://www.bleepingcomputer.com/feed/", "limit": 15},
+            {"name": "Krebs on Security", "short": "KRB", "url": "https://krebsonsecurity.com/feed/", "limit": 10},
+        ]
+    },
+    {
+        "category_id": "startups",
+        "category_title": "Startups",
+        "feeds": [
+            {"name": "TechCrunch", "short": "TC", "url": "https://techcrunch.com/category/startups/feed/", "limit": 18},
+            {"name": "StrictlyVC", "short": "SVC", "url": "https://strictlyvc.com/feed/", "limit": 12},
+            {"name": "Sifted", "short": "SFT", "url": "https://sifted.eu/feed", "limit": 12},
         ]
     }
 ]

@@ -51,8 +51,12 @@ full_width: true
               <label class="settings-label">Categories</label>
               <div class="cat-checklist">
                 {% for cat in site.data.news.categories %}
+                {% assign is_default_disabled = false %}
+                {% if cat.id == 'crypto' or cat.id == 'cybersec' or cat.id == 'startups' %}
+                  {% assign is_default_disabled = true %}
+                {% endif %}
                 <label class="cat-check-label">
-                  <input type="checkbox" class="cat-checkbox" value="{{ cat.id }}" checked>
+                  <input type="checkbox" class="cat-checkbox" value="{{ cat.id }}"{% unless is_default_disabled %} checked{% endunless %}>
                   <span>{{ cat.title }}</span>
                 </label>
                 {% endfor %}
@@ -130,7 +134,8 @@ full_width: true
   }
 
   let selectedCols = 4;
-  let activeCategories = new Set(['world', 'tech', 'markets', 'science_ideas']);
+  const DEFAULT_ACTIVE_CATS = ['world', 'tech', 'markets', 'science', 'ai', 'geopolitics', 'energy', 'culture', 'gaming'];
+  let activeCategories = new Set(DEFAULT_ACTIVE_CATS);
 
   // Format relative timestamp
   if (timePillEl && timePillEl.dataset.utc) {
