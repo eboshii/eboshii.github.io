@@ -1,8 +1,12 @@
 /**
  * eboshii space sailboat easter egg
  * Controlled via WASD or Arrow keys on the homepage.
- * Features 8-direction isometric sailboat rendering, smooth sailing momentum,
- * screen wrapping, and dynamic cosmic wake ripples.
+ * Features:
+ * - Ultra-tight, responsive 8-direction steering controls
+ * - 3px pixelation and 4x4 Bayer ordered dithering matching the WebGL nebula background
+ * - Two-part sail model with dynamic wind billow
+ * - Screen boundary wrap-around
+ * - Background WebGL cosmic wake ripples
  */
 (function () {
   // Only active on the homepage
@@ -12,9 +16,20 @@
   }
 
   let boatCanvas, ctx;
+  let offscreenCanvas, offCtx;
   let isInitialized = false;
   let isRevealed = false;
-  let riseProgress = 0.0; // 0.0 (submerged) to 1.0 (fully surfaced)
+  let riseProgress = 0.0;
+
+  const PIXEL_SCALE = 3.0; // Exact 3px cell size matching the WebGL shader
+
+  // Standard 4x4 Bayer Matrix
+  const BAYER_4X4 = [
+    [-0.5000,  0.0000, -0.3750,  0.1250],
+    [ 0.2500, -0.2500,  0.3750, -0.1250],
+    [-0.3125,  0.1875, -0.4375,  0.0625],
+    [ 0.4375, -0.0625,  0.3125, -0.1875]
+  ];
 
   // Boat state
   const boat = {
@@ -23,12 +38,10 @@
     vx: 0,
     vy: 0,
     speed: 0,
-    targetAngle: -Math.PI / 4, // start facing NE
+    targetAngle: -Math.PI / 4,
     currentAngle: -Math.PI / 4,
     isoDir: 1, // 0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW
     sailBillow: 0,
-    bobOffset: 0,
-    rollAngle: 0,
     lastRippleTime: 0,
     foamParticles: []
   };
@@ -57,22 +70,33 @@
     boatCanvas.style.width = '100%';
     boatCanvas.style.height = '100%';
     boatCanvas.style.pointerEvents = 'none';
-    boatCanvas.style.zIndex = '1'; // Above nebula canvas (-1), below page content
+    boatCanvas.style.zIndex = '1';
     boatCanvas.style.opacity = '0';
-    boatCanvas.style.transition = 'opacity 0.6s ease';
+    boatCanvas.style.transition = 'opacity 0.4s ease';
     document.body.appendChild(boatCanvas);
 
     ctx = boatCanvas.getContext('2d');
 
+    // Low-resolution offscreen buffer for pixelation & dithering
+    offscreenCanvas = document.createElement('canvas');
+    offCtx = offscreenCanvas.getContext('2d', { willReadFrequently: true });
+
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      boatCanvas.width = Math.floor(window.innerWidth * dpr);
-      boatCanvas.height = Math.floor(window.innerHeight * dpr);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      boatCanvas.width = w;
+      boatCanvas.height = h;
+
+      offscreenCanvas.width = Math.ceil(w / PIXEL_SCALE);
+      offscreenCanvas.height = Math.ceil(h / PIXEL_SCALE);
+
+      ctx.imageSmoothingEnabled = false;
+      offCtx.imageSmoothingEnabled = false;
     }
     window.addEventListener('resize', resize);
     resize();
 
-    // Default spawn coordinates (lower-right quarter of screen)
+    // Default spawn coordinates
     boat.x = window.innerWidth * 0.72;
     boat.y = window.innerHeight * 0.68;
 
@@ -96,7 +120,6 @@
         initBoat();
         if (boatCanvas) boatCanvas.style.opacity = '1';
       }
-      // Prevent page scrolling on arrow keys when steering the sailboat
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
@@ -113,231 +136,256 @@
 
   // Calculate 8-direction isometric index (0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW)
   function getIsoDirection(angle) {
-    // Normalize angle to [0, 2pi)
     let a = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-    // Sector size is pi / 4
     const sector = Math.PI / 4;
-    // Offset by half sector for rounding
     const idx = Math.floor((a + sector / 2) / sector) % 8;
-    // Maps standard trig angle (0=E, pi/2=S, pi=W, 3pi/2=N) to our 8 directions:
-    // 0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW
     const mapping = [2, 3, 4, 5, 6, 7, 0, 1];
     return mapping[idx];
   }
 
-  // Draw 8-Direction Isometric Sailboat Sprite
-  function drawSailboat(ctx, x, y, scale, isoDir, billow, rise, time) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
+  // Draw 8-Direction Isometric Sailboat Sprite onto low-res canvas
+  function drawSailboatLowRes(oCtx, lx, ly, isoDir, billow, rise, time) {
+    oCtx.save();
+    oCtx.translate(lx, ly);
 
     // Wave bobbing & buoyancy rocking
-    const bob = Math.sin(time * 3.2) * 1.8;
-    const rock = Math.sin(time * 2.1) * 0.045;
-    ctx.translate(0, bob);
-    ctx.rotate(rock);
+    const bob = Math.sin(time * 3.6) * 0.8;
+    const rock = Math.sin(time * 2.4) * 0.04;
+    oCtx.translate(0, bob);
+    oCtx.rotate(rock);
 
-    // Elevation rise progress (emerging from the cosmic depths)
-    const riseY = (1.0 - rise) * 25;
-    ctx.translate(0, riseY);
+    // Elevation rise progress
+    const riseY = (1.0 - rise) * 12;
+    oCtx.translate(0, riseY);
 
     // Color Palette
     const woodDark  = '#26140b';
-    const woodMid   = '#593217';
-    const woodLight = '#9e5d2d';
-    const woodDeck  = '#c98a53';
+    const woodMid   = '#693816';
+    const woodLight = '#a66230';
+    const woodDeck  = '#d6945a';
     const mastColor = '#e0a96d';
     const sailLit   = '#fffaf0';
-    const sailMid   = '#e3d5be';
+    const sailMid   = '#e5d7c0';
     const sailShade = '#a89478';
-    const foamColor = 'rgba(127, 212, 138, 0.75)';
+    const foamColor = '#7fd48a';
 
-    // Directions: 0:N, 1:NE, 2:E, 3:SE, 4:S, 5:SW, 6:W, 7:NW
-    // We flip horizontally for West-facing directions (5, 6, 7)
     let flipX = 1;
     let dirKey = isoDir;
     if (isoDir === 5) { dirKey = 3; flipX = -1; }
     else if (isoDir === 6) { dirKey = 2; flipX = -1; }
     else if (isoDir === 7) { dirKey = 1; flipX = -1; }
 
-    ctx.scale(flipX, 1);
+    oCtx.scale(flipX, 1);
 
-    // --- Submerged Hull Mask & Cosmic Waterline ---
-    // Draw Hull Base
-    ctx.fillStyle = woodMid;
-    ctx.strokeStyle = woodDark;
-    ctx.lineWidth = 1.5;
+    // --- Hull Base ---
+    oCtx.fillStyle = woodMid;
+    oCtx.strokeStyle = woodDark;
+    oCtx.lineWidth = 1.0;
 
-    ctx.beginPath();
+    oCtx.beginPath();
     if (dirKey === 1) {
-      // Isometric NE (quarter view from stern-left)
-      ctx.moveTo(-18, 6);
-      ctx.lineTo(20, -10);
-      ctx.lineTo(24, -8);
-      ctx.lineTo(-12, 12);
-      ctx.closePath();
+      // NE
+      oCtx.moveTo(-9, 3);
+      oCtx.lineTo(10, -5);
+      oCtx.lineTo(12, -4);
+      oCtx.lineTo(-6, 6);
     } else if (dirKey === 2) {
-      // Isometric E (side profile)
-      ctx.moveTo(-22, 5);
-      ctx.lineTo(24, 5);
-      ctx.lineTo(20, 12);
-      ctx.lineTo(-18, 12);
-      ctx.closePath();
+      // E
+      oCtx.moveTo(-11, 2);
+      oCtx.lineTo(12, 2);
+      oCtx.lineTo(10, 6);
+      oCtx.lineTo(-9, 6);
     } else if (dirKey === 3) {
-      // Isometric SE (front-quarter view towards viewer)
-      ctx.moveTo(-20, -6);
-      ctx.lineTo(18, 10);
-      ctx.lineTo(12, 14);
-      ctx.lineTo(-24, -2);
-      ctx.closePath();
+      // SE
+      oCtx.moveTo(-10, -3);
+      oCtx.lineTo(9, 5);
+      oCtx.lineTo(6, 7);
+      oCtx.lineTo(-12, -1);
     } else if (dirKey === 4) {
-      // Isometric S (bow facing directly towards viewer)
-      ctx.moveTo(0, 16);
-      ctx.lineTo(-12, -2);
-      ctx.lineTo(-8, -6);
-      ctx.lineTo(0, -4);
-      ctx.lineTo(8, -6);
-      ctx.lineTo(12, -2);
-      ctx.closePath();
+      // S
+      oCtx.moveTo(0, 8);
+      oCtx.lineTo(-6, -1);
+      oCtx.lineTo(-4, -3);
+      oCtx.lineTo(0, -2);
+      oCtx.lineTo(4, -3);
+      oCtx.lineTo(6, -1);
     } else {
-      // Isometric N (stern facing directly away)
-      ctx.moveTo(0, -14);
-      ctx.lineTo(-12, 4);
-      ctx.lineTo(-8, 8);
-      ctx.lineTo(0, 6);
-      ctx.lineTo(8, 8);
-      ctx.lineTo(12, 4);
-      ctx.closePath();
+      // N
+      oCtx.moveTo(0, -7);
+      oCtx.lineTo(-6, 2);
+      oCtx.lineTo(-4, 4);
+      oCtx.lineTo(0, 3);
+      oCtx.lineTo(4, 4);
+      oCtx.lineTo(6, 2);
     }
-    ctx.fill();
-    ctx.stroke();
+    oCtx.closePath();
+    oCtx.fill();
+    oCtx.stroke();
 
-    // Deck planking highlight
-    ctx.fillStyle = woodDeck;
-    ctx.beginPath();
+    // Deck planking
+    oCtx.fillStyle = woodDeck;
+    oCtx.beginPath();
     if (dirKey === 1) {
-      ctx.moveTo(-16, 5);
-      ctx.lineTo(18, -9);
-      ctx.lineTo(16, -7);
-      ctx.lineTo(-14, 7);
+      oCtx.moveTo(-8, 2);
+      oCtx.lineTo(9, -5);
+      oCtx.lineTo(8, -3);
+      oCtx.lineTo(-7, 4);
     } else if (dirKey === 2) {
-      ctx.moveTo(-20, 5);
-      ctx.lineTo(22, 5);
-      ctx.lineTo(18, 8);
-      ctx.lineTo(-16, 8);
+      oCtx.moveTo(-10, 2);
+      oCtx.lineTo(11, 2);
+      oCtx.lineTo(9, 4);
+      oCtx.lineTo(-8, 4);
     } else if (dirKey === 3) {
-      ctx.moveTo(-18, -5);
-      ctx.lineTo(16, 9);
-      ctx.lineTo(11, 11);
-      ctx.lineTo(-21, -3);
+      oCtx.moveTo(-9, -2);
+      oCtx.lineTo(8, 4);
+      oCtx.lineTo(5, 5);
+      oCtx.lineTo(-10, -1);
     } else if (dirKey === 4) {
-      ctx.moveTo(0, 14);
-      ctx.lineTo(-10, 0);
-      ctx.lineTo(0, -2);
-      ctx.lineTo(10, 0);
+      oCtx.moveTo(0, 7);
+      oCtx.lineTo(-5, 0);
+      oCtx.lineTo(0, -1);
+      oCtx.lineTo(5, 0);
     } else {
-      ctx.moveTo(0, -12);
-      ctx.lineTo(-10, 3);
-      ctx.lineTo(0, 5);
-      ctx.lineTo(10, 3);
+      oCtx.moveTo(0, -6);
+      oCtx.lineTo(-5, 1);
+      oCtx.lineTo(0, 2);
+      oCtx.lineTo(5, 1);
     }
-    ctx.closePath();
-    ctx.fill();
+    oCtx.closePath();
+    oCtx.fill();
 
     // --- Mast ---
-    ctx.strokeStyle = mastColor;
-    ctx.lineWidth = 2.0;
-    ctx.beginPath();
-    ctx.moveTo(0, 3);
-    ctx.lineTo(0, -32);
-    ctx.stroke();
+    oCtx.strokeStyle = mastColor;
+    oCtx.lineWidth = 1.0;
+    oCtx.beginPath();
+    oCtx.moveTo(0, 1);
+    oCtx.lineTo(0, -16);
+    oCtx.stroke();
 
-    // --- Two-Part Sails (Mainsail & Jib) with Billow ---
-    const b = Math.sin(time * 4.0 + billow) * 2.0;
+    // --- Two-Part Sails with dynamic billow ---
+    const b = Math.sin(time * 4.5 + billow) * 1.2;
 
-    // 1. Mainsail (Large triangular sail)
-    ctx.fillStyle = sailLit;
-    ctx.strokeStyle = sailShade;
-    ctx.lineWidth = 1.0;
-    ctx.beginPath();
-    ctx.moveTo(0, -30);
+    // 1. Mainsail
+    oCtx.fillStyle = sailLit;
+    oCtx.strokeStyle = sailShade;
+    oCtx.lineWidth = 0.5;
+    oCtx.beginPath();
+    oCtx.moveTo(0, -15);
     if (dirKey === 1 || dirKey === 2 || dirKey === 3) {
-      ctx.quadraticCurveTo(-14 + b, -14, -18 + b * 0.8, -2);
-      ctx.lineTo(0, 2);
+      oCtx.quadraticCurveTo(-7 + b, -7, -9 + b * 0.8, -1);
+      oCtx.lineTo(0, 1);
     } else if (dirKey === 4) {
-      ctx.quadraticCurveTo(-15 + b, -15, -16 + b, 0);
-      ctx.lineTo(0, 2);
+      oCtx.quadraticCurveTo(-8 + b, -8, -8 + b, 0);
+      oCtx.lineTo(0, 1);
     } else {
-      ctx.quadraticCurveTo(14 + b, -15, 16 + b, 0);
-      ctx.lineTo(0, 2);
+      oCtx.quadraticCurveTo(7 + b, -8, 8 + b, 0);
+      oCtx.lineTo(0, 1);
     }
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
+    oCtx.closePath();
+    oCtx.fill();
+    oCtx.stroke();
 
     // Mainsail shadow / inner fold
-    ctx.fillStyle = sailMid;
-    ctx.beginPath();
-    ctx.moveTo(0, -28);
+    oCtx.fillStyle = sailMid;
+    oCtx.beginPath();
+    oCtx.moveTo(0, -14);
     if (dirKey === 1 || dirKey === 2 || dirKey === 3) {
-      ctx.quadraticCurveTo(-8 + b * 0.5, -14, -12 + b * 0.5, 0);
-      ctx.lineTo(0, 1);
+      oCtx.quadraticCurveTo(-4 + b * 0.5, -7, -6 + b * 0.5, 0);
+      oCtx.lineTo(0, 1);
     } else {
-      ctx.quadraticCurveTo(8 + b * 0.5, -14, 10 + b * 0.5, 0);
-      ctx.lineTo(0, 1);
+      oCtx.quadraticCurveTo(4 + b * 0.5, -7, 5 + b * 0.5, 0);
+      oCtx.lineTo(0, 1);
     }
-    ctx.closePath();
-    ctx.fill();
+    oCtx.closePath();
+    oCtx.fill();
 
-    // 2. Jib / Foresail (Front triangular sail)
-    ctx.fillStyle = sailLit;
-    ctx.beginPath();
-    ctx.moveTo(0, -24);
+    // 2. Jib / Foresail
+    oCtx.fillStyle = sailLit;
+    oCtx.beginPath();
+    oCtx.moveTo(0, -12);
     if (dirKey === 1) {
-      ctx.quadraticCurveTo(12 + b * 0.6, -12, 16, -8);
-      ctx.lineTo(2, 0);
+      oCtx.quadraticCurveTo(6 + b * 0.6, -6, 8, -4);
+      oCtx.lineTo(1, 0);
     } else if (dirKey === 2) {
-      ctx.quadraticCurveTo(14 + b * 0.6, -10, 18, 4);
-      ctx.lineTo(2, 2);
+      oCtx.quadraticCurveTo(7 + b * 0.6, -5, 9, 2);
+      oCtx.lineTo(1, 1);
     } else if (dirKey === 3) {
-      ctx.quadraticCurveTo(10 + b * 0.6, 0, 14, 8);
-      ctx.lineTo(2, 2);
+      oCtx.quadraticCurveTo(5 + b * 0.6, 0, 7, 4);
+      oCtx.lineTo(1, 1);
     } else if (dirKey === 4) {
-      ctx.quadraticCurveTo(8 + b * 0.6, 2, 6, 12);
-      ctx.lineTo(0, 2);
+      oCtx.quadraticCurveTo(4 + b * 0.6, 1, 3, 6);
+      oCtx.lineTo(0, 1);
     } else {
-      ctx.quadraticCurveTo(-8 + b * 0.6, -8, -6, -10);
-      ctx.lineTo(0, 2);
+      oCtx.quadraticCurveTo(-4 + b * 0.6, -4, -3, -5);
+      oCtx.lineTo(0, 1);
     }
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
+    oCtx.closePath();
+    oCtx.fill();
 
-    // --- Luminous Waterline Foam & Cosmic Wave Wake ---
-    ctx.fillStyle = foamColor;
-    ctx.beginPath();
-    ctx.arc(-14, 8, 2.5, 0, Math.PI * 2);
-    ctx.arc(14, 8, 2.0, 0, Math.PI * 2);
-    ctx.arc(0, 11, 2.8, 0, Math.PI * 2);
-    ctx.fill();
+    // Waterline foam dots
+    oCtx.fillStyle = foamColor;
+    oCtx.fillRect(-7, 4, 2, 2);
+    oCtx.fillRect(7, 4, 2, 2);
+    oCtx.fillRect(0, 6, 2, 2);
 
-    ctx.restore();
+    oCtx.restore();
   }
 
   // Foam Particle Trailing System
-  function addFoam(x, y, vx, vy) {
+  function addFoam(lx, ly, vx, vy) {
     boat.foamParticles.push({
-      x: x + (Math.random() - 0.5) * 8,
-      y: y + (Math.random() - 0.5) * 6 + 6,
-      vx: -vx * 0.25 + (Math.random() - 0.5) * 0.6,
-      vy: -vy * 0.25 + (Math.random() - 0.5) * 0.6,
-      size: 2.0 + Math.random() * 2.5,
+      x: lx + (Math.random() - 0.5) * 4,
+      y: ly + (Math.random() - 0.5) * 3 + 3,
+      vx: -vx * 0.25 + (Math.random() - 0.5) * 0.3,
+      vy: -vy * 0.25 + (Math.random() - 0.5) * 0.3,
+      size: 1.0 + Math.random() * 1.2,
       life: 1.0,
-      decay: 0.02 + Math.random() * 0.015
+      decay: 0.03 + Math.random() * 0.02
     });
-    if (boat.foamParticles.length > 50) {
+    if (boat.foamParticles.length > 40) {
       boat.foamParticles.shift();
     }
+  }
+
+  // Apply 4x4 Bayer ordered dithering & quantization to offscreen canvas region
+  function applyBayerDither(oCtx, minX, minY, boxW, boxH) {
+    minX = Math.max(0, Math.floor(minX));
+    minY = Math.max(0, Math.floor(minY));
+    boxW = Math.min(offscreenCanvas.width - minX, Math.ceil(boxW));
+    boxH = Math.min(offscreenCanvas.height - minY, Math.ceil(boxH));
+
+    if (boxW <= 0 || boxH <= 0) return;
+
+    const imgData = oCtx.getImageData(minX, minY, boxW, boxH);
+    const data = imgData.data;
+    const levels = 14.0;
+    const step = 255.0 / levels;
+
+    for (let py = 0; py < boxH; py++) {
+      const globalY = minY + py;
+      const rowOffset = py * boxW;
+
+      for (let px = 0; px < boxW; px++) {
+        const globalX = minX + px;
+        const idx = (rowOffset + px) * 4;
+        const a = data[idx + 3];
+        if (a < 10) continue;
+
+        // Sample 4x4 Bayer Matrix
+        const ditherVal = BAYER_4X4[globalY % 4][globalX % 4] * 0.085 * 255.0;
+
+        for (let c = 0; c < 3; c++) {
+          let v = data[idx + c] + ditherVal;
+          v = Math.max(0, Math.min(255, v));
+          data[idx + c] = Math.round(v / step) * step;
+        }
+
+        // Discrete pixel boundary
+        data[idx + 3] = a > 140 ? 255 : (a > 30 ? 190 : 0);
+      }
+    }
+
+    oCtx.putImageData(imgData, minX, minY);
   }
 
   let lastTime = performance.now();
@@ -347,15 +395,14 @@
     lastTime = now;
     const timeSec = now * 0.001;
 
-    if (isRevealed && isHomePage() && ctx && boatCanvas) {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    if (isRevealed && isHomePage() && ctx && boatCanvas && offCtx && offscreenCanvas) {
+      // Clear both canvases
+      offCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
       ctx.clearRect(0, 0, boatCanvas.width, boatCanvas.height);
-      ctx.save();
-      ctx.scale(dpr, dpr);
 
-      // Rise progress
+      // Rise animation
       if (riseProgress < 1.0) {
-        riseProgress = Math.min(1.0, riseProgress + dt * 1.2);
+        riseProgress = Math.min(1.0, riseProgress + dt * 1.5);
       }
 
       // Movement input
@@ -368,22 +415,21 @@
 
       const isMoving = (moveX !== 0 || moveY !== 0);
 
-      // Acceleration and Steering Physics
-      const accel = 8.0;
-      const maxSpeed = 3.4;
-      const drag = 0.94;
+      // Tight, responsive physics
+      const accel = 26.0; // Snappy acceleration
+      const maxSpeed = 4.4; // Crisp cruise speed
+      const drag = 0.88; // Quick deceleration when keys released
 
       if (isMoving) {
         const targetAngle = Math.atan2(moveY, moveX);
         boat.targetAngle = targetAngle;
 
-        // Smooth shortest angular interpolation
+        // Fast angular steering interpolation
         let diff = boat.targetAngle - boat.currentAngle;
         while (diff < -Math.PI) diff += Math.PI * 2;
         while (diff > Math.PI) diff -= Math.PI * 2;
-        boat.currentAngle += diff * Math.min(1.0, dt * 7.0);
+        boat.currentAngle += diff * Math.min(1.0, dt * 18.0);
 
-        // Apply thrust in heading direction
         boat.vx += Math.cos(boat.currentAngle) * accel * dt;
         boat.vy += Math.sin(boat.currentAngle) * accel * dt;
       }
@@ -392,7 +438,6 @@
       boat.vx *= Math.pow(drag, dt * 60);
       boat.vy *= Math.pow(drag, dt * 60);
 
-      // Clamp speed
       boat.speed = Math.hypot(boat.vx, boat.vy);
       if (boat.speed > maxSpeed) {
         boat.vx = (boat.vx / boat.speed) * maxSpeed;
@@ -400,7 +445,6 @@
         boat.speed = maxSpeed;
       }
 
-      // Update position
       boat.x += boat.vx;
       boat.y += boat.vy;
 
@@ -412,23 +456,26 @@
       if (boat.y < -margin) boat.y = window.innerHeight + margin - 5;
       else if (boat.y > window.innerHeight + margin) boat.y = -margin + 5;
 
-      // Determine 8-direction isometric heading
       boat.isoDir = getIsoDirection(boat.currentAngle);
 
-      // Spawn wake foam & emit background WebGL ripples
-      if (boat.speed > 0.35 && riseProgress > 0.4) {
-        addFoam(boat.x, boat.y, boat.vx, boat.vy);
+      // Low-res boat coordinates
+      const lx = boat.x / PIXEL_SCALE;
+      const ly = boat.y / PIXEL_SCALE;
 
-        if (now - boat.lastRippleTime > 120) {
+      // Spawn wake foam & emit background WebGL ripples
+      if (boat.speed > 0.3 && riseProgress > 0.4) {
+        addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
+
+        if (now - boat.lastRippleTime > 110) {
           boat.lastRippleTime = now;
           if (window.addNebulaRipple) {
-            const rippleStrength = Math.min(1.0, boat.speed / 2.5);
+            const rippleStrength = Math.min(1.0, boat.speed / 2.8);
             window.addNebulaRipple(boat.x, boat.y, rippleStrength);
           }
         }
       }
 
-      // Draw trailing foam particles
+      // Draw trailing foam particles on low-res buffer
       for (let i = boat.foamParticles.length - 1; i >= 0; i--) {
         const p = boat.foamParticles[i];
         p.x += p.vx;
@@ -440,16 +487,24 @@
           continue;
         }
 
-        ctx.fillStyle = `rgba(127, 212, 138, ${p.life * 0.7})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-        ctx.fill();
+        offCtx.fillStyle = `rgba(127, 212, 138, ${p.life * 0.8})`;
+        offCtx.fillRect(Math.floor(p.x), Math.floor(p.y), Math.max(1, Math.floor(p.size)), Math.max(1, Math.floor(p.size)));
       }
 
-      // Draw the sailboat
-      drawSailboat(ctx, boat.x, boat.y, 1.35, boat.isoDir, boat.sailBillow, riseProgress, timeSec);
+      // Draw sailboat onto low-res buffer
+      drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.sailBillow, riseProgress, timeSec);
 
-      ctx.restore();
+      // Apply 4x4 Bayer dithering & color quantization to the active boat area
+      const boxPad = 25;
+      applyBayerDither(offCtx, lx - boxPad, ly - boxPad, boxPad * 2, boxPad * 2);
+
+      // Blit pixelated & dithered buffer onto main screen canvas
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(
+        offscreenCanvas,
+        0, 0, offscreenCanvas.width, offscreenCanvas.height,
+        0, 0, boatCanvas.width, boatCanvas.height
+      );
     }
 
     requestAnimationFrame(gameLoop);
