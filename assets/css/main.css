@@ -33,6 +33,12 @@ img, video { max-width: 100%; height: auto; display: block; }
   z-index: -2;
   pointer-events: none;
   display: block;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#nebula-bg.loaded {
+  opacity: 1;
 }
 
 /* Sailboat Easter Egg (Between background and page content) */

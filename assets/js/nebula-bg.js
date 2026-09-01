@@ -476,5 +476,11 @@
     }
   });
 
-  requestAnimationFrame(render);
+  // Start WebGL render loop & smoothly fade/fizzle in canvas after initial frame paint
+  requestAnimationFrame(function () {
+    render();
+    requestAnimationFrame(function () {
+      canvas.classList.add('loaded');
+    });
+  });
 })();
