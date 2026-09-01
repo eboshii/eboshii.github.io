@@ -16,12 +16,14 @@ layout: default
   {% if published_posts.size > 0 %}
   <ul class="post-list">
     {% for post in published_posts %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <div class="post-meta">
-        {% if post.date %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>{% endif %}
-        {% if post.subtitle %}<span class="post-excerpt">{{ post.subtitle }}</span>{% endif %}
-      </div>
+    <li class="post-list-item">
+      <a href="{{ post.url | relative_url }}" class="post-list-card">
+        <span class="post-title">{{ post.title }}</span>
+        <div class="post-meta">
+          {% if post.date %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>{% endif %}
+          {% if post.subtitle %}<span class="post-excerpt">{{ post.subtitle }}</span>{% endif %}
+        </div>
+      </a>
     </li>
     {% endfor %}
   </ul>
