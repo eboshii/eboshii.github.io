@@ -192,18 +192,18 @@
           float birth = u_wake[i].w;
           float age = time - birth;
 
-          if (age > 0.0 && age < 4.8) {
+          if (age > 0.0 && age < 5.2) {
             vec2 d = rawUv - nodePos;
             // 2.5D perspective ellipse
             d.y *= 1.75;
 
             float r = length(d);
-            float waveFront = age * 0.22;
+            float waveFront = age * 0.13;
             float deltaR = r - waveFront;
 
             // Dispersive water wave packet envelope with gentle lingering decay
-            float envelope = exp(-abs(deltaR) * 16.0) * exp(-age * 0.65);
-            float phase = deltaR * 42.0 - age * 7.0;
+            float envelope = exp(-abs(deltaR) * 18.0) * exp(-age * 0.55);
+            float phase = deltaR * 46.0 - age * 3.8;
             float wave = sin(phase) * envelope;
 
             vec2 dir = normalize(vec2(d.x, d.y / 1.75) + 0.0001);

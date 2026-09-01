@@ -411,8 +411,8 @@
       const isMoving = (moveX !== 0 || moveY !== 0);
 
       // --- Snappy Game Handling & Kinematics ---
-      const maxSpeed = 4.8;
-      const accelRate = 38.0; // Fast snappy acceleration ramp
+      const maxSpeed = 3.2; // Graceful, controlled cruising pace
+      const accelRate = 24.0; // Responsive acceleration ramp
 
       let targetStretch = 1.0;
       let targetHeel = 0.0;
