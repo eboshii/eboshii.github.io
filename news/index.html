@@ -52,7 +52,7 @@ full_width: true
               <div class="cat-checklist">
                 {% for cat in site.data.news.categories %}
                 {% assign is_default_disabled = false %}
-                {% if cat.id == 'crypto' or cat.id == 'cybersec' or cat.id == 'startups' %}
+                {% if cat.id == 'energy' or cat.id == 'geopolitics' or cat.id == 'europe' or cat.id == 'asia' or cat.id == 'africa' or cat.id == 'startups' or cat.id == 'cybersec' or cat.id == 'crypto' %}
                   {% assign is_default_disabled = true %}
                 {% endif %}
                 <label class="cat-check-label">
@@ -62,11 +62,11 @@ full_width: true
                 {% endfor %}
               </div>
             </div>
+          </div>
 
-            <div class="settings-footer">
-              <button id="save-cookies-btn" class="settings-save-btn">Save into cookies</button>
-              <span id="save-feedback" class="save-feedback" style="display: none;">Saved!</span>
-            </div>
+          <div class="settings-footer">
+            <button id="save-cookies-btn" class="settings-save-btn">Save into cookies</button>
+            <span id="save-feedback" class="save-feedback" style="display: none;">Saved!</span>
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@ full_width: true
   }
 
   let selectedCols = 4;
-  const DEFAULT_ACTIVE_CATS = ['world', 'tech', 'markets', 'science', 'ai', 'geopolitics', 'energy', 'culture', 'gaming'];
+  const DEFAULT_ACTIVE_CATS = ['world', 'tech', 'science', 'markets', 'ai', 'politics', 'culture', 'movies', 'music', 'gaming'];
   let activeCategories = new Set(DEFAULT_ACTIVE_CATS);
 
   // Format relative timestamp

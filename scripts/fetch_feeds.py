@@ -28,6 +28,7 @@ except ImportError:
 # Configuration: Categories & RSS Feeds (1-Word Titles)
 # ---------------------------------------------------------------------------
 FEEDS_CONFIG = [
+    # --- Top 10 Core Broad-Appeal Categories (Default Active) ---
     {
         "category_id": "world",
         "category_title": "World",
@@ -38,8 +39,6 @@ FEEDS_CONFIG = [
             {"name": "Deutsche Welle", "short": "DW", "url": "https://rss.dw.com/rdf/rss-en-all", "limit": 15},
             {"name": "Al Jazeera", "short": "AJ", "url": "https://www.aljazeera.com/xml/rss/all.xml", "limit": 15},
             {"name": "France 24", "short": "F24", "url": "https://www.france24.com/en/rss", "limit": 15},
-            {"name": "South China MP", "short": "SCM", "url": "https://www.scmp.com/rss/91/feed", "limit": 15},
-            {"name": "Mainichi News", "short": "MAI", "url": "https://mainichi.jp/english/rss/etc/mainichi.rss", "limit": 15},
         ]
     },
     {
@@ -53,18 +52,6 @@ FEEDS_CONFIG = [
             {"name": "MIT Tech Review", "short": "MIT", "url": "https://www.technologyreview.com/feed/", "limit": 12},
             {"name": "Techmeme", "short": "TM", "url": "https://www.techmeme.com/feed.xml", "limit": 20},
             {"name": "Phoronix", "short": "PHX", "url": "https://www.phoronix.com/phoronix-rss.php", "limit": 15},
-            {"name": "IEEE Spectrum", "short": "IEE", "url": "https://spectrum.ieee.org/feeds/topic/computing.rss", "limit": 12},
-        ]
-    },
-    {
-        "category_id": "markets",
-        "category_title": "Markets",
-        "feeds": [
-            {"name": "MarketWatch", "short": "MW", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "limit": 20},
-            {"name": "Yahoo Finance", "short": "YF", "url": "https://finance.yahoo.com/news/rssindex", "limit": 20},
-            {"name": "Financial Times", "short": "FT", "url": "https://www.ft.com/news-feed?format=rss", "limit": 15},
-            {"name": "Calculated Risk", "short": "CR", "url": "https://calculatedrisk.substack.com/feed", "limit": 12},
-            {"name": "Seeking Alpha", "short": "SA", "url": "https://seekingalpha.com/market_currents.xml", "limit": 15},
         ]
     },
     {
@@ -80,6 +67,17 @@ FEEDS_CONFIG = [
         ]
     },
     {
+        "category_id": "markets",
+        "category_title": "Markets",
+        "feeds": [
+            {"name": "MarketWatch", "short": "MW", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "limit": 20},
+            {"name": "Yahoo Finance", "short": "YF", "url": "https://finance.yahoo.com/news/rssindex", "limit": 20},
+            {"name": "Financial Times", "short": "FT", "url": "https://www.ft.com/news-feed?format=rss", "limit": 15},
+            {"name": "Calculated Risk", "short": "CR", "url": "https://calculatedrisk.substack.com/feed", "limit": 12},
+            {"name": "Seeking Alpha", "short": "SA", "url": "https://seekingalpha.com/market_currents.xml", "limit": 15},
+        ]
+    },
+    {
         "category_id": "ai",
         "category_title": "AI",
         "feeds": [
@@ -92,24 +90,13 @@ FEEDS_CONFIG = [
         ]
     },
     {
-        "category_id": "geopolitics",
-        "category_title": "Geopolitics",
+        "category_id": "politics",
+        "category_title": "Politics",
         "feeds": [
-            {"name": "The Diplomat", "short": "DIP", "url": "https://thediplomat.com/feed/", "limit": 15},
-            {"name": "Foreign Policy", "short": "FP", "url": "https://foreignpolicy.com/feed/", "limit": 15},
-            {"name": "War on the Rocks", "short": "WTR", "url": "https://warontherocks.com/feed/", "limit": 15},
-            {"name": "Defense One", "short": "DEF", "url": "https://www.defenseone.com/rss/all/", "limit": 15},
-            {"name": "FP Blogs", "short": "FPB", "url": "https://foreignpolicyblogs.com/feed/", "limit": 12},
-        ]
-    },
-    {
-        "category_id": "energy",
-        "category_title": "Energy",
-        "feeds": [
-            {"name": "Canary Media", "short": "CNR", "url": "https://www.canarymedia.com/rss", "limit": 15},
-            {"name": "CleanTechnica", "short": "CLN", "url": "https://cleantechnica.com/feed/", "limit": 15},
-            {"name": "OilPrice", "short": "OPC", "url": "https://oilprice.com/rss/main", "limit": 15},
-            {"name": "Carbon Brief", "short": "CRB", "url": "https://www.carbonbrief.org/feed/", "limit": 12},
+            {"name": "Politico", "short": "POL", "url": "https://rss.politico.com/politics-news.xml", "limit": 18},
+            {"name": "The Hill", "short": "HIL", "url": "https://thehill.com/feed/", "limit": 18},
+            {"name": "BBC Politics", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/politics/rss.xml", "limit": 15},
+            {"name": "Guardian Politics", "short": "GDN", "url": "https://www.theguardian.com/politics/rss", "limit": 15},
         ]
     },
     {
@@ -126,6 +113,28 @@ FEEDS_CONFIG = [
         ]
     },
     {
+        "category_id": "movies",
+        "category_title": "Movies",
+        "feeds": [
+            {"name": "Variety", "short": "VAR", "url": "https://variety.com/feed/", "limit": 18},
+            {"name": "Deadline", "short": "DDL", "url": "https://deadline.com/feed/", "limit": 18},
+            {"name": "IndieWire", "short": "IND", "url": "https://www.indiewire.com/feed/", "limit": 15},
+            {"name": "Hollywood Rep", "short": "THR", "url": "https://www.hollywoodreporter.com/feed/", "limit": 15},
+            {"name": "Roger Ebert", "short": "EBT", "url": "https://www.rogerebert.com/feed", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "music",
+        "category_title": "Music",
+        "feeds": [
+            {"name": "Pitchfork", "short": "P4K", "url": "https://pitchfork.com/rss/news/", "limit": 18},
+            {"name": "Stereogum", "short": "SGM", "url": "https://www.stereogum.com/feed/", "limit": 18},
+            {"name": "NME", "short": "NME", "url": "https://www.nme.com/feed", "limit": 15},
+            {"name": "Consequence", "short": "CSQ", "url": "https://consequence.net/feed/", "limit": 15},
+            {"name": "Bandcamp Daily", "short": "BCD", "url": "https://daily.bandcamp.com/feed", "limit": 12},
+        ]
+    },
+    {
         "category_id": "gaming",
         "category_title": "Gaming",
         "feeds": [
@@ -136,15 +145,66 @@ FEEDS_CONFIG = [
             {"name": "Game Developer", "short": "GMD", "url": "https://www.gamedeveloper.com/rss.xml", "limit": 12},
         ]
     },
+
+    # --- Specialized & Regional Categories (Available in Settings) ---
     {
-        "category_id": "crypto",
-        "category_title": "Crypto",
+        "category_id": "energy",
+        "category_title": "Energy",
         "feeds": [
-            {"name": "CoinDesk", "short": "CDK", "url": "https://www.coindesk.com/arc/outboundfeeds/rss/", "limit": 18},
-            {"name": "Cointelegraph", "short": "CT", "url": "https://cointelegraph.com/rss", "limit": 18},
-            {"name": "Decrypt", "short": "DEC", "url": "https://decrypt.co/feed", "limit": 15},
-            {"name": "The Block", "short": "TBK", "url": "https://www.theblock.co/rss.xml", "limit": 15},
-            {"name": "Blockworks", "short": "BWK", "url": "https://blockworks.co/feed", "limit": 15},
+            {"name": "Canary Media", "short": "CNR", "url": "https://www.canarymedia.com/rss", "limit": 15},
+            {"name": "CleanTechnica", "short": "CLN", "url": "https://cleantechnica.com/feed/", "limit": 15},
+            {"name": "OilPrice", "short": "OPC", "url": "https://oilprice.com/rss/main", "limit": 15},
+            {"name": "Carbon Brief", "short": "CRB", "url": "https://www.carbonbrief.org/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "geopolitics",
+        "category_title": "Geopolitics",
+        "feeds": [
+            {"name": "The Diplomat", "short": "DIP", "url": "https://thediplomat.com/feed/", "limit": 15},
+            {"name": "Foreign Policy", "short": "FP", "url": "https://foreignpolicy.com/feed/", "limit": 15},
+            {"name": "War on the Rocks", "short": "WTR", "url": "https://warontherocks.com/feed/", "limit": 15},
+            {"name": "Defense One", "short": "DEF", "url": "https://www.defenseone.com/rss/all/", "limit": 15},
+            {"name": "FP Blogs", "short": "FPB", "url": "https://foreignpolicyblogs.com/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "europe",
+        "category_title": "Europe",
+        "feeds": [
+            {"name": "Euronews", "short": "ENW", "url": "https://www.euronews.com/rss?format=mrss&level=theme&name=news", "limit": 15},
+            {"name": "Politico Europe", "short": "PLE", "url": "https://www.politico.eu/feed/", "limit": 15},
+            {"name": "DW Europe", "short": "DW", "url": "https://rss.dw.com/rdf/rss-en-eu", "limit": 15},
+            {"name": "BBC Europe", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml", "limit": 15},
+        ]
+    },
+    {
+        "category_id": "asia",
+        "category_title": "Asia",
+        "feeds": [
+            {"name": "South China MP", "short": "SCM", "url": "https://www.scmp.com/rss/91/feed", "limit": 15},
+            {"name": "Mainichi News", "short": "MAI", "url": "https://mainichi.jp/english/rss/etc/mainichi.rss", "limit": 15},
+            {"name": "BBC Asia", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/asia/rss.xml", "limit": 15},
+            {"name": "CNA", "short": "CNA", "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml", "limit": 15},
+        ]
+    },
+    {
+        "category_id": "africa",
+        "category_title": "Africa",
+        "feeds": [
+            {"name": "BBC Africa", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/africa/rss.xml", "limit": 18},
+            {"name": "Guardian Africa", "short": "GDN", "url": "https://www.theguardian.com/world/africa/rss", "limit": 15},
+            {"name": "Africa Report", "short": "TAR", "url": "https://www.theafricareport.com/feed/", "limit": 12},
+        ]
+    },
+    {
+        "category_id": "startups",
+        "category_title": "Startups",
+        "feeds": [
+            {"name": "TechCrunch", "short": "TC", "url": "https://techcrunch.com/category/startups/feed/", "limit": 18},
+            {"name": "Crunchbase", "short": "CRN", "url": "https://news.crunchbase.com/feed/", "limit": 15},
+            {"name": "StrictlyVC", "short": "SVC", "url": "https://strictlyvc.com/feed/", "limit": 12},
+            {"name": "Sifted", "short": "SFT", "url": "https://sifted.eu/feed", "limit": 12},
         ]
     },
     {
@@ -159,13 +219,14 @@ FEEDS_CONFIG = [
         ]
     },
     {
-        "category_id": "startups",
-        "category_title": "Startups",
+        "category_id": "crypto",
+        "category_title": "Crypto",
         "feeds": [
-            {"name": "TechCrunch", "short": "TC", "url": "https://techcrunch.com/category/startups/feed/", "limit": 18},
-            {"name": "Crunchbase", "short": "CRN", "url": "https://news.crunchbase.com/feed/", "limit": 15},
-            {"name": "StrictlyVC", "short": "SVC", "url": "https://strictlyvc.com/feed/", "limit": 12},
-            {"name": "Sifted", "short": "SFT", "url": "https://sifted.eu/feed", "limit": 12},
+            {"name": "CoinDesk", "short": "CDK", "url": "https://www.coindesk.com/arc/outboundfeeds/rss/", "limit": 18},
+            {"name": "Cointelegraph", "short": "CT", "url": "https://cointelegraph.com/rss", "limit": 18},
+            {"name": "Decrypt", "short": "DEC", "url": "https://decrypt.co/feed", "limit": 15},
+            {"name": "The Block", "short": "TBK", "url": "https://www.theblock.co/rss.xml", "limit": 15},
+            {"name": "Blockworks", "short": "BWK", "url": "https://blockworks.co/feed", "limit": 15},
         ]
     }
 ]
