@@ -920,7 +920,7 @@ main.main-wide {
 }
 
 .col-header {
-  padding: 0.35rem 0.55rem;
+  padding: 0.45rem 0.6rem 0.42rem;
   background: var(--bg-raised);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -932,13 +932,12 @@ main.main-wide {
   font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.25;
   color: var(--text);
   letter-spacing: 0.01em;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin: 0;
+  padding-bottom: 0.08rem;
 }
 
 .col-count {
@@ -1035,10 +1034,12 @@ main.main-wide {
 /* 3-Column Mode Typography Scale (1-2 ticks bigger for wider columns) */
 .news-grid.cols-3 .col-title {
   font-size: 1.5rem;
+  line-height: 1.25;
+  padding-bottom: 0.08rem;
 }
 
 .news-grid.cols-3 .col-header {
-  padding: 0.4rem 0.65rem;
+  padding: 0.5rem 0.7rem 0.45rem;
 }
 
 .news-grid.cols-3 .col-count {
