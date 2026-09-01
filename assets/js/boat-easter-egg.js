@@ -174,10 +174,6 @@
     }
     oCtx.translate(0, plopY);
 
-    // Directional Squash & Stretch along boat heading frame
-    const lenScale = Math.max(0.75, Math.min(1.35, stretch));
-    const widthScale = 1.0 / Math.sqrt(lenScale); // Preserve volume
-
     // Color Palette
     const woodDark  = '#26140b';
     const woodMid   = '#693816';
@@ -194,7 +190,25 @@
     else if (isoDir === 6) { dirKey = 2; flipX = -1; }
     else if (isoDir === 7) { dirKey = 1; flipX = -1; }
 
-    oCtx.scale(flipX * widthScale, lenScale);
+    oCtx.scale(flipX, 1);
+
+    // Directional Squash & Stretch aligned precisely with movement axis
+    const lenScale = Math.max(0.75, Math.min(1.35, stretch));
+    const widthScale = 1.0 / Math.sqrt(lenScale); // Preserve volume
+
+    if (dirKey === 2) {
+      // Sideways (East / West): stretch horizontally along X
+      oCtx.scale(lenScale, widthScale);
+    } else if (dirKey === 4 || dirKey === 0) {
+      // Vertical (North / South): stretch vertically along Y
+      oCtx.scale(widthScale, lenScale);
+    } else {
+      // Diagonal (NE / SE / NW / SW): stretch along 45-degree axis
+      const diagAngle = dirKey === 1 ? -Math.PI / 4 : Math.PI / 4;
+      oCtx.rotate(diagAngle);
+      oCtx.scale(lenScale, widthScale);
+      oCtx.rotate(-diagAngle);
+    }
 
     // --- Subtle Wave Lapping & Sea Immersion Modulation ---
     // The hull gently ascends and descends into the sea water plane
@@ -502,12 +516,12 @@
       let targetHeel = 0.0;
 
       if (isMoving) {
-        // Initial acceleration punch / launch burst
+        // Initial acceleration punch / launch burst (gentler, slower pace)
         if (!boat.wasMoving) {
-          boat.stretch = 1.18; // Forward elongation burst
-          boat.stretchVel = 0.8;
+          boat.stretch = 1.12; // Forward elongation burst
+          boat.stretchVel = 0.4;
           boat.strokeDist = 0.0;
-          addFoam(lx, ly, moveX, moveY, 5);
+          addFoam(lx, ly, moveX, moveY, 4);
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, 0.7);
           }
@@ -565,9 +579,9 @@
       boat.x += boat.vx;
       boat.y += boat.vy;
 
-      // Spring-Damper System for Organic Bounce-back
-      const springK = 75.0;
-      const springDamp = 9.5;
+      // Slower, softer Spring-Damper System for Organic Bounce-back
+      const springK = 46.0; // Slower, relaxed spring frequency
+      const springDamp = 7.2; // Soft damping
       const springForce = -springK * (boat.stretch - targetStretch) - springDamp * boat.stretchVel;
       boat.stretchVel += springForce * dt;
       boat.stretch += boat.stretchVel * dt;
