@@ -149,8 +149,8 @@
     oCtx.save();
     oCtx.translate(lx, ly);
 
-    // Wave bobbing & buoyancy
-    const bob = Math.sin(time * 3.6) * 0.7;
+    // Wave bobbing & buoyancy (slower, gentle ocean motion)
+    const bob = Math.sin(time * 2.0) * 0.7;
     oCtx.translate(0, bob);
 
     // Turn lean / heel tilt
@@ -266,9 +266,9 @@
     oCtx.lineTo(0, -17);
     oCtx.stroke();
 
-    // --- Dynamic Sail Catch with Wind Billow ---
-    const windPop = (stretch - 1.0) * 2.5;
-    const b = Math.sin(time * 4.5) * 1.2 + windPop;
+    // --- Dynamic Sail Catch with Wind Billow (Gentle pace) ---
+    const windPop = (stretch - 1.0) * 2.0;
+    const b = Math.sin(time * 2.4) * 0.9 + windPop;
 
     // 1. Mainsail
     oCtx.fillStyle = sailLit;
@@ -420,9 +420,9 @@
       if (isMoving) {
         // Initial acceleration punch / launch burst
         if (!boat.wasMoving) {
-          boat.stretch = 1.24; // Instant forward elongation burst
-          boat.stretchVel = 1.5;
-          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 6);
+          boat.stretch = 1.18; // Forward elongation burst
+          boat.stretchVel = 0.8;
+          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 5);
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, Math.atan2(moveY, moveX));
           }
@@ -436,8 +436,8 @@
         while (diff < -Math.PI) diff += Math.PI * 2;
         while (diff > Math.PI) diff -= Math.PI * 2;
         
-        boat.currentAngle += diff * Math.min(1.0, dt * 20.0);
-        targetHeel = Math.max(-0.16, Math.min(0.16, diff * 0.25));
+        boat.currentAngle += diff * Math.min(1.0, dt * 16.0);
+        targetHeel = Math.max(-0.14, Math.min(0.14, diff * 0.22));
 
         // Accelerate along current heading
         boat.speed = Math.min(maxSpeed, boat.speed + accelRate * dt);
@@ -445,13 +445,13 @@
         boat.vy = Math.sin(boat.currentAngle) * boat.speed;
 
         // Cruise stretch factor
-        targetStretch = 1.04 + (boat.speed / maxSpeed) * 0.08;
+        targetStretch = 1.03 + (boat.speed / maxSpeed) * 0.05;
       } else {
-        // --- Immediate Crisp Stop on Button Release with Elastic Bounce ---
+        // --- Immediate Crisp Stop on Button Release with Gentle Elastic Bounce ---
         if (boat.wasMoving) {
-          boat.stretchVel = -4.2; // Elastic recoil kickback
+          boat.stretchVel = -1.8; // Gentle recoil kickback
           targetStretch = 1.0;
-          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 4);
+          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 3);
         }
 
         // Instantly halt linear movement
@@ -468,15 +468,15 @@
       boat.x += boat.vx;
       boat.y += boat.vy;
 
-      // Spring-Damper System for Organic Squash & Stretch Bounce-back
-      const springK = 210.0;
-      const springDamp = 18.0;
+      // Slower, softer Spring-Damper System for Organic Bounce-back
+      const springK = 75.0; // Slower, relaxed spring frequency
+      const springDamp = 9.5; // Soft damping
       const springForce = -springK * (boat.stretch - targetStretch) - springDamp * boat.stretchVel;
       boat.stretchVel += springForce * dt;
       boat.stretch += boat.stretchVel * dt;
 
       // Smooth heel tilt
-      boat.heelAngle += (targetHeel - boat.heelAngle) * Math.min(1.0, dt * 14.0);
+      boat.heelAngle += (targetHeel - boat.heelAngle) * Math.min(1.0, dt * 8.0);
 
       // Screen boundary wrap-around
       const margin = 35;
