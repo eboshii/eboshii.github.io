@@ -2,11 +2,12 @@
  * eboshii space sailboat easter egg
  * Controlled via WASD or Arrow keys on the homepage.
  * Features:
- * - Ultra-tight, responsive 8-direction steering controls
+ * - Snappy game feel: short punchy acceleration with instant crisp stop on release
+ * - Directional Squash & Stretch spring deformation along heading axis
+ * - Elastic settling bounce-back on stop
+ * - Turn-leaning / heel dynamics
  * - 3px pixelation and 4x4 Bayer ordered dithering matching the WebGL nebula background
- * - Two-part sail model with dynamic wind billow
- * - Screen boundary wrap-around
- * - Background WebGL cosmic wake ripples
+ * - 2.5D Kelvin wake hydrodynamics and pure refraction
  */
 (function () {
   // Only active on the homepage
@@ -31,7 +32,7 @@
     [ 0.4375, -0.0625,  0.3125, -0.1875]
   ];
 
-  // Boat state
+  // Boat state with game-feel dynamics
   const boat = {
     x: 0,
     y: 0,
@@ -41,7 +42,10 @@
     targetAngle: -Math.PI / 4,
     currentAngle: -Math.PI / 4,
     isoDir: 1, // 0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW
-    sailBillow: 0,
+    wasMoving: false,
+    stretch: 1.0,      // Squash & stretch length factor
+    stretchVel: 0.0,   // Spring velocity for elastic bounce
+    heelAngle: 0.0,    // Leaning tilt during turns
     lastRippleTime: 0,
     foamParticles: []
   };
@@ -77,7 +81,6 @@
 
     ctx = boatCanvas.getContext('2d');
 
-    // Low-resolution offscreen buffer for pixelation & dithering
     offscreenCanvas = document.createElement('canvas');
     offCtx = offscreenCanvas.getContext('2d', { willReadFrequently: true });
 
@@ -96,7 +99,6 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Default spawn coordinates
     boat.x = window.innerWidth * 0.72;
     boat.y = window.innerHeight * 0.68;
 
@@ -134,7 +136,6 @@
     if (k === 'd' || e.key === 'ArrowRight') { keys.d = false; keys.right = false; }
   });
 
-  // Calculate 8-direction isometric index (0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW)
   function getIsoDirection(angle) {
     let a = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
     const sector = Math.PI / 4;
@@ -143,16 +144,21 @@
     return mapping[idx];
   }
 
-  // Draw 8-Direction Isometric Sailboat Sprite onto low-res canvas
-  function drawSailboatLowRes(oCtx, lx, ly, isoDir, billow, rise, time) {
+  // Draw 8-Direction Isometric Sailboat Sprite with Squash & Stretch + Heel tilt
+  function drawSailboatLowRes(oCtx, lx, ly, isoDir, stretch, heel, rise, time) {
     oCtx.save();
     oCtx.translate(lx, ly);
 
-    // Wave bobbing & buoyancy rocking
-    const bob = Math.sin(time * 3.6) * 0.8;
-    const rock = Math.sin(time * 2.4) * 0.04;
+    // Wave bobbing & buoyancy
+    const bob = Math.sin(time * 3.6) * 0.7;
     oCtx.translate(0, bob);
-    oCtx.rotate(rock);
+
+    // Turn lean / heel tilt
+    oCtx.rotate(heel);
+
+    // Directional Squash & Stretch along boat heading frame
+    const lenScale = Math.max(0.75, Math.min(1.35, stretch));
+    const widthScale = 1.0 / Math.sqrt(lenScale); // Preserve volume
 
     // Elevation rise progress
     const riseY = (1.0 - rise) * 12;
@@ -167,7 +173,6 @@
     const sailLit   = '#fffaf0';
     const sailMid   = '#e5d7c0';
     const sailShade = '#a89478';
-    const foamColor = '#7fd48a';
 
     let flipX = 1;
     let dirKey = isoDir;
@@ -175,7 +180,7 @@
     else if (isoDir === 6) { dirKey = 2; flipX = -1; }
     else if (isoDir === 7) { dirKey = 1; flipX = -1; }
 
-    oCtx.scale(flipX, 1);
+    oCtx.scale(flipX * widthScale, lenScale);
 
     // --- Slim Curved Hydrodynamic Hull Base ---
     oCtx.fillStyle = woodMid;
@@ -184,34 +189,34 @@
 
     oCtx.beginPath();
     if (dirKey === 1) {
-      // NE (Slender quarter-angle bow pointing up-right)
+      // NE
       oCtx.moveTo(-11, 4);
       oCtx.quadraticCurveTo(1, 0, 14, -6);
       oCtx.quadraticCurveTo(15.5, -5, 13.5, -3.8);
       oCtx.quadraticCurveTo(2, 4.2, -8, 6.2);
       oCtx.quadraticCurveTo(-11.8, 5.8, -11, 4);
     } else if (dirKey === 2) {
-      // E (Streamlined sleek profile heading right)
+      // E
       oCtx.moveTo(-13, 2.5);
       oCtx.quadraticCurveTo(0, 2.8, 15, 2.5);
       oCtx.quadraticCurveTo(15.8, 3.5, 13.5, 4.8);
       oCtx.quadraticCurveTo(0, 6.2, -11.5, 5.0);
       oCtx.quadraticCurveTo(-13.8, 4.0, -13, 2.5);
     } else if (dirKey === 3) {
-      // SE (Sleek quarter-angle bow pointing down-right)
+      // SE
       oCtx.moveTo(-12, -3.5);
       oCtx.quadraticCurveTo(0, 2.0, 14, 7.5);
       oCtx.quadraticCurveTo(13.8, 8.8, 11.5, 8.5);
       oCtx.quadraticCurveTo(-1, 6.5, -13, -1.0);
       oCtx.quadraticCurveTo(-13.5, -2.8, -12, -3.5);
     } else if (dirKey === 4) {
-      // S (Fine-entry bow heading down toward viewer)
+      // S
       oCtx.moveTo(0, 10.5);
       oCtx.quadraticCurveTo(-3.8, 4.5, -4.5, -2.0);
       oCtx.quadraticCurveTo(0, -3.8, 4.5, -2.0);
       oCtx.quadraticCurveTo(3.8, 4.5, 0, 10.5);
     } else {
-      // N (Slender hull heading up away from viewer)
+      // N
       oCtx.moveTo(0, -9.5);
       oCtx.quadraticCurveTo(-3.8, -3.5, -4.5, 2.5);
       oCtx.quadraticCurveTo(0, 4.0, 4.5, 2.5);
@@ -261,8 +266,9 @@
     oCtx.lineTo(0, -17);
     oCtx.stroke();
 
-    // --- Two-Part Sails with dynamic billow ---
-    const b = Math.sin(time * 4.5 + billow) * 1.2;
+    // --- Dynamic Sail Catch with Wind Billow ---
+    const windPop = (stretch - 1.0) * 2.5;
+    const b = Math.sin(time * 4.5) * 1.2 + windPop;
 
     // 1. Mainsail
     oCtx.fillStyle = sailLit;
@@ -324,23 +330,23 @@
     oCtx.restore();
   }
 
-  // Foam Particle Trailing System
-  function addFoam(lx, ly, vx, vy) {
-    boat.foamParticles.push({
-      x: lx + (Math.random() - 0.5) * 4,
-      y: ly + (Math.random() - 0.5) * 3 + 3,
-      vx: -vx * 0.25 + (Math.random() - 0.5) * 0.3,
-      vy: -vy * 0.25 + (Math.random() - 0.5) * 0.3,
-      size: 1.0 + Math.random() * 1.2,
-      life: 1.0,
-      decay: 0.03 + Math.random() * 0.02
-    });
-    if (boat.foamParticles.length > 40) {
-      boat.foamParticles.shift();
+  function addFoam(lx, ly, vx, vy, count = 1) {
+    for (let i = 0; i < count; i++) {
+      boat.foamParticles.push({
+        x: lx + (Math.random() - 0.5) * 4,
+        y: ly + (Math.random() - 0.5) * 3 + 3,
+        vx: -vx * 0.25 + (Math.random() - 0.5) * 0.4,
+        vy: -vy * 0.25 + (Math.random() - 0.5) * 0.4,
+        size: 1.0 + Math.random() * 1.3,
+        life: 1.0,
+        decay: 0.025 + Math.random() * 0.02
+      });
+    }
+    if (boat.foamParticles.length > 50) {
+      boat.foamParticles.splice(0, boat.foamParticles.length - 50);
     }
   }
 
-  // Apply 4x4 Bayer ordered dithering & quantization to offscreen canvas region
   function applyBayerDither(oCtx, minX, minY, boxW, boxH) {
     minX = Math.max(0, Math.floor(minX));
     minY = Math.max(0, Math.floor(minY));
@@ -364,7 +370,6 @@
         const a = data[idx + 3];
         if (a < 10) continue;
 
-        // Sample 4x4 Bayer Matrix
         const ditherVal = BAYER_4X4[globalY % 4][globalX % 4] * 0.085 * 255.0;
 
         for (let c = 0; c < 3; c++) {
@@ -373,7 +378,6 @@
           data[idx + c] = Math.round(v / step) * step;
         }
 
-        // Discrete pixel boundary
         data[idx + 3] = a > 140 ? 255 : (a > 30 ? 190 : 0);
       }
     }
@@ -389,11 +393,9 @@
     const timeSec = now * 0.001;
 
     if (isRevealed && isHomePage() && ctx && boatCanvas && offCtx && offscreenCanvas) {
-      // Clear both canvases
       offCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
       ctx.clearRect(0, 0, boatCanvas.width, boatCanvas.height);
 
-      // Rise animation
       if (riseProgress < 1.0) {
         riseProgress = Math.min(1.0, riseProgress + dt * 1.5);
       }
@@ -408,38 +410,73 @@
 
       const isMoving = (moveX !== 0 || moveY !== 0);
 
-      // Tight, responsive physics
-      const accel = 26.0; // Snappy acceleration
-      const maxSpeed = 4.4; // Crisp cruise speed
-      const drag = 0.88; // Quick deceleration when keys released
+      // --- Snappy Game Handling & Kinematics ---
+      const maxSpeed = 4.8;
+      const accelRate = 38.0; // Fast snappy acceleration ramp
+
+      let targetStretch = 1.0;
+      let targetHeel = 0.0;
 
       if (isMoving) {
+        // Initial acceleration punch / launch burst
+        if (!boat.wasMoving) {
+          boat.stretch = 1.24; // Instant forward elongation burst
+          boat.stretchVel = 1.5;
+          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, moveX, moveY, 6);
+          if (window.addBoatWakeNode) {
+            window.addBoatWakeNode(boat.x, boat.y, Math.atan2(moveY, moveX));
+          }
+        }
+
         const targetAngle = Math.atan2(moveY, moveX);
         boat.targetAngle = targetAngle;
 
-        // Fast angular steering interpolation
+        // Angular turning with heel tilt
         let diff = boat.targetAngle - boat.currentAngle;
         while (diff < -Math.PI) diff += Math.PI * 2;
         while (diff > Math.PI) diff -= Math.PI * 2;
-        boat.currentAngle += diff * Math.min(1.0, dt * 18.0);
+        
+        boat.currentAngle += diff * Math.min(1.0, dt * 20.0);
+        targetHeel = Math.max(-0.16, Math.min(0.16, diff * 0.25));
 
-        boat.vx += Math.cos(boat.currentAngle) * accel * dt;
-        boat.vy += Math.sin(boat.currentAngle) * accel * dt;
+        // Accelerate along current heading
+        boat.speed = Math.min(maxSpeed, boat.speed + accelRate * dt);
+        boat.vx = Math.cos(boat.currentAngle) * boat.speed;
+        boat.vy = Math.sin(boat.currentAngle) * boat.speed;
+
+        // Cruise stretch factor
+        targetStretch = 1.04 + (boat.speed / maxSpeed) * 0.08;
+      } else {
+        // --- Immediate Crisp Stop on Button Release with Elastic Bounce ---
+        if (boat.wasMoving) {
+          boat.stretchVel = -4.2; // Elastic recoil kickback
+          targetStretch = 1.0;
+          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 4);
+        }
+
+        // Instantly halt linear movement
+        boat.speed = 0;
+        boat.vx = 0;
+        boat.vy = 0;
+        targetStretch = 1.0;
+        targetHeel = 0.0;
       }
 
-      // Apply drag
-      boat.vx *= Math.pow(drag, dt * 60);
-      boat.vy *= Math.pow(drag, dt * 60);
+      boat.wasMoving = isMoving;
 
-      boat.speed = Math.hypot(boat.vx, boat.vy);
-      if (boat.speed > maxSpeed) {
-        boat.vx = (boat.vx / boat.speed) * maxSpeed;
-        boat.vy = (boat.vy / boat.speed) * maxSpeed;
-        boat.speed = maxSpeed;
-      }
-
+      // Update position
       boat.x += boat.vx;
       boat.y += boat.vy;
+
+      // Spring-Damper System for Organic Squash & Stretch Bounce-back
+      const springK = 210.0;
+      const springDamp = 18.0;
+      const springForce = -springK * (boat.stretch - targetStretch) - springDamp * boat.stretchVel;
+      boat.stretchVel += springForce * dt;
+      boat.stretch += boat.stretchVel * dt;
+
+      // Smooth heel tilt
+      boat.heelAngle += (targetHeel - boat.heelAngle) * Math.min(1.0, dt * 14.0);
 
       // Screen boundary wrap-around
       const margin = 35;
@@ -451,21 +488,19 @@
 
       boat.isoDir = getIsoDirection(boat.currentAngle);
 
-      // Low-res boat coordinates
       const lx = boat.x / PIXEL_SCALE;
       const ly = boat.y / PIXEL_SCALE;
 
-      // Update background WebGL 2.5D Kelvin wake hydrodynamics
+      // Hydrodynamics update
       if (window.updateBoatHydrodynamics) {
         const activeSpeed = riseProgress > 0.4 ? boat.speed : 0;
         window.updateBoatHydrodynamics(boat.x, boat.y, boat.currentAngle, activeSpeed);
       }
 
-      // Spawn trailing wake nodes for dispersive expanding ripples
-      if (boat.speed > 0.35 && riseProgress > 0.4) {
+      if (boat.speed > 0.5 && riseProgress > 0.4) {
         addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
 
-        if (now - boat.lastRippleTime > 140) {
+        if (now - boat.lastRippleTime > 130) {
           boat.lastRippleTime = now;
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, boat.currentAngle);
@@ -473,7 +508,7 @@
         }
       }
 
-      // Draw trailing foam particles on low-res buffer
+      // Draw trailing foam
       for (let i = boat.foamParticles.length - 1; i >= 0; i--) {
         const p = boat.foamParticles[i];
         p.x += p.vx;
@@ -489,14 +524,14 @@
         offCtx.fillRect(Math.floor(p.x), Math.floor(p.y), Math.max(1, Math.floor(p.size)), Math.max(1, Math.floor(p.size)));
       }
 
-      // Draw sailboat onto low-res buffer
-      drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.sailBillow, riseProgress, timeSec);
+      // Draw sailboat with squash & stretch + heel lean
+      drawSailboatLowRes(offCtx, lx, ly, boat.isoDir, boat.stretch, boat.heelAngle, riseProgress, timeSec);
 
-      // Apply 4x4 Bayer dithering & color quantization to the active boat area
-      const boxPad = 25;
+      // Apply 4x4 Bayer dithering
+      const boxPad = 26;
       applyBayerDither(offCtx, lx - boxPad, ly - boxPad, boxPad * 2, boxPad * 2);
 
-      // Blit pixelated & dithered buffer onto main screen canvas
+      // Blit to screen canvas
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
         offscreenCanvas,
