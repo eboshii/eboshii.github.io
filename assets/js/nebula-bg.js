@@ -28,6 +28,7 @@
     uniform vec2 u_resolution;
     uniform float u_time;
     uniform float u_seed;
+    uniform vec4 u_ripples[6];
 
     // Standard 4x4 Bayer Matrix (100% WebGL 1.0 compliant)
     float bayer4x4(vec2 p) {
@@ -145,9 +146,35 @@
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
+      // --- Ripple Wake Displacement & Shimmering Crest ---
+      vec2 rippleDisp = vec2(0.0);
+      float rippleCrest = 0.0;
+
+      for (int i = 0; i < 6; i++) {
+        if (u_ripples[i].w > 0.001) {
+          vec2 rPos = u_ripples[i].xy;
+          float birth = u_ripples[i].z;
+          float str = u_ripples[i].w;
+          float age = u_time - birth;
+
+          if (age > 0.0 && age < 3.2) {
+            float waveRadius = age * 0.32;
+            float dist = length(rawUv - rPos);
+            float delta = dist - waveRadius;
+
+            float envelope = exp(-abs(delta) * 16.0) * exp(-age * 1.1) * str;
+            float wave = sin(delta * 45.0) * envelope;
+
+            vec2 dir = normalize(rawUv - rPos + 0.0001);
+            rippleDisp += dir * wave * 0.07;
+            rippleCrest += smoothstep(0.035, 0.0, abs(delta)) * envelope * 0.55;
+          }
+        }
+      }
+
       // Computer clock seed spatial offset
       vec2 seedOffset = vec2(sin(u_seed * 7.13), cos(u_seed * 11.47)) * 8.0;
-      vec2 uv = rawUv * 2.8 + seedOffset;
+      vec2 uv = (rawUv + rippleDisp) * 2.8 + seedOffset;
 
       float t = u_time * 0.05;
 
@@ -201,10 +228,13 @@
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
 
+      // Luminous wake ripple crest tint (cyan-amber cosmic foam)
+      col += vec3(0.25, 0.65, 0.85) * rippleCrest;
+
       // ---------------------------------------------------------
       // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
       // ---------------------------------------------------------
-      vec2 starUv = rawUv + seedOffset * 0.3;
+      vec2 starUv = (rawUv + rippleDisp * 0.4) + seedOffset * 0.3;
       vec3 stars = vec3(0.0);
       // Pass 1: Faint background micro-pinpoints
       stars += starLayer(starUv, 70.0, 0.20, 0.35, u_time, 0.8);
@@ -276,6 +306,7 @@
   const uResolution = gl.getUniformLocation(program, 'u_resolution');
   const uTime = gl.getUniformLocation(program, 'u_time');
   const uSeed = gl.getUniformLocation(program, 'u_seed');
+  const uRipples = gl.getUniformLocation(program, 'u_ripples[0]');
 
   // -------------------------------------------------------------
   // Session Anchor Time & Seed (Persists seamlessly across tabs/pages)
@@ -286,13 +317,38 @@
   // If first visit in this tab, anchor with computer clock time
   if (isNaN(sessionStartTime) || isNaN(sessionSeed)) {
     sessionStartTime = Date.now();
-    // Computer clock seed (derived from timestamp)
     sessionSeed = (sessionStartTime % 1000000) * 0.00137;
     sessionStorage.setItem('nebula_session_start', sessionStartTime.toString());
     sessionStorage.setItem('nebula_session_seed', sessionSeed.toString());
   }
 
   gl.uniform1f(uSeed, sessionSeed);
+
+  // -------------------------------------------------------------
+  // Dynamic Ripple System
+  // -------------------------------------------------------------
+  const MAX_RIPPLES = 6;
+  const ripples = [];
+  for (let i = 0; i < MAX_RIPPLES; i++) {
+    ripples.push({ x: 0, y: 0, birth: -999, strength: 0 });
+  }
+  let nextRippleIdx = 0;
+  const flatRipples = new Float32Array(MAX_RIPPLES * 4);
+
+  // Public ripple emitter (transforms screen px to normalized UV)
+  window.addNebulaRipple = function (screenX, screenY, strength = 1.0) {
+    const minDim = Math.min(window.innerWidth, window.innerHeight);
+    const uvX = (screenX - 0.5 * window.innerWidth) / minDim;
+    // WebGL fragCoord Y is flipped relative to screen Y
+    const uvY = ((window.innerHeight - screenY) - 0.5 * window.innerHeight) / minDim;
+
+    const r = ripples[nextRippleIdx];
+    r.x = uvX;
+    r.y = uvY;
+    r.birth = (Date.now() - sessionStartTime) * 0.001;
+    r.strength = strength;
+    nextRippleIdx = (nextRippleIdx + 1) % MAX_RIPPLES;
+  };
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
@@ -318,6 +374,18 @@
     // Continuous wall-clock time relative to the session start anchor
     const elapsed = (Date.now() - sessionStartTime) * 0.001;
     gl.uniform1f(uTime, elapsed);
+
+    // Update ripples array
+    if (uRipples) {
+      for (let i = 0; i < MAX_RIPPLES; i++) {
+        flatRipples[i * 4 + 0] = ripples[i].x;
+        flatRipples[i * 4 + 1] = ripples[i].y;
+        flatRipples[i * 4 + 2] = ripples[i].birth;
+        flatRipples[i * 4 + 3] = ripples[i].strength;
+      }
+      gl.uniform4fv(uRipples, flatRipples);
+    }
+
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     requestAnimationFrame(render);
