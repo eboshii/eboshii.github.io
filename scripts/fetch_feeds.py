@@ -81,6 +81,13 @@ HEADERS = {
     "Accept": "application/rss+xml, application/rdf+xml, application/atom+xml, application/xml, text/xml, */*"
 }
 
+try:
+    from dateutil import parser as date_parser
+except ImportError:
+    date_parser = None
+
+MAX_AGE_SECONDS = 24 * 60 * 60  # Strict 24-hour cutoff
+
 def clean_text(text: str) -> str:
     """Removes HTML tags, decodes entities, and cleans whitespace."""
     if not text:
@@ -90,40 +97,54 @@ def clean_text(text: str) -> str:
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
-def parse_time_relative(pub_time_struct) -> str:
-    """Formats time into short human-readable string (e.g. 15m, 2h, 1d)."""
-    if not pub_time_struct:
-        return ""
-    try:
-        dt = datetime.datetime(*pub_time_struct[:6], tzinfo=datetime.timezone.utc)
-        now = datetime.datetime.now(datetime.timezone.utc)
-        diff = now - dt
-        seconds = int(diff.total_seconds())
+def parse_entry_datetime(entry) -> datetime.datetime:
+    """Extracts and normalizes timezone-aware UTC datetime from an RSS entry."""
+    pub_struct = (getattr(entry, "published_parsed", None)
+                  or getattr(entry, "updated_parsed", None)
+                  or getattr(entry, "created_parsed", None))
+    if pub_struct:
+        try:
+            return datetime.datetime(*pub_struct[:6], tzinfo=datetime.timezone.utc)
+        except Exception:
+            pass
 
-        if seconds < 0:
-            return "just now"
-        if seconds < 60:
-            return f"{seconds}s"
-        minutes = seconds // 60
-        if minutes < 60:
-            return f"{minutes}m"
-        hours = minutes // 60
-        if hours < 24:
-            return f"{hours}h"
-        days = hours // 24
-        if days < 7:
-            return f"{days}d"
-        return dt.strftime("%b %d")
-    except Exception:
-        return ""
+    # Fallback to raw date strings if struct parsing was unavailable
+    for attr in ["published", "updated", "created", "pubDate", "dc:date"]:
+        val = getattr(entry, attr, None) or entry.get(attr)
+        if val and date_parser:
+            try:
+                dt = date_parser.parse(val)
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=datetime.timezone.utc)
+                else:
+                    dt = dt.astimezone(datetime.timezone.utc)
+                return dt
+            except Exception:
+                pass
+    return None
+
+def format_time_relative(seconds: int, dt: datetime.datetime) -> str:
+    """Formats time difference into short string (e.g. 15m, 2h, 23h)."""
+    if seconds < 0:
+        return "now"
+    if seconds < 60:
+        return f"{seconds}s"
+    minutes = seconds // 60
+    if minutes < 60:
+        return f"{minutes}m"
+    hours = minutes // 60
+    if hours < 24:
+        return f"{hours}h"
+    return dt.strftime("%b %d")
 
 def fetch_feed(feed_meta: dict):
-    """Fetches a single feed and returns normalized items."""
+    """Fetches a single feed and returns normalized items from the last 24 hours."""
     url = feed_meta["url"]
     source_name = feed_meta["name"]
     source_short = feed_meta.get("short", source_name)
-    limit = feed_meta.get("limit", 10)
+    limit = feed_meta.get("limit", 20)
     items = []
+    now = datetime.datetime.now(datetime.timezone.utc)
 
     try:
         # Use requests with timeout and proper User-Agent
@@ -140,23 +161,31 @@ def fetch_feed(feed_meta: dict):
             print(f"[WARN] No entries found for {source_name} ({url})")
             return items
 
-        for entry in feed.entries[:limit]:
+        for entry in feed.entries:
+            if len(items) >= limit:
+                break
+
             title = clean_text(getattr(entry, "title", ""))
             link = getattr(entry, "link", "")
             if not title or not link:
                 continue
 
-            # Parse time
-            pub_struct = getattr(entry, "published_parsed", None) or getattr(entry, "updated_parsed", None)
+            dt = parse_entry_datetime(entry)
             iso_time = ""
             time_relative = ""
-            if pub_struct:
-                try:
-                    dt = datetime.datetime(*pub_struct[:6], tzinfo=datetime.timezone.utc)
-                    iso_time = dt.isoformat()
-                    time_relative = parse_time_relative(pub_struct)
-                except Exception:
-                    pass
+            age_seconds = 0
+
+            if dt:
+                age_seconds = int((now - dt).total_seconds())
+                # Strictly filter to the last 24 hours (with 1h clock-skew allowance into future)
+                if age_seconds > MAX_AGE_SECONDS or age_seconds < -3600:
+                    continue
+                iso_time = dt.isoformat()
+                time_relative = format_time_relative(age_seconds, dt)
+            else:
+                # If date is completely absent, accept only top 3 newest entries
+                if len(items) >= 3:
+                    continue
 
             domain = urlparse(link).netloc.replace("www.", "")
 
@@ -167,7 +196,8 @@ def fetch_feed(feed_meta: dict):
                 "source_short": source_short,
                 "domain": domain,
                 "published_iso": iso_time,
-                "time_ago": time_relative
+                "time_ago": time_relative,
+                "age_seconds": age_seconds
             })
 
     except Exception as e:
