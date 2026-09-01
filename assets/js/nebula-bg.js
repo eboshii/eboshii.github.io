@@ -138,9 +138,8 @@
     }
 
     // 2.5D Isometric Kelvin Wake & Dispersive Ripple Distortion Field
-    vec2 get25DWaveDistortion(vec2 rawUv, float time, out float waveCrest) {
+    vec2 get25DWaveDistortion(vec2 rawUv, float time) {
       vec2 grad = vec2(0.0);
-      waveCrest = 0.0;
 
       // 1. Dynamic Kelvin V-Wake from active boat movement
       if (u_boat_state.w > 0.05) {
@@ -179,9 +178,6 @@
 
           vec2 normDir = normalize(vec2(-local.x, local.y * 1.8) + 0.0001);
           grad += normDir * wakeIntensity * 0.058;
-
-          // Delicate wave crest highlight along the sharpest peaks of the bow wave
-          waveCrest += smoothstep(0.35, 0.90, bowWave) * exp(-armDist * 30.0) * exp(-distAlong * 1.8) * 0.35;
         }
       }
 
@@ -208,9 +204,6 @@
 
             vec2 dir = normalize(vec2(d.x, d.y / 1.75) + 0.0001);
             grad += dir * wave * 0.042;
-
-            // Subtle glistening wave crash highlight on the crest
-            waveCrest += smoothstep(0.35, 0.85, wave) * envelope * 0.26;
           }
         }
       }
@@ -224,9 +217,8 @@
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      // --- 2.5D Wave Refraction Distortion & Delicate Crest Highlight ---
-      float waveCrest = 0.0;
-      vec2 waveDistort = get25DWaveDistortion(rawUv, u_time, waveCrest);
+      // --- Pure 2.5D Wave Refraction Distortion ---
+      vec2 waveDistort = get25DWaveDistortion(rawUv, u_time);
 
       // Computer clock seed spatial offset
       vec2 seedOffset = vec2(sin(u_seed * 7.13), cos(u_seed * 11.47)) * 8.0;
@@ -283,9 +275,6 @@
       // Dense intersection highlights
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
-
-      // Subtle delicate wave crest sheen
-      col += vec3(0.30, 0.68, 0.88) * waveCrest;
 
       // ---------------------------------------------------------
       // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
