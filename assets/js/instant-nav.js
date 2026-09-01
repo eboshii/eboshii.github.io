@@ -88,13 +88,7 @@
       if (window.EboshiiTracker) {
         const key = window.EboshiiTracker.getRouteKey(url.pathname);
         if (key) {
-          // Re-record for the new page view
-          const sessionKey = 'viewed_' + key;
-          if (!sessionStorage.getItem(sessionKey)) {
-            sessionStorage.setItem(sessionKey, 'true');
-            fetch(`${window.EboshiiTracker.API_BASE}/${encodeURIComponent(key)}/up`, { mode: 'cors' }).catch(() => {});
-            fetch(`${window.EboshiiTracker.API_BASE}/total_site_views/up`, { mode: 'cors' }).catch(() => {});
-          }
+          window.EboshiiTracker.recordHit(key);
         }
       }
     } catch (e) {

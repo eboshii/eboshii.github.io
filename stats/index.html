@@ -31,8 +31,8 @@ description: Page view statistics for eboshii.
         <!-- Home -->
         <tr data-key="page_home">
           <td><a href="/" class="stat-path-link">/</a></td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
 
         <!-- Blog (Expandable) -->
@@ -44,8 +44,8 @@ description: Page view statistics for eboshii.
               <span class="post-count-pill">{{ all_posts.size }} posts</span>
             </button>
           </td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
 
         <!-- Nested Individual Blog Post Sub-rows -->
@@ -56,37 +56,37 @@ description: Page view statistics for eboshii.
               <span class="sub-tree-branch">└─</span>
               <a href="{{ post.url | relative_url }}" class="stat-path-link sub-link">{{ post.url }}</a>
             </td>
-            <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-            <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+            <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+            <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
           </tr>
         {% endfor %}
 
         <!-- Pre-IPO -->
         <tr data-key="page_pre_ipo">
           <td><a href="/pre-ipo/" class="stat-path-link">/pre-ipo/</a></td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
 
         <!-- News -->
         <tr data-key="page_news">
           <td><a href="/news/" class="stat-path-link">/news/</a></td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
 
         <!-- Games: Predichess -->
         <tr data-key="game_predichess">
           <td><a href="https://eboshii.github.io/predichess/" class="stat-path-link">/games/predichess</a></td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
 
         <!-- Games: Emergence -->
         <tr data-key="game_emergence">
           <td><a href="https://eboshiidev.itch.io/emergence" target="_blank" rel="noopener noreferrer" class="stat-path-link">/games/emergence</a></td>
-          <td class="text-right font-mono count-24h"><span class="view-num">--</span></td>
-          <td class="text-right font-mono count-total"><span class="view-num">--</span></td>
+          <td class="text-right font-mono count-24h"><span class="view-num">0</span></td>
+          <td class="text-right font-mono count-total"><span class="view-num">0</span></td>
         </tr>
       </tbody>
     </table>
@@ -94,52 +94,60 @@ description: Page view statistics for eboshii.
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async function () {
-  const expandBtn = document.getElementById('blog-expand-btn');
-  const parentRow = document.getElementById('blog-parent-row');
-  const subRows = document.querySelectorAll('.sub-post-row');
+(function () {
+  function initStatsTable() {
+    const expandBtn = document.getElementById('blog-expand-btn');
+    const parentRow = document.getElementById('blog-parent-row');
+    const subRows = document.querySelectorAll('.sub-post-row');
 
-  // Toggle Blog Child Rows
-  if (expandBtn && parentRow) {
-    function toggleBlogExpand() {
-      const isExpanded = expandBtn.getAttribute('aria-expanded') === 'true';
-      const newExpanded = !isExpanded;
-      expandBtn.setAttribute('aria-expanded', newExpanded.toString());
-      const caret = expandBtn.querySelector('.expand-caret');
-      if (caret) caret.textContent = newExpanded ? '▾' : '▸';
+    if (expandBtn && parentRow && !expandBtn.dataset.bound) {
+      expandBtn.dataset.bound = 'true';
+      function toggleBlogExpand() {
+        const isExpanded = expandBtn.getAttribute('aria-expanded') === 'true';
+        const newExpanded = !isExpanded;
+        expandBtn.setAttribute('aria-expanded', newExpanded.toString());
+        const caret = expandBtn.querySelector('.expand-caret');
+        if (caret) caret.textContent = newExpanded ? '▾' : '▸';
 
-      subRows.forEach(row => {
-        row.style.display = newExpanded ? 'table-row' : 'none';
-      });
-    }
-
-    expandBtn.addEventListener('click', toggleBlogExpand);
-    parentRow.addEventListener('click', function (e) {
-      if (e.target.tagName !== 'A') {
-        toggleBlogExpand();
+        subRows.forEach(row => {
+          row.style.display = newExpanded ? 'table-row' : 'none';
+        });
       }
-    });
-  }
 
-  // Load 24h and Total Views
-  if (window.EboshiiTracker) {
-    const allRows = document.querySelectorAll('table.stats-minimal-table tr[data-key]');
-    
-    for (const row of allRows) {
-      const key = row.dataset.key;
-      if (!key) continue;
+      expandBtn.addEventListener('click', toggleBlogExpand);
+      parentRow.addEventListener('click', function (e) {
+        if (e.target.tagName !== 'A') {
+          toggleBlogExpand();
+        }
+      });
+    }
 
-      // 24h count
-      const c24 = window.EboshiiTracker.get24hCount(key);
-      const el24 = row.querySelector('.count-24h .view-num');
-      if (el24) el24.textContent = c24.toLocaleString();
+    if (window.EboshiiTracker) {
+      const allRows = document.querySelectorAll('table.stats-minimal-table tr[data-key]');
+      
+      allRows.forEach(row => {
+        const key = row.dataset.key;
+        if (!key) return;
 
-      // Total count
-      window.EboshiiTracker.getTotalCount(key).then(total => {
+        const c24 = window.EboshiiTracker.get24hCount(key);
+        const cTotal = window.EboshiiTracker.getTotalCount(key);
+
+        const el24 = row.querySelector('.count-24h .view-num');
+        if (el24) el24.textContent = c24.toLocaleString();
+
         const elTotal = row.querySelector('.count-total .view-num');
-        if (elTotal) elTotal.textContent = (total || c24 || 0).toLocaleString();
+        if (elTotal) elTotal.textContent = (cTotal || c24 || 0).toLocaleString();
       });
     }
   }
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStatsTable);
+  } else {
+    initStatsTable();
+  }
+
+  // Also rerun immediately after any async script execution
+  setTimeout(initStatsTable, 50);
+})();
 </script>
