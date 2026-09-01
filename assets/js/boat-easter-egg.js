@@ -451,18 +451,28 @@
         // Cruise stretch factor
         targetStretch = 1.03 + (boat.speed / maxSpeed) * 0.05;
       } else {
-        // --- Immediate Crisp Stop on Button Release with Gentle Elastic Bounce ---
+        // --- Smooth Coastal Momentum Deceleration on Button Release ---
         if (boat.wasMoving) {
-          boat.stretchVel = -1.8; // Gentle recoil kickback
-          targetStretch = 1.0;
-          addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 3);
+          boat.stretchVel = -1.4; // Soft recoil kickback
         }
 
-        // Instantly halt linear movement
-        boat.speed = 0;
-        boat.vx = 0;
-        boat.vy = 0;
-        boat.strokeDist = 0.0;
+        if (boat.speed > 0.05) {
+          // Coast down smoothly over a short time
+          const coastDrag = 0.89;
+          boat.speed *= Math.pow(coastDrag, dt * 60);
+          boat.vx = Math.cos(boat.currentAngle) * boat.speed;
+          boat.vy = Math.sin(boat.currentAngle) * boat.speed;
+          boat.strokeDist = (boat.strokeDist || 0) + Math.hypot(boat.vx, boat.vy);
+
+          if (Math.random() < 0.35) {
+            addFoam(boat.x / PIXEL_SCALE, boat.y / PIXEL_SCALE, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 1);
+          }
+        } else {
+          boat.speed = 0;
+          boat.vx = 0;
+          boat.vy = 0;
+        }
+
         targetStretch = 1.0;
         targetHeel = 0.0;
       }
