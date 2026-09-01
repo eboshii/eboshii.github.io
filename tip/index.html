@@ -27,16 +27,16 @@ full_width: true
 
     const ctx = canvas.getContext('2d');
     const PIXEL_SCALE = 3; // 3px resolution matching nebula background
-    const FADE_PIXELS = 30; // ~30px exterior dither gradient (~10 cells)
-    const FADE_CELLS = 10;  
+    const FADE_PIXELS = 36; // Exterior continuous gradient border
+    const FADE_CELLS = 12;  
     const CORNER_RADIUS = 8; // 8px matching .kofi-page-iframe border-radius
 
-    // 4x4 Bayer Matrix
-    const BAYER_4X4 = [
-      [ 0/16,  8/16,  2/16, 10/16],
-      [12/16,  4/16, 14/16,  6/16],
-      [ 3/16, 11/16,  1/16,  9/16],
-      [15/16,  7/16, 13/16,  5/16]
+    // Normalized 4x4 Bayer Matrix [-0.5, +0.5] matching WebGL shader
+    const BAYER_4X4_NORM = [
+      [-0.5000,  0.0000, -0.3750,  0.1250],
+      [ 0.2500, -0.2500,  0.3750, -0.1250],
+      [-0.3125,  0.1875, -0.4375,  0.0625],
+      [ 0.4375, -0.0625,  0.3125, -0.1875]
     ];
 
     function renderDitherEdge() {
@@ -62,14 +62,16 @@ full_width: true
       const rCells = CORNER_RADIUS / PIXEL_SCALE; // ~2.67 cells
 
       ctx.clearRect(0, 0, wTotal, hTotal);
-      ctx.fillStyle = '#ffffff'; // Exact pure white matching the single solid Ko-fi card background
+
+      // Quantization levels matching nebula WebGL shader
+      const QUANT_LEVELS = 14.0;
 
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
           const px = (gx + 0.5) - cx;
           const py = (gy + 0.5) - cy;
 
-          // Exact analytical Signed Distance Field (SDF) to rounded rectangle
+          // Exact Signed Distance Field (SDF) to rounded card contour
           const qx = Math.abs(px) - (hw - rCells);
           const qy = Math.abs(py) - (hh - rCells);
 
@@ -77,12 +79,21 @@ full_width: true
           const extY = Math.max(qy, 0.0);
           const dist = Math.hypot(extX, extY) + Math.min(Math.max(qx, qy), 0.0) - rCells;
 
-          // Render exterior dither aura strictly outside the rounded card boundary
           if (dist > 0.0 && dist <= FADE_CELLS) {
-            const density = 1.0 - (dist / FADE_CELLS);
-            const threshold = BAYER_4X4[gy % 4][gx % 4];
+            // Smooth continuous falloff curve
+            const u = dist / FADE_CELLS;
+            const continuousAlpha = (1.0 - u) * (1.0 - u) * (3.0 - 2.0 * (1.0 - u));
 
-            if (density > threshold) {
+            // Apply 4x4 Bayer dither perturbation (same amplitude as WebGL background)
+            const ditherOffset = BAYER_4X4_NORM[gy % 4][gx % 4] * 0.16;
+            const ditheredAlpha = continuousAlpha + ditherOffset;
+
+            // Discrete retro 14-level quantization
+            const clamped = Math.max(0.0, Math.min(1.0, ditheredAlpha));
+            const quantAlpha = Math.floor(clamped * QUANT_LEVELS + 0.5) / QUANT_LEVELS;
+
+            if (quantAlpha > 0.02) {
+              ctx.fillStyle = `rgba(255, 255, 255, ${quantAlpha})`;
               ctx.fillRect(gx * PIXEL_SCALE, gy * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
             }
           }
