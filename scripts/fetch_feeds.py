@@ -181,7 +181,7 @@ except ImportError:
     date_parser = None
 
 MAX_AGE_SECONDS = 24 * 60 * 60  # Strict 24-hour cutoff
-MAX_HEADLINES_PER_SECTION = 18   # Curated concise limit for high-signal columns
+MAX_HEADLINES_PER_SECTION = 20   # Curated concise limit for high-signal columns
 
 NOISE_PATTERNS = [
     r"^(live updates|as it happened|watch live|live video|video:|podcast:|listen:|listen to:)",
