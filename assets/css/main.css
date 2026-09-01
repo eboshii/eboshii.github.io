@@ -645,19 +645,21 @@ footer {
    Tip Jar Page (Centered Cosmic Frame with Dither Fade)
 ----------------------------------------------- */
 .tip-page-centered {
-  min-height: calc(100vh - 160px);
+  height: calc(100vh - 130px);
+  min-height: 540px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem 1rem;
+  padding: 0.5rem 1rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .kofi-dither-wrapper {
   position: relative;
   width: 100%;
-  max-width: 380px;
-  height: 620px;
+  max-width: 365px;
+  height: 512px;
   background: transparent;
   display: flex;
   align-items: center;
@@ -670,12 +672,9 @@ footer {
   height: 100%;
   border: none;
   display: block;
-  background: rgba(255, 255, 255, 0.88);
-  opacity: 0.88;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
   z-index: 1;
 }
 
