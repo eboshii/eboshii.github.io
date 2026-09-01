@@ -58,7 +58,7 @@
     </nav>
   </header>
 
-  <main class="{% if page.full_width %}main-wide{% endif %}">
+  <main class="{% if page.full_width %}main-wide{% endif %}{% if page.url contains '/tip' %} main-tip{% endif %}">
     {{ content }}
   </main>
 
