@@ -321,12 +321,6 @@
     oCtx.closePath();
     oCtx.fill();
 
-    // Waterline foam dots
-    oCtx.fillStyle = foamColor;
-    oCtx.fillRect(-7, 4, 2, 2);
-    oCtx.fillRect(7, 4, 2, 2);
-    oCtx.fillRect(0, 6, 2, 2);
-
     oCtx.restore();
   }
 

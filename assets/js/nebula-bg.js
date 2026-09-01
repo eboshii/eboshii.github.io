@@ -138,8 +138,9 @@
     }
 
     // 2.5D Isometric Kelvin Wake & Dispersive Ripple Distortion Field
-    vec2 get25DWaveDistortion(vec2 rawUv, float time) {
+    vec2 get25DWaveDistortion(vec2 rawUv, float time, out float waveCrest) {
       vec2 grad = vec2(0.0);
+      waveCrest = 0.0;
 
       // 1. Dynamic Kelvin V-Wake from active boat movement
       if (u_boat_state.w > 0.05) {
@@ -160,7 +161,7 @@
         );
 
         // Wake forms behind the moving boat (local.x < 0)
-        if (local.x < 0.04 && local.x > -0.55) {
+        if (local.x < 0.04 && local.x > -0.85) {
           float distAlong = -local.x;
           float distCross = abs(local.y);
 
@@ -169,41 +170,47 @@
           float armDist = abs(distCross - wakeArm);
 
           // Divergent bow waves (Kelvin V-crest)
-          float bowWave = sin(distAlong * 65.0 - distCross * 120.0) * exp(-armDist * 45.0) * exp(-distAlong * 3.8);
+          float bowWave = sin(distAlong * 55.0 - distCross * 105.0) * exp(-armDist * 38.0) * exp(-distAlong * 2.2);
 
           // Transverse stern oscillations
-          float transWave = sin(distAlong * 80.0) * exp(-distCross * 36.0) * exp(-distAlong * 4.2);
+          float transWave = sin(distAlong * 70.0) * exp(-distCross * 30.0) * exp(-distAlong * 2.5);
 
-          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.8, 0.0, 1.0);
+          float wakeIntensity = (bowWave * 0.75 + transWave * 0.45) * clamp(bSpeed / 2.6, 0.0, 1.0);
 
           vec2 normDir = normalize(vec2(-local.x, local.y * 1.8) + 0.0001);
-          grad += normDir * wakeIntensity * 0.038;
+          grad += normDir * wakeIntensity * 0.058;
+
+          // Delicate wave crest highlight along the sharpest peaks of the bow wave
+          waveCrest += smoothstep(0.35, 0.90, bowWave) * exp(-armDist * 30.0) * exp(-distAlong * 1.8) * 0.35;
         }
       }
 
-      // 2. Dispersive Isometric Expanding Wave Packets
+      // 2. Dispersive Isometric Expanding Wave Packets (Slower lingering fade)
       for (int i = 0; i < 8; i++) {
         if (u_wake[i].w > 0.0001) {
           vec2 nodePos = u_wake[i].xy;
           float birth = u_wake[i].w;
           float age = time - birth;
 
-          if (age > 0.0 && age < 2.8) {
+          if (age > 0.0 && age < 4.8) {
             vec2 d = rawUv - nodePos;
             // 2.5D perspective ellipse
             d.y *= 1.75;
 
             float r = length(d);
-            float waveFront = age * 0.25;
+            float waveFront = age * 0.22;
             float deltaR = r - waveFront;
 
-            // Dispersive water wave packet envelope
-            float envelope = exp(-abs(deltaR) * 20.0) * exp(-age * 1.3);
-            float phase = deltaR * 50.0 - age * 8.0;
+            // Dispersive water wave packet envelope with gentle lingering decay
+            float envelope = exp(-abs(deltaR) * 16.0) * exp(-age * 0.65);
+            float phase = deltaR * 42.0 - age * 7.0;
             float wave = sin(phase) * envelope;
 
             vec2 dir = normalize(vec2(d.x, d.y / 1.75) + 0.0001);
-            grad += dir * wave * 0.026;
+            grad += dir * wave * 0.042;
+
+            // Subtle glistening wave crash highlight on the crest
+            waveCrest += smoothstep(0.35, 0.85, wave) * envelope * 0.26;
           }
         }
       }
@@ -217,8 +224,9 @@
       vec2 gridCoord = floor(gl_FragCoord.xy / pixelSize);
       vec2 rawUv = (gridCoord * pixelSize - 0.5 * u_resolution) / min(u_resolution.x, u_resolution.y);
 
-      // --- Pure Refractive 2.5D Wave Distortion (No artificial lighting) ---
-      vec2 waveDistort = get25DWaveDistortion(rawUv, u_time);
+      // --- 2.5D Wave Refraction Distortion & Delicate Crest Highlight ---
+      float waveCrest = 0.0;
+      vec2 waveDistort = get25DWaveDistortion(rawUv, u_time, waveCrest);
 
       // Computer clock seed spatial offset
       vec2 seedOffset = vec2(sin(u_seed * 7.13), cos(u_seed * 11.47)) * 8.0;
@@ -275,6 +283,9 @@
       // Dense intersection highlights
       float intersection = smoothstep(0.42, 0.85, dNear) * smoothstep(0.26, 0.75, dFar);
       col = mix(col, c_amber, intersection * 0.92);
+
+      // Subtle delicate wave crest sheen
+      col += vec3(0.30, 0.68, 0.88) * waveCrest;
 
       // ---------------------------------------------------------
       // Multi-Pass Poisson-Disk Starfield (Seeded continuous coordinate)
