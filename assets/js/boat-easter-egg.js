@@ -44,9 +44,9 @@
     vx: 0,
     vy: 0,
     speed: 0,
-    targetAngle: -Math.PI / 4,
-    currentAngle: -Math.PI / 4,
-    isoDir: 1, // 0: N, 1: NE, 2: E, 3: SE, 4: S, 5: SW, 6: W, 7: NW
+    targetAngle: Math.PI, // Starts facing Left (West)
+    currentAngle: Math.PI,
+    isoDir: 6, // 6: West / Left
     wasMoving: false,
     strokeDist: 0.0,
     stretch: 1.0,      // Squash & stretch length factor
@@ -152,7 +152,7 @@
     return mapping[idx];
   }
 
-  // Draw 8-Direction Isometric Sailboat Sprite with Squash & Stretch + Heel tilt + Plop emergence
+  // Draw 8-Direction Isometric Sailboat Sprite with Squash & Stretch + Heel tilt + Waterline emergence
   function drawSailboatLowRes(oCtx, lx, ly, isoDir, stretch, heel, plopProgress, time) {
     oCtx.save();
     oCtx.translate(lx, ly);
@@ -160,18 +160,19 @@
     // Turn lean / heel tilt
     oCtx.rotate(heel);
 
-    // 1-second "Plop out of water" emergence animation
+    // Waterline emergence: boat rises from beneath water surface at 100% scale (no scaling)
     let plopY = 0;
-    let plopScale = 1.0;
     if (plopProgress < 1.0) {
       const u = Math.max(0.0, Math.min(1.0, plopProgress));
-      // Buoyant surfacing overshoot curve: deep underwater -> breach crest -> settle
-      const breachOvershoot = Math.sin(u * Math.PI) * 4.5;
-      plopY = (1.0 - u) * 22.0 - breachOvershoot;
-      plopScale = 0.45 + 0.55 * u + Math.sin(u * Math.PI) * 0.08;
+      const breachOvershoot = Math.sin(u * Math.PI) * 2.5;
+      plopY = (1.0 - u) * 20.0 - breachOvershoot;
+
+      // Clip below the water plane so submerged parts remain under the sea surface
+      oCtx.beginPath();
+      oCtx.rect(-35, -45, 70, 53.5); // Only region above waterline is visible
+      oCtx.clip();
     }
     oCtx.translate(0, plopY);
-    oCtx.scale(plopScale, plopScale);
 
     // Directional Squash & Stretch along boat heading frame
     const lenScale = Math.max(0.75, Math.min(1.35, stretch));
