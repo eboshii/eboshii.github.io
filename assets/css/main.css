@@ -623,6 +623,106 @@ footer {
   border-bottom-color: var(--accent-dim);
 }
 
+.footer-tip-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-bottom-color 0.15s;
+}
+
+.footer-tip-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent-dim);
+}
+
+/* -----------------------------------------------
+   Ko-fi In-Page Donation Modal
+----------------------------------------------- */
+.kofi-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(5, 3, 10, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.kofi-modal-card {
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: kofiModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes kofiModalPop {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.kofi-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.95rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(14, 9, 22, 0.75);
+}
+
+.kofi-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kofi-modal-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem;
+  transition: color 0.15s;
+}
+
+.kofi-modal-close:hover {
+  color: var(--text);
+}
+
+.kofi-modal-body {
+  flex: 1;
+  overflow: auto;
+  min-height: 600px;
+  background: #ffffff;
+  border-radius: 0 0 7px 7px;
+}
+
+.kofi-modal-body iframe {
+  display: block;
+}
+
 /* -----------------------------------------------
    Rouge syntax highlighting (Dark Cosmic Theme)
 ----------------------------------------------- */
