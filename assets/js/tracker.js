@@ -96,12 +96,14 @@
 
   // Record outbound game clicks
   function setupGameTracking() {
-    document.querySelectorAll('a[href*="predichess"], a[href*="emergence"]').forEach(link => {
+    document.querySelectorAll('a[href*="predichess"], a[href*="Paperclips"], a[href*="paperclips"], a[href*="emergence"]').forEach(link => {
       if (link.dataset.tracked) return;
       link.dataset.tracked = 'true';
       link.addEventListener('click', () => {
-        const href = link.getAttribute('href') || '';
-        if (href.includes('predichess')) {
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        if (href.includes('paperclips')) {
+          recordHit('game_paperclips');
+        } else if (href.includes('predichess')) {
           recordHit('game_predichess');
         } else if (href.includes('emergence')) {
           recordHit('game_emergence');

@@ -132,7 +132,8 @@
       href.startsWith('#') ||
       href.startsWith('mailto:') ||
       href.startsWith('tel:') ||
-      href.includes('predichess') ||
+      href.toLowerCase().includes('predichess') ||
+      href.toLowerCase().includes('paperclips') ||
       href.includes('itch.io')
     ) {
       return;
