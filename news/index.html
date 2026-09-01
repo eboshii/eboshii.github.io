@@ -48,17 +48,29 @@ full_width: true
             </div>
 
             <div class="settings-group">
-              <label class="settings-label">Categories</label>
-              <div class="cat-checklist">
+              <label class="settings-label">Categories (Drag to reorder)</label>
+              <div class="cat-checklist" id="cat-checklist">
                 {% for cat in site.data.news.categories %}
                 {% assign is_default_disabled = false %}
                 {% if cat.id == 'environment' or cat.id == 'geopolitics' or cat.id == 'europe' or cat.id == 'asia' or cat.id == 'africa' or cat.id == 'startups' or cat.id == 'cybersec' or cat.id == 'crypto' %}
                   {% assign is_default_disabled = true %}
                 {% endif %}
-                <label class="cat-check-label">
-                  <input type="checkbox" class="cat-checkbox" value="{{ cat.id }}"{% unless is_default_disabled %} checked{% endunless %}>
-                  <span>{{ cat.title }}</span>
-                </label>
+                <div class="cat-check-item" draggable="true" data-cat="{{ cat.id }}">
+                  <label class="cat-check-label">
+                    <input type="checkbox" class="cat-checkbox" value="{{ cat.id }}"{% unless is_default_disabled %} checked{% endunless %}>
+                    <span>{{ cat.title }}</span>
+                  </label>
+                  <div class="cat-drag-handle" title="Drag to reorder" aria-label="Drag to reorder">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                      <circle cx="8.5" cy="6" r="1.6"></circle>
+                      <circle cx="15.5" cy="6" r="1.6"></circle>
+                      <circle cx="8.5" cy="12" r="1.6"></circle>
+                      <circle cx="15.5" cy="12" r="1.6"></circle>
+                      <circle cx="8.5" cy="18" r="1.6"></circle>
+                      <circle cx="15.5" cy="18" r="1.6"></circle>
+                    </svg>
+                  </div>
+                </div>
                 {% endfor %}
               </div>
             </div>
@@ -124,6 +136,7 @@ full_width: true
   const settingsModal = document.getElementById('news-settings-modal');
   const closeBtn = document.getElementById('modal-close-btn');
   const colsBtns = document.querySelectorAll('.cols-btn');
+  const checklistEl = document.getElementById('cat-checklist');
   const catCheckboxes = document.querySelectorAll('.cat-checkbox');
   const saveCookiesBtn = document.getElementById('save-cookies-btn');
   const saveFeedback = document.getElementById('save-feedback');
@@ -138,9 +151,27 @@ full_width: true
     return match ? decodeURIComponent(match[2]) : null;
   }
 
-  let selectedCols = 3;
   const DEFAULT_ACTIVE_CATS = ['world', 'politics', 'science', 'tech', 'markets', 'ai', 'culture', 'movies', 'music', 'gaming'];
+  const DEFAULT_CATEGORY_ORDER = [
+    'world', 'politics', 'science', 'tech', 'markets', 'ai', 'culture', 'movies',
+    'music', 'gaming', 'environment', 'geopolitics', 'europe', 'asia', 'africa',
+    'startups', 'cybersec', 'crypto'
+  ];
+
+  let selectedCols = 3;
   let activeCategories = new Set(DEFAULT_ACTIVE_CATS);
+  let currentCategoryOrder = [...DEFAULT_CATEGORY_ORDER];
+
+  // Helper to reorder checklist DOM elements to match an order array
+  function reorderChecklistDOM(orderList) {
+    if (!checklistEl) return;
+    const items = Array.from(checklistEl.querySelectorAll('.cat-check-item'));
+    const itemMap = new Map(items.map(el => [el.dataset.cat, el]));
+    orderList.forEach(catId => {
+      const itemEl = itemMap.get(catId);
+      if (itemEl) checklistEl.appendChild(itemEl);
+    });
+  }
 
   // Format relative timestamp
   if (timePillEl && timePillEl.dataset.utc) {
@@ -167,11 +198,18 @@ full_width: true
       if (Array.isArray(prefs.categories)) {
         activeCategories = new Set(prefs.categories);
       }
+      if (Array.isArray(prefs.order)) {
+        const validOrder = prefs.order.filter(id => DEFAULT_CATEGORY_ORDER.includes(id));
+        const missing = DEFAULT_CATEGORY_ORDER.filter(id => !validOrder.includes(id));
+        currentCategoryOrder = [...validOrder, ...missing];
+        reorderChecklistDOM(currentCategoryOrder);
+      }
     }
   } catch(e) {}
 
-  // Apply column layout with Left-to-Right Priority Masonry
-  function applyLayout() {
+  // Apply column layout with Left-to-Right Priority Masonry & Optional FLIP Animation
+  function applyLayout(options = {}) {
+    const animate = options.animate === true;
     gridEl.className = 'news-grid cols-' + selectedCols;
 
     colsBtns.forEach(btn => {
@@ -182,7 +220,17 @@ full_width: true
       cb.checked = activeCategories.has(cb.value);
     });
 
-    // Create masonry column containers
+    // 1. FIRST: Capture old bounding rects of currently rendered cards
+    const firstRects = new Map();
+    if (animate) {
+      allSections.forEach(sec => {
+        if (sec.style.display !== 'none' && sec.isConnected) {
+          firstRects.set(sec, sec.getBoundingClientRect());
+        }
+      });
+    }
+
+    // 2. Build column containers
     gridEl.innerHTML = '';
     const colContainers = [];
     for (let c = 0; c < selectedCols; c++) {
@@ -192,8 +240,14 @@ full_width: true
       gridEl.appendChild(colDiv);
     }
 
-    // Distribute active categories across columns in left-to-right priority order
-    const activeSections = allSections.filter(sec => activeCategories.has(sec.dataset.category));
+    // 3. Sort allSections according to currentCategoryOrder
+    const sectionMap = new Map(allSections.map(sec => [sec.dataset.category, sec]));
+    const sortedSections = currentCategoryOrder
+      .map(id => sectionMap.get(id))
+      .filter(Boolean);
+
+    // 4. Distribute active categories across columns in left-to-right priority order
+    const activeSections = sortedSections.filter(sec => activeCategories.has(sec.dataset.category));
     activeSections.forEach((sec, idx) => {
       sec.style.display = '';
       const targetCol = idx % selectedCols;
@@ -207,6 +261,35 @@ full_width: true
     });
 
     filterItems();
+
+    // 5. LAST, INVERT, PLAY: Smooth physical FLIP animation across the screen
+    if (animate && firstRects.size > 0) {
+      activeSections.forEach(sec => {
+        const first = firstRects.get(sec);
+        if (!first) return;
+        const last = sec.getBoundingClientRect();
+        const deltaX = first.left - last.left;
+        const deltaY = first.top - last.top;
+
+        if (deltaX !== 0 || deltaY !== 0) {
+          sec.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+          sec.style.transition = 'none';
+
+          // Force reflow
+          void sec.offsetHeight;
+
+          requestAnimationFrame(() => {
+            sec.style.transition = 'transform 360ms cubic-bezier(0.2, 0.9, 0.2, 1)';
+            sec.style.transform = '';
+          });
+
+          sec.addEventListener('transitionend', function handler() {
+            sec.style.transition = '';
+            sec.removeEventListener('transitionend', handler);
+          });
+        }
+      });
+    }
   }
 
   // Filter headlines and visible columns
@@ -308,7 +391,7 @@ full_width: true
   colsBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       selectedCols = parseInt(btn.dataset.cols);
-      applyLayout();
+      applyLayout({ animate: true });
     });
   });
 
@@ -325,16 +408,93 @@ full_width: true
           cb.checked = true;
         }
       }
-      applyLayout();
+      applyLayout({ animate: true });
     });
   });
+
+  // Drag and Drop reordering for categories
+  let draggedItem = null;
+
+  if (checklistEl) {
+    checklistEl.addEventListener('dragstart', e => {
+      const item = e.target.closest('.cat-check-item');
+      if (!item) return;
+      draggedItem = item;
+      item.classList.add('dragging');
+      if (e.dataTransfer) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', item.dataset.cat);
+      }
+    });
+
+    checklistEl.addEventListener('dragend', () => {
+      if (draggedItem) {
+        draggedItem.classList.remove('dragging');
+        draggedItem = null;
+      }
+    });
+
+    checklistEl.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (!draggedItem) return;
+
+      const targetItem = e.target.closest('.cat-check-item');
+      if (!targetItem || targetItem === draggedItem) return;
+
+      const rect = targetItem.getBoundingClientRect();
+      const nextSibling = (e.clientY < rect.top + rect.height / 2) ? targetItem : targetItem.nextSibling;
+
+      if (draggedItem.nextSibling !== nextSibling) {
+        checklistEl.insertBefore(draggedItem, nextSibling);
+        currentCategoryOrder = Array.from(checklistEl.querySelectorAll('.cat-check-item')).map(el => el.dataset.cat);
+        // Realtime smooth FLIP animation
+        applyLayout({ animate: true });
+      }
+    });
+
+    // Touch support for mobile / touchpads
+    let touchItem = null;
+    checklistEl.addEventListener('touchstart', e => {
+      const handle = e.target.closest('.cat-drag-handle');
+      if (!handle) return;
+      touchItem = handle.closest('.cat-check-item');
+      if (touchItem) touchItem.classList.add('dragging');
+    }, { passive: true });
+
+    checklistEl.addEventListener('touchmove', e => {
+      if (!touchItem) return;
+      const touch = e.touches[0];
+      const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (!targetEl) return;
+
+      const targetItem = targetEl.closest('.cat-check-item');
+      if (targetItem && targetItem !== touchItem && targetItem.parentNode === checklistEl) {
+        const rect = targetItem.getBoundingClientRect();
+        const nextSibling = (touch.clientY < rect.top + rect.height / 2) ? targetItem : targetItem.nextSibling;
+
+        if (touchItem.nextSibling !== nextSibling) {
+          checklistEl.insertBefore(touchItem, nextSibling);
+          currentCategoryOrder = Array.from(checklistEl.querySelectorAll('.cat-check-item')).map(el => el.dataset.cat);
+          applyLayout({ animate: true });
+        }
+      }
+    }, { passive: true });
+
+    checklistEl.addEventListener('touchend', () => {
+      if (touchItem) {
+        touchItem.classList.remove('dragging');
+        touchItem = null;
+      }
+    });
+  }
 
   // Save layout preferences to cookie
   if (saveCookiesBtn) {
     saveCookiesBtn.addEventListener('click', () => {
       const prefs = {
         cols: selectedCols,
-        categories: Array.from(activeCategories)
+        categories: Array.from(activeCategories),
+        order: currentCategoryOrder
       };
       setCookie('eboshii_news_prefs', JSON.stringify(prefs));
       saveFeedback.textContent = 'Saved!';
@@ -345,13 +505,15 @@ full_width: true
     });
   }
 
-  // Reset to default categories & layout
+  // Reset to default categories, order & layout
   const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
   if (resetDefaultsBtn) {
     resetDefaultsBtn.addEventListener('click', () => {
       selectedCols = 3;
       activeCategories = new Set(DEFAULT_ACTIVE_CATS);
-      applyLayout();
+      currentCategoryOrder = [...DEFAULT_CATEGORY_ORDER];
+      reorderChecklistDOM(currentCategoryOrder);
+      applyLayout({ animate: true });
       setCookie('eboshii_news_prefs', '', -1);
       saveFeedback.textContent = 'Reset to defaults!';
       saveFeedback.style.display = 'inline';
