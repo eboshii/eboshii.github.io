@@ -19,7 +19,7 @@ full_width: true
 
     <div class="news-controls">
       <div class="search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+        <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
@@ -30,7 +30,7 @@ full_width: true
       <div class="category-filters" id="category-filters">
         <button class="filter-btn active" data-cat="all">All</button>
         {% for cat in site.data.news.categories %}
-        <button class="filter-btn" data-cat="{{ cat.id }}">{{ cat.title | split: " " | first }}</button>
+        <button class="filter-btn" data-cat="{{ cat.id }}">{{ cat.title }}</button>
         {% endfor %}
       </div>
     </div>
@@ -46,13 +46,12 @@ full_width: true
 
       <ul class="headline-list">
         {% for item in cat.items %}
-        <li class="headline-item" data-title="{{ item.title | downcase | escape }}" data-source="{{ item.source | downcase }}">
+        <li class="headline-item" data-title="{{ item.title | downcase | escape }}" data-source="{{ item.source | downcase }}" title="{{ item.title | escape }}">
           <a class="headline-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
-            <span class="headline-text">{{ item.title }}</span>
-            <span class="headline-sub">
+            <span class="headline-title">{{ item.title }}</span>
+            <span class="headline-meta">
               <span class="badge-source">{{ item.source_short }}</span>
               {% if item.time_ago != "" %}<span class="badge-time">{{ item.time_ago }}</span>{% endif %}
-              <span class="badge-domain">{{ item.domain }}</span>
             </span>
           </a>
         </li>

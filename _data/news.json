@@ -1,55 +1,622 @@
 {
-  "last_updated": "2026-08-31T12:32:24.021994+00:00",
+  "last_updated": "2026-09-01T07:43:54.993482+00:00",
   "categories": [
     {
       "id": "world",
       "title": "World & Wire",
-      "count": 63,
+      "count": 80,
       "items": [
         {
-          "title": "Germany: Sven Schulze takes on the far-right AfD",
-          "url": "https://www.dw.com/en/germany-sven-schulze-takes-on-the-far-right-afd/a-78509861?maca=en-rss-en-all-1573-rdf",
+          "title": "Nepal death toll crosses 1,000 as rescuers race to find workers trapped in mud-filled tunnels",
+          "url": "https://www.bbc.co.uk/news/articles/c5ylvgq9q71o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T07:37:24+00:00",
+          "time_ago": "6m"
+        },
+        {
+          "title": "Duolingo D-Day: Iranians question latest US sanctions targeting education",
+          "url": "https://www.aljazeera.com/news/2026/9/1/duolingo-d-day-iranians-question-latest-us-sanctions-targeting-education?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T07:25:54+00:00",
+          "time_ago": "18m"
+        },
+        {
+          "title": "Zambia's president to be sworn in for second term while opponent detained",
+          "url": "https://www.bbc.co.uk/news/articles/c62m7vp5895o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T07:19:45+00:00",
+          "time_ago": "24m"
+        },
+        {
+          "title": "Fugitive property developer won’t give evidence this week to Icac – as it happened",
+          "url": "https://www.theguardian.com/australia-news/live/2026/sep/01/nepal-tibet-flooding-missing-australians-penny-wong-anthony-albanese-pacific-islands-forum-liberal-national-coalition-one-nation-politics-reactions-ntwnfb",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T07:18:02+00:00",
+          "time_ago": "25m"
+        },
+        {
+          "title": "Hindu pilgrims, on arduous trek, among Nepal's missing",
+          "url": "https://www.npr.org/2026/09/01/g-s1-141349/hindu-pilgrims-on-arduous-trek-among-nepals-missing",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-09-01T07:08:12+00:00",
+          "time_ago": "35m"
+        },
+        {
+          "title": "Ex-gang boss guilty of orchestrating 1996 murder of rapper Tupac Shakur",
+          "url": "https://www.bbc.co.uk/news/articles/c24j5192j7jo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T07:02:58+00:00",
+          "time_ago": "40m"
+        },
+        {
+          "title": "Palestine weekly: Israel’s rightwing campaigns on anti-Palestinian abuses",
+          "url": "https://www.aljazeera.com/features/2026/9/1/palestine-weekly-israels-rightwing-campaigns-on-anti-palestinian-abuses?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T07:02:25+00:00",
+          "time_ago": "41m"
+        },
+        {
+          "title": "Times Square stabbing in NYC leaves 1 dead, assailant killed",
+          "url": "https://www.dw.com/en/times-square-stabbing-in-nyc-leaves-1-dead-assailant-killed/a-78582543?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-09-01T07:00:00+00:00",
+          "time_ago": "43m"
+        },
+        {
+          "title": "Teen faces life over livestream of San Diego mosque attack",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/9/1/teen-faces-life-over-livestream-of-san-diego-mosque-attack?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T06:39:07+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "US Open: Alcaraz wins on return, aggressive Sabalenka advances",
+          "url": "https://www.aljazeera.com/sports/2026/9/1/us-open-2026-results-carlos-alcaraz-aryna-sabalenka-tennis?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T06:36:25+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "How prices in Tunisia have skyrocketed since the Arab Spring",
+          "url": "https://www.aljazeera.com/news/2026/9/1/how-prices-in-tunisia-have-skyrocketed-since-the-arab-spring?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T06:34:28+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Ukraine updates: Russia hits Kyiv for sixth straight day",
+          "url": "https://www.dw.com/en/ukraine-updates-russia-hits-kyiv-for-sixth-straight-day/live-78582421?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-09-01T06:34:00+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Ex-gang leader Duane ‘Keffe D’ Davis found guilty of murdering Tupac Shakur",
+          "url": "https://www.aljazeera.com/news/2026/9/1/ex-gang-leader-keffe-d-found-guilty-of-killing-rap-legend-tupac-shakur?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T06:10:29+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Oil prices climb as US, Iranian attacks stoke fears of escalation",
+          "url": "https://www.aljazeera.com/economy/2026/9/1/oil-prices-climb-as-us-iranian-attacks-stoke-fears-of-escalation?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T06:07:39+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "How catastrophic flash flood unfolded at remote Nepal-China border point",
+          "url": "https://www.bbc.co.uk/news/articles/c0qxw1qw3g7o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T06:02:27+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "South Korean police officer admits to closing missing person cases to avoid work",
+          "url": "https://www.bbc.co.uk/news/articles/c780wy7ype4o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T05:47:21+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Amid backlash, museum cancels planned Met Gala exhibit on fashion designer John Galliano",
+          "url": "https://www.npr.org/2026/09/01/g-s1-141347/met-gala-john-galliano-exhibit-canceled",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-09-01T05:43:37+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Relief as Australian missing in Nepal-Tibet flood disaster found alive",
+          "url": "https://www.theguardian.com/world/2026/sep/01/missing-australian-found-alive-nepal-tibet-floods",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T05:43:15+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "China warns of ‘consequences’ over Taiwan presence at Pacific Islands Forum",
+          "url": "https://www.theguardian.com/world/2026/sep/01/china-warns-of-consequences-taiwan-pacific-islands-forum-palau",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T05:34:12+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Meal deal: meth found hidden inside McMuffin during a police car search in Western Australia",
+          "url": "https://www.theguardian.com/australia-news/2026/sep/01/meth-hidden-in-mcmuffin-burger-police-car-search-western-australia-ntwnfb",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T05:32:48+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Israeli forces raze West Bank homes as EU weighs ban on settlement goods",
+          "url": "https://www.aljazeera.com/news/2026/9/1/israeli-forces-raze-west-bank-homes-as-eu-weighs-ban-on-settlement-goods?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T05:27:17+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "EU considers military mission to replace UN peacekeepers in South Lebanon",
+          "url": "https://www.aljazeera.com/news/2026/9/1/can-europe-fill-vacuum-left-in-lebanon-as-un-peacekeeping-force-winds-up?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T05:25:37+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Rival Ray Hadley tells Alan Jones trial that alleged victim ‘broke down and sobbed’ when detailing assaults",
+          "url": "https://www.theguardian.com/australia-news/2026/sep/01/2gb-rival-ray-hadley-evidence-alan-jones-trial-alleged-sexual-touching-ntwnfb",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T05:20:40+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "'I've never been to Afghanistan': Six million deportees forced to start over under the Taliban",
+          "url": "https://www.bbc.co.uk/news/articles/c2e074nn8eko?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T05:00:34+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Jury convicts a man of first-degree murder for the 1996 killing of rap icon Tupac Shakur",
+          "url": "https://www.npr.org/2026/09/01/g-s1-141341/conviction-tupac-shakur-murder",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-09-01T04:57:01+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Army Secretary Dan Driscoll is stepping down, White House says",
+          "url": "https://www.npr.org/2026/09/01/g-s1-141337/army-secretary-stepping-down",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-09-01T04:43:57+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "AfD's Ulrich Siegmund has plans for Saxony-Anhalt and beyond",
+          "url": "https://www.dw.com/en/afd-s-ulrich-siegmund-has-plans-for-saxony-anhalt-and-beyond/a-78579499?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-09-01T04:32:00+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Former gang leader found guilty of Tupac Shakur’s 1996 murder",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/9/1/09-01-26-tupac-murder-verdict-sv?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T04:29:23+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Algeria’s president seeks death penalty for those who start forest fires",
+          "url": "https://www.aljazeera.com/news/2026/9/1/algerias-president-seeks-death-penalty-for-those-who-start-forest-fires?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T04:24:28+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Shein shares fall in long-awaited stock market debut",
+          "url": "https://www.bbc.co.uk/news/articles/c3v0qrz7z25o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T04:15:15+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Nearly 200 witnesses to Charlie Kirk shooting apply for victims' benefits in Utah",
+          "url": "https://www.npr.org/2026/09/01/nx-s1-5945736/nearly-200-witnesses-to-charlie-kirk-shooting-apply-for-victims-benefits-in-utah",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-09-01T04:01:00+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "John Ternus to lead Apple into the age of AI",
+          "url": "https://www.aljazeera.com/economy/2026/9/1/john-ternus-to-lead-apple-into-the-age-of-ai?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T03:20:25+00:00",
+          "time_ago": "4h"
+        },
+        {
+          "title": "Kākāpō rising: 90 chicks swell population of the world’s heaviest parrot",
+          "url": "https://www.theguardian.com/world/2026/sep/01/record-breeding-worlds-heaviest-parrot-nz-endangered-kakapo",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-09-01T02:57:21+00:00",
+          "time_ago": "4h"
+        },
+        {
+          "title": "US brings back Russia’s Siluanov to G20 finance talks, angering Europe",
+          "url": "https://www.aljazeera.com/news/2026/9/1/us-brings-back-russias-siluanov-to-g20-finance-talks-angering-europe?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T02:23:03+00:00",
+          "time_ago": "5h"
+        },
+        {
+          "title": "Toxic haze from Indonesian forest fires chokes Malaysian Borneo",
+          "url": "https://www.aljazeera.com/news/2026/9/1/toxic-haze-from-indonesian-fires-chokes-malaysian-borneo?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T02:06:01+00:00",
+          "time_ago": "5h"
+        },
+        {
+          "title": "New York police kill knife-wielding woman in Times Square",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/9/1/09-01-26-times-square-stabbing-minisv?traffic_source=rss",
+          "source": "Al Jazeera",
+          "source_short": "AlJazeera",
+          "domain": "aljazeera.com",
+          "published_iso": "2026-09-01T01:19:34+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "US army secretary resigns after months of tension",
+          "url": "https://www.bbc.co.uk/news/articles/czjz31dk1xmo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T01:01:03+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "Tupac Shakur murder trial: Duane 'Keffe D' Davis guilty",
+          "url": "https://www.dw.com/en/tupac-shakur-murder-trial-duane-keffe-d-davis-guilty/a-78581756?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-09-01T00:27:00+00:00",
+          "time_ago": "7h"
+        },
+        {
+          "title": "US Supreme Court clears way for Trump to keep building White House ballroom",
+          "url": "https://www.bbc.co.uk/news/articles/c9w457e7ydlo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T22:38:24+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "Trump officials cut political interference ban after unusual Census Bureau report",
+          "url": "https://www.npr.org/2026/08/31/nx-s1-5948057/department-commerce-census-bureau-scientific-integrity",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-08-31T22:24:12+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "US Supreme Court allows Trump ballroom project to proceed",
+          "url": "https://www.dw.com/en/us-supreme-court-allows-trump-ballroom-project-to-proceed/a-78581275?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T21:54:00+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "Amazon rigged $20bn worth of ad prices, US lawsuit alleges",
+          "url": "https://www.bbc.co.uk/news/articles/cvgy91nvy27o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T21:28:49+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Two dead and more than a dozen missing after 'terrifying' flash flood hits Grand Canyon",
+          "url": "https://www.bbc.co.uk/news/articles/clylkjyez1do?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T20:47:38+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Whatever happened to the U.S. famine alert system that Trump shut down, then reopened",
+          "url": "https://www.npr.org/2026/09/01/nx-s1-5944472/famine-usaid-fews-net",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-08-31T20:42:17+00:00",
+          "time_ago": "11h"
+        },
+        {
+          "title": "Kalshi bans former congressman George Santos for life after State of the Union trades",
+          "url": "https://www.npr.org/2026/08/31/nx-s1-5950432/george-santos-kalshi-ban-prediction-markets",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-08-31T20:21:47+00:00",
+          "time_ago": "11h"
+        },
+        {
+          "title": "The U.S. sues Amazon again",
+          "url": "https://www.npr.org/2026/08/31/nx-s1-5950482/ftc-amazon-advertising-lawsuit",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-08-31T20:17:03+00:00",
+          "time_ago": "11h"
+        },
+        {
+          "title": "Poland launches sabotage probe in drone factory fire",
+          "url": "https://www.dw.com/en/poland-launches-sabotage-probe-in-drone-factory-fire/a-78580918?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T19:43:00+00:00",
+          "time_ago": "12h"
+        },
+        {
+          "title": "Festival honouring Dolly Parton set for Nashville and London",
+          "url": "https://www.bbc.co.uk/news/articles/c5ywd9q3ywvo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T18:58:35+00:00",
+          "time_ago": "12h"
+        },
+        {
+          "title": "Ex-congressman George Santos banned from betting platform for life",
+          "url": "https://www.bbc.co.uk/news/articles/cpwlxy49225o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T18:15:12+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "US singer D4vd's celebrity lawyers withdraw from murder case",
+          "url": "https://www.bbc.co.uk/news/articles/crr451lpl4no?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T17:54:23+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "Paperwork, lines, hours on hold: There's a 'Time Tax' on Americans who need help most",
+          "url": "https://www.npr.org/2026/08/31/nx-s1-5946449/time-tax-annie-lowrey-government-assistance-unemployment",
+          "source": "NPR News",
+          "source_short": "NPR",
+          "domain": "npr.org",
+          "published_iso": "2026-08-31T17:06:39+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "Nepal rescuers race to reach hundreds feared trapped in hydropower tunnels",
+          "url": "https://www.theguardian.com/world/2026/aug/31/nepal-tibet-floods-rescuers-hundreds-trapped-hydropower",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-08-31T15:56:31+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "John Galliano exhibition at New York Met cancelled after backlash",
+          "url": "https://www.bbc.co.uk/news/articles/c4gkp6pgy03o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T15:30:05+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Lionel Messi announces retirement from international football",
+          "url": "https://www.dw.com/en/lionel-messi-announces-retirement-from-international-football/a-78579502?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T15:30:00+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Messi retires from international football with 'nothing left to give'",
+          "url": "https://www.bbc.co.uk/sport/football/articles/ceq89y38elro?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T15:18:39+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Trump pushes Apple to change 'Lake Ontario' to 'Lake America' on its maps",
+          "url": "https://www.bbc.co.uk/news/articles/c2l80eq5lxno?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T15:00:11+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "'She slipped out of my hand' - children missing after ferry sinks off northern Cyprus",
+          "url": "https://www.bbc.co.uk/news/articles/c1mv5ggg1l8o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T14:50:36+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Court says India must uphold Pakistan water treaty",
+          "url": "https://www.dw.com/en/court-says-india-must-uphold-pakistan-water-treaty/a-78579010?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T14:49:00+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "How China buried Tibet flood images after Nepal disaster",
+          "url": "https://www.dw.com/en/how-china-buried-tibet-flood-images-after-nepal-disaster/a-78576472?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T14:19:00+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "At Venice Film Festival, politics take center stage",
+          "url": "https://www.dw.com/en/at-venice-film-festival-politics-take-center-stage/a-78493761?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T14:05:00+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "US and Iran trade strikes for first time in weeks",
+          "url": "https://www.bbc.co.uk/news/articles/cx2z72x5z1po?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T13:47:30+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "South African airline defends dramatic low-level flyby before rugby union clash",
+          "url": "https://www.theguardian.com/sport/2026/aug/31/south-african-airline-defends-dramatic-low-level-flyby-before-rugby-union-springboks-new-zealand",
+          "source": "The Guardian",
+          "source_short": "Guardian",
+          "domain": "theguardian.com",
+          "published_iso": "2026-08-31T13:44:39+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "Deceived and deployed: How young Cameroonians end up fighting in Russia's war in Ukraine",
+          "url": "https://www.dw.com/en/deceived-and-deployed-how-young-cameroonians-end-up-fighting-in-russia-s-war-in-ukraine/a-78513256?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T13:39:00+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Tariffs spat: Carney bets Canada can defy Trump",
+          "url": "https://www.dw.com/en/tariffs-spat-carney-bets-canada-can-defy-trump/a-78542754?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T13:38:00+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "EU puts ChatGPT, Reddit and Roblox under stricter rules",
+          "url": "https://www.dw.com/en/eu-puts-chatgpt-reddit-and-roblox-under-stricter-rules/a-78577019?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T13:36:00+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Man arrested after Swiss rave shooting that killed woman",
+          "url": "https://www.bbc.co.uk/news/articles/cddv92n194vo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC News",
+          "source_short": "BBC",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T13:11:35+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Iran retaliates, condemns US strikes on Larak Island",
+          "url": "https://www.dw.com/en/iran-retaliates-condemns-us-strikes-on-larak-island/live-78566992?maca=en-rss-en-all-1573-rdf",
+          "source": "Deutsche Welle",
+          "source_short": "DW",
+          "domain": "dw.com",
+          "published_iso": "2026-08-31T12:47:00+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "In Saxony-Anhalt, Sven Schulze takes on far-right AfD",
+          "url": "https://www.dw.com/en/in-saxony-anhalt-sven-schulze-takes-on-far-right-afd/a-78509861?maca=en-rss-en-all-1573-rdf",
           "source": "Deutsche Welle",
           "source_short": "DW",
           "domain": "dw.com",
           "published_iso": "2026-08-31T12:28:00+00:00",
-          "time_ago": "4m"
-        },
-        {
-          "title": "Modi-Putin meeting at SCO: Can India-Russia ties hold?",
-          "url": "https://www.dw.com/en/modi-putin-meeting-at-sco-can-india-russia-ties-hold/a-78575121?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T12:02:00+00:00",
-          "time_ago": "30m"
-        },
-        {
-          "title": "Who are the economic winners and losers of the US-Israel war on Iran?",
-          "url": "https://www.aljazeera.com/economy/2026/8/31/who-are-the-economic-winners-and-losers-of-the-us-israel-war-on-iran?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T12:01:18+00:00",
-          "time_ago": "31m"
-        },
-        {
-          "title": "Rescuers search for 18 missing after boat capsizes off Northern Cyprus",
-          "url": "https://www.aljazeera.com/news/2026/8/31/rescue-teams-continue-search-for-missing-after-north-cyprus-ferry-sinking?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T11:59:37+00:00",
-          "time_ago": "32m"
-        },
-        {
-          "title": "Fire breaks out after unidentified explosions at oil refinery in Baghdad",
-          "url": "https://www.aljazeera.com/video/newsfeed/2026/8/31/fire-breaks-out-after-unidentified-explosions-at-oil-refinery-in-baghdad-2?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T11:58:57+00:00",
-          "time_ago": "33m"
+          "time_ago": "19h"
         },
         {
           "title": "Countries legally obliged to consider slavery reparations, says UN committee",
@@ -58,142 +625,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-31T11:54:16+00:00",
-          "time_ago": "38m"
-        },
-        {
-          "title": "The jury's options in Lindsay Clancy's murder trial",
-          "url": "https://www.bbc.co.uk/news/articles/c93vgv4kr49o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T11:53:21+00:00",
-          "time_ago": "39m"
-        },
-        {
-          "title": "Italy extends Schengen suspension with Spain",
-          "url": "https://www.dw.com/en/italy-extends-schengen-suspension-with-spain/a-78573029?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T11:51:00+00:00",
-          "time_ago": "41m"
-        },
-        {
-          "title": "Nepal's hesitance to accept foreign help for flood relief under scrutiny",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5949971/nepals-hesitance-help-flood",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T11:50:17+00:00",
-          "time_ago": "42m"
-        },
-        {
-          "title": "Turkiye, Saudi Arabia, Pakistan hold first Mecca defence pact meeting",
-          "url": "https://www.aljazeera.com/video/newsfeed/2026/8/31/turkiye-saudi-arabia-pakistan-hold-first-mecca-defence-pact-meeting?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T11:49:03+00:00",
-          "time_ago": "43m"
-        },
-        {
-          "title": "Man arrested after Swiss rave shooting that killed woman",
-          "url": "https://www.bbc.co.uk/news/articles/cddv92n194vo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T11:41:40+00:00",
-          "time_ago": "50m"
-        },
-        {
-          "title": "Search continues for 18 passengers after ferry capsized in northern Cyprus",
-          "url": "https://www.bbc.co.uk/news/articles/c1mv5ggg1l8o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T11:41:05+00:00",
-          "time_ago": "51m"
-        },
-        {
-          "title": "Nepal floods: A major test for PM Balen's government",
-          "url": "https://www.dw.com/en/nepal-floods-a-major-test-for-pm-balen-s-government/a-78574227?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T11:34:00+00:00",
-          "time_ago": "58m"
-        },
-        {
-          "title": "Niger: Failed coup exposes junta's weakness — and Russia's influence",
-          "url": "https://www.dw.com/en/niger-failed-coup-exposes-junta-s-weakness-and-russia-s-influence/a-78572278?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T11:32:00+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "UAE intercepts drone after US and Iran exchange attacks",
-          "url": "https://www.aljazeera.com/news/2026/8/31/uae-intercepts-drone-after-us-and-iran-exchange-attacks?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T11:25:43+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Swiss police arrest man over deadly rave shooting",
-          "url": "https://www.dw.com/en/swiss-police-arrest-man-over-deadly-rave-shooting/a-78575110?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T11:23:00+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "U.S., Venezuela strike oil deal. And, the staggering hidden toll of U.S. heat deaths",
-          "url": "https://www.npr.org/2026/08/31/g-s1-141187/up-first-newsletter-venezuela-oil-iran-war-house-government-funding-grand-canyon-flash-flooding",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T11:20:15+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "With multilateralism in decline, what's next for the world?",
-          "url": "https://www.dw.com/en/with-multilateralism-in-decline-what-s-next-for-the-world/a-78555977?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T11:13:00+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Passengers stranded as strike disrupts flights at Kenya's main airport",
-          "url": "https://www.bbc.co.uk/news/articles/c783x05nnlko?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T10:54:01+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Inside the sea cucumber smuggling boom",
-          "url": "https://www.dw.com/en/inside-the-sea-cucumber-smuggling-boom/a-78005662?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T10:50:00+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Russia's jet-powered drones bring empty Kyiv supermarket shelves and rattle Ukrainians",
-          "url": "https://www.npr.org/2026/08/31/g-s1-141181/russia-ukraine-war",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T10:24:25+00:00",
-          "time_ago": "2h"
+          "time_ago": "19h"
         },
         {
           "title": "Morocco not to blame for Ceuta border breach, says Spanish PM",
@@ -202,106 +634,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-31T10:21:56+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "The looming failure of Operation Economic Outcast",
-          "url": "https://www.aljazeera.com/opinions/2026/8/31/the-looming-failure-of-operation-economic-outcast?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T10:18:40+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "South African airline defends low-altitude aerial stunt over packed stadium",
-          "url": "https://www.bbc.co.uk/news/articles/c3rew8jqny5o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T10:18:07+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Nepal tunnel traps hinder flood rescue: How many are dead or missing?",
-          "url": "https://www.aljazeera.com/news/2026/8/31/nepal-tunnel-traps-hinder-flood-rescue-how-many-are-dead-or-missing?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T10:17:22+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "After the flash flood disaster, here is what Nepal really needs",
-          "url": "https://www.aljazeera.com/opinions/2026/8/31/after-the-flash-flood-disaster-here-is-what-nepal-really-needs?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T10:12:38+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Attacks flare between the U.S. and Iran after a monthlong pause",
-          "url": "https://www.npr.org/2026/08/31/g-s1-141175/attacks-flare-us-iran",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T10:04:30+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Israel signs €3 billion arms export deal with Greece",
-          "url": "https://www.dw.com/en/israel-signs-€3-billion-arms-export-deal-with-greece/a-78572062?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T10:02:00+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Spain’s Sanchez says Russia, Israel spread disinformation on Ceuta crisis",
-          "url": "https://www.aljazeera.com/news/2026/8/31/spains-sanchez-condemns-russia-israel-disinformation-during-ceuta-crisis?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T09:56:34+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Ailing Djokovic 'despised' every moment of US Open defeat",
-          "url": "https://www.dw.com/en/ailing-djokovic-despised-every-moment-of-us-open-defeat/a-78572187?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T09:45:00+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Dolly Parton laid to rest alongside husband in Nashville",
-          "url": "https://www.bbc.co.uk/news/articles/cew95ke74l7o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T09:24:50+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Venus Williams bows out of US Open with straight-sets defeat to Sofia Kenin",
-          "url": "https://www.aljazeera.com/sports/2026/8/31/venus-williams-bows-out-of-us-open-with-straight-sets-defeat-to-sofia-kenin?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T09:20:38+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Iran attacks Jordan, UAE after US bombs Larak Island: What’s the latest?",
-          "url": "https://www.aljazeera.com/news/2026/8/31/iran-attacks-jordan-uae-after-us-bombs-larak-island-whats-the-latest?traffic_source=rss",
-          "source": "Al Jazeera",
-          "source_short": "AlJazeera",
-          "domain": "aljazeera.com",
-          "published_iso": "2026-08-31T09:19:40+00:00",
-          "time_ago": "3h"
+          "time_ago": "21h"
         },
         {
           "title": "China is concealing scale of flood disaster, say Tibet campaigners",
@@ -310,106 +643,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-31T09:18:28+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Kenya: Passengers stranded amid airport staff strike",
-          "url": "https://www.dw.com/en/kenya-passengers-stranded-amid-airport-staff-strike/a-78570644?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T09:03:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Singapore is scrambling to stabilize birthrates. Experts say there are lessons for the U.S.",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5944260/singapore-initiative-declining-birthrates",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T09:00:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Hit shows from Edinburgh's Fringe festival are coming to America. Here are our top picks",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5949346/edinburgh-fringe-scotland-best-shows-coming-to-america",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T09:00:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Why too many women are prescribed antibiotics for UTIs they don't have",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5947249/infection-uti-bladder-antibiotics-hormone-menopause",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T09:00:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "NPR spent 2 years tracking deaths from heat. We found a staggering hidden toll",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5724225/heat-wave-death-toll-tracker",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T09:00:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "The U.S. Venezuela oil deal won't lower your gas prices. Here's what you need to know",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5949407/us-venezuelan-oil-deal",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T09:00:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Morning news brief",
-          "url": "https://www.npr.org/2026/08/31/nx-s1-5946754/morning-news-brief",
-          "source": "NPR News",
-          "source_short": "NPR",
-          "domain": "npr.org",
-          "published_iso": "2026-08-31T08:49:20+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "US and Iran trade strikes for first time in weeks",
-          "url": "https://www.bbc.co.uk/news/articles/cx2z72x5z1po?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T08:34:25+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "One dead and more than a dozen missing after 'terrifying' flash flood hits Grand Canyon",
-          "url": "https://www.bbc.co.uk/news/articles/clylkjyez1do?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T08:17:25+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "Algeria president seeks death penalty for arsonists after deadly forest fires",
-          "url": "https://www.bbc.co.uk/news/articles/cvgy41lwe0jo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T08:13:40+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "Germany news: Police operation in Cologne after shots fired",
-          "url": "https://www.dw.com/en/germany-news-police-operation-in-cologne-after-shots-fired/live-78568957?maca=en-rss-en-all-1573-rdf",
-          "source": "Deutsche Welle",
-          "source_short": "DW",
-          "domain": "dw.com",
-          "published_iso": "2026-08-31T08:02:00+00:00",
-          "time_ago": "4h"
+          "time_ago": "22h"
         },
         {
           "title": "Weather tracker: Warm Yellow Sea strengthens storms in South Korea",
@@ -418,16 +652,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-31T07:57:24+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "'Moonies' church leader jailed for two years over bribery offences",
-          "url": "https://www.bbc.co.uk/news/articles/c8xkqjdk142o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T06:56:40+00:00",
-          "time_ago": "5h"
+          "time_ago": "23h"
         },
         {
           "title": "Canada erects giant ‘Lake Ontario’ sign as spat with Trump over name escalates",
@@ -436,52 +661,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-30T18:57:22+00:00",
-          "time_ago": "17h"
-        },
-        {
-          "title": "'A giant leap forward': Nasa launches powerful new space telescope",
-          "url": "https://www.bbc.co.uk/news/articles/ce87e55vgpjo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T18:53:53+00:00",
-          "time_ago": "17h"
-        },
-        {
-          "title": "Manhunt after shooting at Swiss rave kills woman, 22, and injures five",
-          "url": "https://www.bbc.co.uk/news/articles/c9qr750je1go?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T17:49:31+00:00",
-          "time_ago": "18h"
-        },
-        {
-          "title": "Zambian opposition leader charged with treason",
-          "url": "https://www.bbc.co.uk/news/articles/c20lwqpx70qo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T17:06:15+00:00",
-          "time_ago": "19h"
-        },
-        {
-          "title": "Head teacher evacuated 900 children minutes before Nepal floods hit school",
-          "url": "https://www.bbc.co.uk/news/articles/c5ymvdm5520o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T16:48:13+00:00",
-          "time_ago": "19h"
-        },
-        {
-          "title": "Iceland votes against restarting EU membership talks",
-          "url": "https://www.bbc.co.uk/news/articles/c70le8ed1plo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC News",
-          "source_short": "BBC",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T16:11:44+00:00",
-          "time_ago": "20h"
+          "time_ago": "1d"
         },
         {
           "title": "Venezuela’s Delcy Rodríguez defends ‘endless’ benefits of her oil deal with Trump",
@@ -490,7 +670,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-30T15:08:33+00:00",
-          "time_ago": "21h"
+          "time_ago": "1d"
         },
         {
           "title": "People fleeing Sudan civil war face ‘dire and deteriorating’ conditions in refuge city",
@@ -499,7 +679,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-30T06:00:48+00:00",
-          "time_ago": "1d"
+          "time_ago": "2d"
         },
         {
           "title": "Was it a mistake for 99 Colombian guerrillas to lay down their arms?",
@@ -517,7 +697,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-29T03:49:58+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "Trump announces new US oil agreement with Venezuela",
@@ -526,7 +706,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-28T23:34:36+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "Venezuelan opposition up in arms over reports US wants big stake in oil and gas",
@@ -535,25 +715,7 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-28T17:41:37+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "At least 93,000 ‘in great need’ after Nepal-Tibet flash floods, says Red Cross",
-          "url": "https://www.theguardian.com/world/2026/aug/28/nepal-tibet-flash-floods-red-cross-rescuers-death-toll",
-          "source": "The Guardian",
-          "source_short": "Guardian",
-          "domain": "theguardian.com",
-          "published_iso": "2026-08-28T15:55:41+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Families of 33 missing Britons rush to Nepal as fears grow of more floods",
-          "url": "https://www.theguardian.com/world/2026/aug/28/families-missing-britons-nepal-flash-floods",
-          "source": "The Guardian",
-          "source_short": "Guardian",
-          "domain": "theguardian.com",
-          "published_iso": "2026-08-28T15:44:38+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "Egyptian queen’s 673-diamond necklace stolen in Vienna smash-and-grab raid",
@@ -562,15 +724,6 @@
           "source_short": "Guardian",
           "domain": "theguardian.com",
           "published_iso": "2026-08-28T14:46:25+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "What could Meta’s US settlement mean around the world – and what now for other claims against firm?",
-          "url": "https://www.theguardian.com/technology/2026/aug/28/meta-facebook-us-lawsuit-settlement-world-impact",
-          "source": "The Guardian",
-          "source_short": "Guardian",
-          "domain": "theguardian.com",
-          "published_iso": "2026-08-28T04:00:48+00:00",
           "time_ago": "3d"
         }
       ]
@@ -578,16 +731,430 @@
     {
       "id": "tech",
       "title": "Tech & Computing",
-      "count": 66,
+      "count": 80,
       "items": [
         {
-          "title": "I Think the Military Commissary's Freezers Were Hacked",
+          "title": "CollectWise (YC F24) Is Hiring",
+          "url": "https://www.ycombinator.com/companies/collectwise/jobs/7U500pP-founding-customer-success-engineer",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "ycombinator.com",
+          "published_iso": "2026-09-01T07:01:49+00:00",
+          "time_ago": "42m"
+        },
+        {
+          "title": "Vermell – Minimal, dependency-free C++ web framework using epoll",
+          "url": "https://github.com/vermellcc/vermell",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "github.com",
+          "published_iso": "2026-09-01T04:56:11+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Restroom Archive",
+          "url": "https://restroomarchive.com",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "restroomarchive.com",
+          "published_iso": "2026-09-01T03:23:48+00:00",
+          "time_ago": "4h"
+        },
+        {
+          "title": "GPU World",
+          "url": "https://www.gpuworld.org/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "gpuworld.org",
+          "published_iso": "2026-09-01T03:16:36+00:00",
+          "time_ago": "4h"
+        },
+        {
+          "title": "Fastpotify",
+          "url": "https://fastpotify.rocks/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "fastpotify.rocks",
+          "published_iso": "2026-09-01T02:52:14+00:00",
+          "time_ago": "4h"
+        },
+        {
+          "title": "RotaryCell: Making an unmodified rotary phone work over LTE with an ESP32-S3",
+          "url": "https://github.com/fregacmols/RotaryCell",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "github.com",
+          "published_iso": "2026-09-01T02:29:23+00:00",
+          "time_ago": "5h"
+        },
+        {
+          "title": "Breaking down Amazon’s mega dropdown (2013)",
+          "url": "https://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "bjk5.com",
+          "published_iso": "2026-09-01T01:30:16+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "DoltLite: A SQLite fork with Git-style version control, built with 2k agent PRs",
+          "url": "https://www.dolthub.com/blog/2026-08-31-doltlite-beta/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "dolthub.com",
+          "published_iso": "2026-09-01T01:25:40+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "2004 RuneScape fit a multiplayer RPG into 56k dial-up",
+          "url": "https://jkm.dev/posts/how-2004-runescape-fit-a-multiplayer-rpg-into-56k-dialup/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "jkm.dev",
+          "published_iso": "2026-09-01T01:01:08+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "Janet 1.42.0",
+          "url": "https://github.com/janet-lang/janet/releases/tag/v1.42.0",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "github.com",
+          "published_iso": "2026-09-01T00:05:30+00:00",
+          "time_ago": "7h"
+        },
+        {
+          "title": "Evidence of Fraud in an Influential Study About Procrastination",
+          "url": "https://datacolada.org/138",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "datacolada.org",
+          "published_iso": "2026-08-31T23:45:56+00:00",
+          "time_ago": "7h"
+        },
+        {
+          "title": "Tmp.0ut Volume 5",
+          "url": "https://tmpout.sh/5/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "tmpout.sh",
+          "published_iso": "2026-08-31T23:26:08+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "The Bentley Supersports: A stripped-out engineer's indulgence",
+          "url": "https://arstechnica.com/cars/2026/08/the-bentley-supersports-a-stripped-out-engineers-indulgence/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T23:01:16+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "The Google TV Streamer now costs $50 more",
+          "url": "https://www.theverge.com/tech/987032/google-tv-streamer-price-increase",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T22:32:51+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "JMGO’s very bright all-in-one projector looks ideal for gamers and sports",
+          "url": "https://www.theverge.com/tech/985986/jmgo-4k-gaming-projector-price-specs",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T22:00:00+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "FTC lawsuit alleges Amazon has been ‘secretly and systematically’ overcharging for ads",
+          "url": "https://www.theverge.com/tech/986982/amazon-advertising-prices-ftc-lawsuit",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T21:41:42+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Trump admin shelves Cyclospora research despite record-breaking outbreak",
+          "url": "https://arstechnica.com/health/2026/08/trump-admin-shelves-cyclospora-research-despite-record-breaking-outbreak/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T21:23:09+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "I went to the loneliest baseball game on Apple Vision Pro",
+          "url": "https://www.theverge.com/tech/986967/apple-vision-pro-mlb-red-sox-yankees-immersive-game",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T21:18:27+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Get in on the Ars community that doesn’t fit beneath an article",
+          "url": "https://arstechnica.com/staff/2026/08/get-in-on-the-ars-community-that-doesnt-fit-beneath-an-article/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T21:12:01+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "V0.1.0.0 of ghcup-gtk released",
+          "url": "https://discourse.haskell.org/t/v0-1-0-0-of-ghcup-gtk-released/14631",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "discourse.haskell.org",
+          "published_iso": "2026-08-31T20:49:27+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes",
+          "url": "https://arstechnica.com/culture/2026/08/review-coyote-vs-acme-is-an-unabashed-love-letter-to-looney-tunes/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T20:02:16+00:00",
+          "time_ago": "11h"
+        },
+        {
+          "title": "Alienware’s budget-friendly QD-OLED is discounted for the first time",
+          "url": "https://www.theverge.com/gadgets/986901/alienware-qdoled-2726dm-deal-sale",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T19:31:59+00:00",
+          "time_ago": "12h"
+        },
+        {
+          "title": "Are We Legacy Computing Yet?",
+          "url": "https://arewelegacycomputingyet.com/",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "arewelegacycomputingyet.com",
+          "published_iso": "2026-08-31T19:11:11+00:00",
+          "time_ago": "12h"
+        },
+        {
+          "title": "Trump tells FCC to punish journalist for calling his election results \"mixed\"",
+          "url": "https://arstechnica.com/tech-policy/2026/08/trump-tells-fcc-to-punish-journalist-for-calling-his-election-results-mixed/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T18:39:25+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "A walkable ASCII cyberpunk city in one HTML file [video]",
+          "url": "https://www.youtube.com/watch?v=3YtygAx_C6A",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "youtube.com",
+          "published_iso": "2026-08-31T18:21:33+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "“Zlibrary my beloved”: Anthropic staff chats extolling piracy cited in Sony suit",
+          "url": "https://arstechnica.com/tech-policy/2026/08/zlibrary-my-beloved-anthropic-staff-chats-extolling-piracy-cited-in-sony-suit/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T18:10:45+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "The Hugging Face hack could indicate cultural issues at OpenAI",
+          "url": "https://www.technologyreview.com/2026/08/31/1143180/hugging-face-hack-could-indicate-cultural-issues-at-openai/",
+          "source": "MIT Tech Review",
+          "source_short": "MIT",
+          "domain": "technologyreview.com",
+          "published_iso": "2026-08-31T18:00:00+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "Raindrops are tiny lightning bolts, and they’re corroding cars, study finds",
+          "url": "https://arstechnica.com/science/2026/08/raindrops-are-tiny-lightning-bolts-and-theyre-corroding-cars-study-finds/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T17:11:48+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "Car owners want tech they can ignore",
+          "url": "https://www.theverge.com/news/986721/car-tech-survey-jd-power-smart-ignition",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T17:11:17+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "Bootstrappable builds: how and why",
+          "url": "https://lwn.net/Articles/1088279/",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "lwn.net",
+          "published_iso": "2026-08-31T17:03:47+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "Phil Schiller is leaving his biggest jobs at Apple",
+          "url": "https://www.theverge.com/tech/986869/apple-phil-schiller-stepping-down",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T16:54:07+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "RangeFrom, Part 2..: What I think is wrong about the design",
+          "url": "https://erk.dev/2026/08/30/rangefrom-part-2",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "erk.dev",
+          "published_iso": "2026-08-31T16:53:28+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "I turned my security cameras into an automatic bird identification system",
+          "url": "https://jasontucker.blog/how-i-turned-my-security-cameras-into-an-automatic-bird-identification-system-with-birdnet-go/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "jasontucker.blog",
+          "published_iso": "2026-08-31T16:47:11+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "Markiplier is now GoPro’s biggest shareholder",
+          "url": "https://www.theverge.com/tech/986847/markiplier-gopro-investor",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T16:38:10+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "Think twice before installing this device promising free movies",
+          "url": "https://arstechnica.com/security/2026/08/how-some-media-streaming-devices-open-home-networks-to-a-world-of-harm/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T16:33:38+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "Read Tim Cook’s final message to Apple staff as CEO",
+          "url": "https://www.theverge.com/tech/986832/read-tim-cooks-final-message-as-ceo-to-apple-staff",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T16:30:45+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "El Niño is now stronger than at any point in the last 1,000 years, study finds",
+          "url": "https://arstechnica.com/science/2026/08/el-nino-is-now-stronger-than-at-any-point-in-the-last-1000-years-study-finds/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T16:04:44+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "Debian won’t ban AI code from its Linux distribution",
+          "url": "https://www.theverge.com/tech/986789/linux-debian-generative-ai-policy",
+          "source": "The Verge",
+          "source_short": "Verge",
+          "domain": "theverge.com",
+          "published_iso": "2026-08-31T15:34:58+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Google Maps renames \"Lake Ontario\" to \"Lake America\" even faster than US government",
+          "url": "https://arstechnica.com/gadgets/2026/08/google-maps-renames-lake-ontario-to-lake-america-even-faster-than-us-government/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T15:33:32+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "I attended a conference recently and AI use by academics was absurd",
+          "url": "https://lobste.rs/s/qn7jtv/i_attended_conference_recently_ai_use_by",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "lobste.rs",
+          "published_iso": "2026-08-31T15:22:00+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Playa Phone",
+          "url": "https://playaphone.com/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "playaphone.com",
+          "published_iso": "2026-08-31T14:52:26+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "Cancelation Terminology",
+          "url": "https://matklad.github.io/2026/08/31/cancelation-terminology.html",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "matklad.github.io",
+          "published_iso": "2026-08-31T14:19:48+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "ChatGPT and Reddit now face EU's toughest online safety rules",
+          "url": "https://arstechnica.com/tech-policy/2026/08/chatgtp-and-reddit-now-face-eus-toughest-online-safety-rules/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T13:41:40+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "On not becoming a cyborg",
+          "url": "https://nolanlawson.com/2026/08/31/on-not-becoming-a-cyborg/",
+          "source": "Lobsters",
+          "source_short": "Lobsters",
+          "domain": "nolanlawson.com",
+          "published_iso": "2026-08-31T13:33:40+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "NASA's next \"great observatory\" begins mission to widen our view of the Universe",
+          "url": "https://arstechnica.com/space/2026/08/nasas-next-great-observatory-begins-mission-to-widen-our-view-of-the-universe/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-31T13:01:09+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Apple caught off guard by AI demand for Mac Mini and Mac Studio",
+          "url": "https://www.macrumors.com/2026/08/30/apple-unexpected-mac-mini-and-studio-demand/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "macrumors.com",
+          "published_iso": "2026-08-31T12:41:22+00:00",
+          "time_ago": "19h"
+        },
+        {
+          "title": "I think the military commissary's freezers were hacked",
           "url": "https://signalandsilence.substack.com/p/i-think-someone-hacked-the-commissary",
           "source": "Hacker News",
           "source_short": "HN",
           "domain": "signalandsilence.substack.com",
           "published_iso": "2026-08-31T11:45:48+00:00",
-          "time_ago": "46m"
+          "time_ago": "19h"
         },
         {
           "title": "VibeCoded AI-Slop License v1.0",
@@ -596,52 +1163,7 @@
           "source_short": "Lobsters",
           "domain": "gist.github.com",
           "published_iso": "2026-08-31T11:40:14+00:00",
-          "time_ago": "52m"
-        },
-        {
-          "title": "What I Learned About AI Trust from Reconciling over 100B Transactions",
-          "url": "https://engineering.moniepoint.com/what-i-learned-about-ai-trust-from-reconciling",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "engineering.moniepoint.com",
-          "published_iso": "2026-08-31T11:34:28+00:00",
-          "time_ago": "58m"
-        },
-        {
-          "title": "Agent Memory as a File Format",
-          "url": "https://calpaterson.com/memoryfields.html",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "calpaterson.com",
-          "published_iso": "2026-08-31T11:17:25+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "A CVE Dispute",
-          "url": "https://daniel.haxx.se/blog/2026/06/24/a-cve-dispute/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "daniel.haxx.se",
-          "published_iso": "2026-08-31T11:13:17+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "I built a hardware-bound local password vault hidden in a photo",
-          "url": "https://blindlock.app/en/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "blindlock.app",
-          "published_iso": "2026-08-31T10:58:21+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "The AI-Native SDLC Starts with Your Infrastructure",
-          "url": "https://metalbear.com/blog/ai-native-sdlc-infrastructure/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "metalbear.com",
-          "published_iso": "2026-08-31T10:57:30+00:00",
-          "time_ago": "1h"
+          "time_ago": "20h"
         },
         {
           "title": "July in Servo: more platforms, faster canvas, web fonts in SVG, and more",
@@ -650,16 +1172,7 @@
           "source_short": "Lobsters",
           "domain": "servo.org",
           "published_iso": "2026-08-31T10:55:09+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Could Cargo's scheduler be better?",
-          "url": "https://spirali.github.io/blog/cargo-scheduler/",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "spirali.github.io",
-          "published_iso": "2026-08-31T10:50:09+00:00",
-          "time_ago": "1h"
+          "time_ago": "20h"
         },
         {
           "title": "curl: a CVE dispute",
@@ -668,16 +1181,7 @@
           "source_short": "Lobsters",
           "domain": "daniel.haxx.se",
           "published_iso": "2026-08-31T10:38:12+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Malleable software = solid bases and custom code",
-          "url": "https://www.mdubakov.me/malleable-software-solid-bases-custom-code/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "mdubakov.me",
-          "published_iso": "2026-08-31T10:36:43+00:00",
-          "time_ago": "1h"
+          "time_ago": "21h"
         },
         {
           "title": "Pocket's AI made my game ideas real. Now Meta controls the results.",
@@ -686,16 +1190,7 @@
           "source_short": "Ars",
           "domain": "arstechnica.com",
           "published_iso": "2026-08-31T10:00:34+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "OpenShot 4.0: Record, Edit, and Color Like Never Before",
-          "url": "https://www.openshot.org/blog/2026/08/30/openshot-40-record-edit-color-like-never-before/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "openshot.org",
-          "published_iso": "2026-08-31T09:59:05+00:00",
-          "time_ago": "2h"
+          "time_ago": "21h"
         },
         {
           "title": "A Better SQL in 11 Lines of Code",
@@ -704,34 +1199,7 @@
           "source_short": "Lobsters",
           "domain": "prela-lang.org",
           "published_iso": "2026-08-31T09:10:20+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Breaking Claude Code Opus 5 Auto Mode",
-          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "embracethered.com",
-          "published_iso": "2026-08-31T07:49:18+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "A 12TB Steam \"teraleak\" spills more than a decade of lost PC gaming history",
-          "url": "https://arstechnica.com/gaming/2026/08/a-12tb-steam-teraleak-spills-more-than-a-decade-of-lost-pc-gaming-history/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-31T06:10:44+00:00",
-          "time_ago": "6h"
-        },
-        {
-          "title": "uv: Deduplicate all files in the wheel cache",
-          "url": "https://github.com/astral-sh/uv/pull/21327",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "github.com",
-          "published_iso": "2026-08-31T06:03:02+00:00",
-          "time_ago": "6h"
+          "time_ago": "22h"
         },
         {
           "title": "The U.S. is more than just the US (according to the ISO)",
@@ -740,88 +1208,34 @@
           "source_short": "Lobsters",
           "domain": "trevmex.com",
           "published_iso": "2026-08-31T05:38:25+00:00",
-          "time_ago": "6h"
+          "time_ago": "1d"
         },
         {
-          "title": "Repeating Ourselves Less with M4",
-          "url": "https://nemin.hu/httpd-macros/index.html",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "nemin.hu",
-          "published_iso": "2026-08-31T04:10:47+00:00",
-          "time_ago": "8h"
-        },
-        {
-          "title": "P99 0 ms* autocomplete for 240M domain names",
-          "url": "https://ruurtjan.com/articles/p99-0ms-autocomplete-for-240-million-domain-names",
+          "title": "Roget's Thesaurus",
+          "url": "https://artflsrv04.uchicago.edu/roget-thesaurus/",
           "source": "Hacker News",
           "source_short": "HN",
-          "domain": "ruurtjan.com",
-          "published_iso": "2026-08-31T03:20:33+00:00",
-          "time_ago": "9h"
+          "domain": "artflsrv04.uchicago.edu",
+          "published_iso": "2026-08-31T04:29:26+00:00",
+          "time_ago": "1d"
         },
         {
-          "title": "Rootless Docker and Its Hidden Security Trade-Offs",
-          "url": "https://www.kenmuse.com/blog/rootless-docker-and-its-hidden-security-trade-offs/",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "kenmuse.com",
-          "published_iso": "2026-08-31T03:12:07+00:00",
-          "time_ago": "9h"
-        },
-        {
-          "title": "Understanding ChatGPT Work",
-          "url": "https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/",
+          "title": "Terence Tao explains 6 essential mathematical concepts [video]",
+          "url": "https://www.youtube.com/watch?v=OOMx2BHHWtE",
           "source": "Hacker News",
           "source_short": "HN",
-          "domain": "simonwillison.net",
-          "published_iso": "2026-08-31T01:28:22+00:00",
-          "time_ago": "11h"
+          "domain": "youtube.com",
+          "published_iso": "2026-08-30T22:37:01+00:00",
+          "time_ago": "1d"
         },
         {
-          "title": "How to build a diffusion language model",
-          "url": "https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "kuleshov-group.github.io",
-          "published_iso": "2026-08-30T23:41:32+00:00",
-          "time_ago": "12h"
-        },
-        {
-          "title": "Matrox: Graphics for Professionals",
-          "url": "https://www.abortretry.fail/p/matrox",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "abortretry.fail",
-          "published_iso": "2026-08-30T23:39:35+00:00",
-          "time_ago": "12h"
-        },
-        {
-          "title": "“I just chose words carefully”",
-          "url": "https://unsung.aresluna.org/i-just-chose-words-carefully/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "unsung.aresluna.org",
-          "published_iso": "2026-08-30T22:49:48+00:00",
-          "time_ago": "13h"
-        },
-        {
-          "title": "Professor Murder Rides the Subway is a forgotten slice of dance punk perfection",
-          "url": "https://www.theverge.com/entertainment/986564/professor-murder-rides-the-subway-dance-punk-perfection-review",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T21:18:59+00:00",
-          "time_ago": "15h"
-        },
-        {
-          "title": "Enormous 12TB Steam leak includes abandoned Half-Life 2: Episode 3 assets",
-          "url": "https://www.theverge.com/games/986552/12tb-steam-leak-half-life-2-episode-3",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T19:14:08+00:00",
-          "time_ago": "17h"
+          "title": "A 12TB Steam “teraleak” spills more than a decade of lost PC gaming history",
+          "url": "https://arstechnica.com/gaming/2026/08/a-12tb-steam-teraleak-spills-more-than-a-decade-of-lost-pc-gaming-history/",
+          "source": "Ars Technica",
+          "source_short": "Ars",
+          "domain": "arstechnica.com",
+          "published_iso": "2026-08-30T21:40:56+00:00",
+          "time_ago": "1d"
         },
         {
           "title": "Omarchy: Any User Process Can Escalate to Root",
@@ -830,87 +1244,24 @@
           "source_short": "Lobsters",
           "domain": "0xcc.io",
           "published_iso": "2026-08-30T18:11:09+00:00",
-          "time_ago": "18h"
+          "time_ago": "1d"
         },
         {
-          "title": "Why it matters that President Trump just dialed into a NASA news conference",
+          "title": "Why it matters that President Trump just dialed in to a NASA news conference",
           "url": "https://arstechnica.com/space/2026/08/why-it-matters-that-president-trump-just-dialed-into-a-nasa-news-conference/",
           "source": "Ars Technica",
           "source_short": "Ars",
           "domain": "arstechnica.com",
           "published_iso": "2026-08-30T17:40:30+00:00",
-          "time_ago": "18h"
-        },
-        {
-          "title": "The Nancy Grace Roman Space Telescope launches to study dark matter and dark energy",
-          "url": "https://www.theverge.com/science/986544/nancy-grace-roman-space-telescope-launch",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T16:36:39+00:00",
-          "time_ago": "19h"
-        },
-        {
-          "title": "Haiku R1/beta6 has been released",
-          "url": "https://www.haiku-os.org/news/2026-08-26_haiku_r1_beta6",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "haiku-os.org",
-          "published_iso": "2026-08-30T16:01:10+00:00",
-          "time_ago": "20h"
-        },
-        {
-          "title": "Texas Governor Abbott blocks funding for more Flock cameras",
-          "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T15:35:10+00:00",
-          "time_ago": "20h"
-        },
-        {
-          "title": "But where does taste come from?",
-          "url": "https://dustycloud.org/blog/but-where-does-taste-come-from/",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "dustycloud.org",
-          "published_iso": "2026-08-30T13:27:41+00:00",
-          "time_ago": "23h"
-        },
-        {
-          "title": "Transfer files over an ethernet patch cable",
-          "url": "https://maurycyz.com/misc/etherfiles/",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "maurycyz.com",
-          "published_iso": "2026-08-30T13:11:46+00:00",
-          "time_ago": "23h"
-        },
-        {
-          "title": "Chess.com launched a poker site, and it’s planning even more classic games",
-          "url": "https://www.theverge.com/games/986302/chess-poker-expansion-gambit",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T13:00:00+00:00",
-          "time_ago": "23h"
-        },
-        {
-          "title": "China’s robots race ahead",
-          "url": "https://www.theverge.com/tech/986167/china-humanoid-robot-games-race",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T12:00:00+00:00",
           "time_ago": "1d"
         },
         {
-          "title": "Two new small, powerful Macs",
-          "url": "https://www.theverge.com/tech/986280/mac-mini-studio-star-wars-zero-company-wyze-camera",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-30T12:00:00+00:00",
+          "title": "Cheap GPS jammers are filling the world with navigation dead zones",
+          "url": "https://www.wsj.com/tech/gps-jammers-dead-zones-e76f3261",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "wsj.com",
+          "published_iso": "2026-08-30T17:05:32+00:00",
           "time_ago": "1d"
         },
         {
@@ -923,40 +1274,31 @@
           "time_ago": "1d"
         },
         {
-          "title": "There's no such thing as Just a Tool",
-          "url": "https://deadsimpletech.com/blog/no-such-thing-as-just-a-tool",
-          "source": "Lobsters",
-          "source_short": "Lobsters",
-          "domain": "deadsimpletech.com",
-          "published_iso": "2026-08-30T03:59:05+00:00",
-          "time_ago": "1d"
+          "title": "Smartphone LED detects hidden cameras with AI",
+          "url": "https://www.chosun.com/english/industry-en/2026/08/30/SBFXUIJQYZEARKP5T4FBAY25HQ/",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "chosun.com",
+          "published_iso": "2026-08-30T06:52:04+00:00",
+          "time_ago": "2d"
         },
         {
-          "title": "Vicariously hike the Appalachian in the gorgeous A Trail Tale",
-          "url": "https://www.theverge.com/entertainment/986461/hike-appalachian-trail-pixel-art-a-trail-tale",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-29T20:59:26+00:00",
-          "time_ago": "1d"
+          "title": "Lion-man",
+          "url": "https://en.wikipedia.org/wiki/Lion-man",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "en.wikipedia.org",
+          "published_iso": "2026-08-29T23:17:15+00:00",
+          "time_ago": "2d"
         },
         {
-          "title": "Alt-right troll Milo Yiannopoulos has been deported",
-          "url": "https://www.theverge.com/policy/986456/milo-yiannopoulos-deported-ice",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-29T19:49:59+00:00",
-          "time_ago": "1d"
-        },
-        {
-          "title": "Sony Music Publishing and Warner Chappell are suing Anthropic",
-          "url": "https://www.theverge.com/ai-artificial-intelligence/986438/sony-music-warner-chappell-anthropic-lawsuit-copyright",
-          "source": "The Verge",
-          "source_short": "Verge",
-          "domain": "theverge.com",
-          "published_iso": "2026-08-29T18:19:53+00:00",
-          "time_ago": "1d"
+          "title": "Show HN: Laser Graffiti",
+          "url": "https://laser.consti.de",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "laser.consti.de",
+          "published_iso": "2026-08-29T12:28:11+00:00",
+          "time_ago": "2d"
         },
         {
           "title": "I asked 100 companies for my data. Some deleted it instead.",
@@ -974,7 +1316,7 @@
           "source_short": "Ars",
           "domain": "arstechnica.com",
           "published_iso": "2026-08-28T22:14:52+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "Cities terminate Flock contracts at record pace in August",
@@ -983,7 +1325,7 @@
           "source_short": "Ars",
           "domain": "arstechnica.com",
           "published_iso": "2026-08-28T21:33:54+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "\"RFK Jr. has lied to the Senate\": Lawmakers call for criminal probe, ouster",
@@ -992,61 +1334,25 @@
           "source_short": "Ars",
           "domain": "arstechnica.com",
           "published_iso": "2026-08-28T21:17:38+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
-          "title": "Trump blacklisting of \"woke\" Anthropic deemed illegal by federal judge",
-          "url": "https://arstechnica.com/tech-policy/2026/08/trump-blacklisting-of-woke-anthropic-deemed-illegal-by-federal-judge/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T18:07:55+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Here's what we know about the \"space academy\" Trump just announced",
-          "url": "https://arstechnica.com/space/2026/08/trump-calls-for-creation-of-a-space-academy-to-train-future-nasa-leaders/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T17:36:30+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Apple One and Apple TV subscription prices increase by up to 20 percent",
-          "url": "https://arstechnica.com/gadgets/2026/08/apple-one-and-apple-tv-subscription-prices-increase-by-up-to-20-percent/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T17:23:53+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Our 10 favorite scenes from T2: Judgment Day",
-          "url": "https://arstechnica.com/culture/2026/08/our-10-favorite-scenes-from-t2-judgment-day/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T16:44:47+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "My hobby of building miniatures and taking pretty pictures",
-          "url": "https://sandyuraz.com/blogs/tiny-cafe/",
+          "title": "Borges Labyrinth in Venice reopens to the public",
+          "url": "https://www.wallpaper.com/design-interiors/labirinto-borges-venice-reopening",
           "source": "Hacker News",
           "source_short": "HN",
-          "domain": "sandyuraz.com",
-          "published_iso": "2026-08-28T16:43:11+00:00",
-          "time_ago": "2d"
+          "domain": "wallpaper.com",
+          "published_iso": "2026-08-28T20:41:35+00:00",
+          "time_ago": "3d"
         },
         {
-          "title": "Meta makes AI glasses slightly less creepy with limit on nonconsensual recording",
-          "url": "https://arstechnica.com/tech-policy/2026/08/meta-tweaks-ai-glasses-to-block-some-creepy-recordings-but-privacy-risks-remain/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T15:42:24+00:00",
-          "time_ago": "2d"
+          "title": "Interactive pattern discovery in binaries (FF-16-TUI)",
+          "url": "https://github.com/HexLasso/FF-16-TUI",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "github.com",
+          "published_iso": "2026-08-28T13:05:49+00:00",
+          "time_ago": "3d"
         },
         {
           "title": "The Download: a secretive antiaging drug and joining virtual power plants",
@@ -1055,24 +1361,6 @@
           "source_short": "MIT",
           "domain": "technologyreview.com",
           "published_iso": "2026-08-28T12:35:27+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Authorities arrest 2 alleged members of prolific hacking group TeamPCP",
-          "url": "https://arstechnica.com/security/2026/08/authorities-arrest-2-alleged-members-of-prolific-hacking-group-teampcp/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T11:15:05+00:00",
-          "time_ago": "3d"
-        },
-        {
-          "title": "Rocket Report: Europe splashes some cash on launch startups; Pallas-1 nears debut",
-          "url": "https://arstechnica.com/space/2026/08/rocket-report-europe-splashes-some-cash-on-launch-startups-pallas-1-nears-debut/",
-          "source": "Ars Technica",
-          "source_short": "Ars",
-          "domain": "arstechnica.com",
-          "published_iso": "2026-08-28T11:00:39+00:00",
           "time_ago": "3d"
         },
         {
@@ -1085,22 +1373,22 @@
           "time_ago": "3d"
         },
         {
-          "title": "Using floci to emulate Cloud platforms (GCP, AWS, Azure)",
-          "url": "https://flowg.cloud/blog/using-floci-local-emulators",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "flowg.cloud",
-          "published_iso": "2026-08-28T07:41:57+00:00",
-          "time_ago": "3d"
-        },
-        {
           "title": "A startup claims it’s found a drug to make your blood young",
           "url": "https://www.technologyreview.com/2026/08/27/1143037/startup-claims-its-found-a-drug-to-make-your-blood-young/",
           "source": "MIT Tech Review",
           "source_short": "MIT",
           "domain": "technologyreview.com",
           "published_iso": "2026-08-27T19:48:13+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
+        },
+        {
+          "title": "Dwarf Fortress is getting the mother of all magic updates",
+          "url": "https://www.rockpapershotgun.com/dwarf-fortress-is-getting-the-mother-of-all-magic-updates-extending-to-the-fundamental-cosmological-makeup-of-the-universe",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "rockpapershotgun.com",
+          "published_iso": "2026-08-27T16:45:22+00:00",
+          "time_ago": "4d"
         },
         {
           "title": "The Download: inside OpenAI’s Hugging Face hack, and a new EV takes on the US",
@@ -1109,15 +1397,6 @@
           "source_short": "MIT",
           "domain": "technologyreview.com",
           "published_iso": "2026-08-27T12:10:00+00:00",
-          "time_ago": "4d"
-        },
-        {
-          "title": "What 2000 Buried Underpants Revealed About Where Soil Is Most Alive",
-          "url": "https://studyfinds.com/what-2000-buried-underpants-revealed-about-where-soil-is-most-alive/",
-          "source": "Hacker News",
-          "source_short": "HN",
-          "domain": "studyfinds.com",
-          "published_iso": "2026-08-27T11:47:07+00:00",
           "time_ago": "4d"
         },
         {
@@ -1130,13 +1409,22 @@
           "time_ago": "4d"
         },
         {
+          "title": "Flat vs. segmented memory – it's recursive",
+          "url": "https://www.humprog.org/~stephen/blog/2026/08/25/#flat-vs-segmented",
+          "source": "Hacker News",
+          "source_short": "HN",
+          "domain": "humprog.org",
+          "published_iso": "2026-08-27T06:02:30+00:00",
+          "time_ago": "5d"
+        },
+        {
           "title": "The inside story on why OpenAI agents hacked Hugging Face",
           "url": "https://www.technologyreview.com/2026/08/26/1143013/the-inside-story-on-why-openai-agents-hacked-hugging-face/",
           "source": "MIT Tech Review",
           "source_short": "MIT",
           "domain": "technologyreview.com",
           "published_iso": "2026-08-26T19:00:00+00:00",
-          "time_ago": "4d"
+          "time_ago": "5d"
         },
         {
           "title": "The Download: the Kids issue arrives, and Bill Gates reveals his AI fears",
@@ -1164,139 +1452,157 @@
           "domain": "technologyreview.com",
           "published_iso": "2026-08-26T09:00:00+00:00",
           "time_ago": "5d"
-        },
-        {
-          "title": "Bill Gates says we’ve passed AI’s danger thresholds. Now what?",
-          "url": "https://www.technologyreview.com/2026/08/26/1142946/bill-gates-ai-danger-threshold/",
-          "source": "MIT Tech Review",
-          "source_short": "MIT",
-          "domain": "technologyreview.com",
-          "published_iso": "2026-08-26T07:01:00+00:00",
-          "time_ago": "5d"
         }
       ]
     },
     {
       "id": "markets",
       "title": "Markets & Finance",
-      "count": 47,
+      "count": 57,
       "items": [
         {
-          "title": "Mel Stride sacked as shadow chancellor",
-          "url": "https://www.ft.com/content/f16c178f-b07c-4b79-a8fc-2bf4c70d43e2?syn-25a6b1a6=1",
+          "title": "How Aston Martin’s latest financing sparked a bondholder revolt",
+          "url": "https://www.ft.com/content/241ca2e1-7135-4505-84db-dfa39bde5a1d?syn-25a6b1a6=1",
           "source": "Financial Times",
           "source_short": "FT",
           "domain": "ft.com",
-          "published_iso": "2026-08-31T12:30:52+00:00",
-          "time_ago": "1m"
+          "published_iso": "2026-09-01T07:11:09+00:00",
+          "time_ago": "32m"
         },
         {
-          "title": "Spain’s Sánchez accuses Russia and Israel of inflaming migrant crisis",
-          "url": "https://www.ft.com/content/306358c2-3597-40dd-b2cd-534073c35fde?syn-25a6b1a6=1",
+          "title": "Ikea cuts prices in Europe by €1.2bn to counter cost of living crisis",
+          "url": "https://www.ft.com/content/d3dc2303-6c8c-4681-b045-25005537f455?syn-25a6b1a6=1",
           "source": "Financial Times",
           "source_short": "FT",
           "domain": "ft.com",
-          "published_iso": "2026-08-31T12:28:24+00:00",
-          "time_ago": "4m"
+          "published_iso": "2026-09-01T07:00:09+00:00",
+          "time_ago": "43m"
         },
         {
-          "title": "Happy birthday to the First Index Investment Trust",
-          "url": "https://www.ft.com/content/c0341d15-482e-41a6-abe1-ef3e5e9a0d0b",
+          "title": "Chicago with the FT",
+          "url": "https://www.ft.com/globetrotter/chicago?syn-25a6b1a6=1",
           "source": "Financial Times",
           "source_short": "FT",
           "domain": "ft.com",
-          "published_iso": "2026-08-31T12:23:11+00:00",
-          "time_ago": "9m"
+          "published_iso": "2026-09-01T07:00:09+00:00",
+          "time_ago": "43m"
         },
         {
-          "title": "Brent oil tops $90 after first U.S. and Iran fighting in a month",
-          "url": "https://www.marketwatch.com/story/brent-oil-tops-90-after-first-u-s-and-iran-fighting-in-a-month-3b818e19?mod=mw_rss_topstories",
+          "title": "Can social media bans protect children online? I FT Transact",
+          "url": "https://www.ft.com/video/73a108c5-9c68-4fef-a0f3-943a3359a57e?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T07:00:00+00:00",
+          "time_ago": "44m"
+        },
+        {
+          "title": "Bodycote agrees £1.84bn takeover by US buyout firm Veritas",
+          "url": "https://www.ft.com/content/28a1331a-3f3d-4010-94d3-e07ab58970d5?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T06:48:43+00:00",
+          "time_ago": "55m"
+        },
+        {
+          "title": "LSE prepares to launch tokenised stocks in digital markets push",
+          "url": "https://www.ft.com/content/64511a2c-34e7-4f98-be24-9e8427b65027?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T06:30:09+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Partners Group replaces chief executive as pressure grows on flagship fund",
+          "url": "https://www.ft.com/content/0d5b67bd-a07f-47da-9e9b-505df1b4ff33?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T06:17:07+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "Japan’s benchmark yield hits 3% as global bond sell-off deepens",
+          "url": "https://www.ft.com/content/e6f5f97a-b199-444e-aaec-b8199359b08e?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T06:04:27+00:00",
+          "time_ago": "1h"
+        },
+        {
+          "title": "South Korea unveils record budget increase to cash in on AI boom",
+          "url": "https://www.ft.com/content/9bb0d48d-9715-4e59-a45d-0324590763f9?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T05:33:08+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "More Warshology",
+          "url": "https://www.ft.com/content/bcc5aa85-4d23-4a7c-9147-c52aa69027bc?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T05:30:09+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "EU diplomatic chief faces up to calls for powers to shift to Commission",
+          "url": "https://www.ft.com/content/4da00f00-5c75-4eae-b0da-9770a999dedc?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T05:00:09+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "FTAV’s further reading",
+          "url": "https://www.ft.com/content/476d21cd-f759-4245-a439-f5b1330c8b30",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T05:00:09+00:00",
+          "time_ago": "2h"
+        },
+        {
+          "title": "Shein shares slide 10% in Hong Kong trading debut",
+          "url": "https://www.ft.com/content/06e22622-3e92-46a5-842f-bfa269687aaa?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T04:36:46+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Transcript: How viable is Trump’s oil deal with Venezuela?",
+          "url": "https://www.ft.com/content/4035c9cc-32a8-4864-a2b6-50133f8955c3?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T04:35:32+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "FirstFT: Big Law urged to cut fees amid AI",
+          "url": "https://www.ft.com/content/d39b3d1e-cf49-4990-9991-355f6585ca3a?syn-25a6b1a6=1",
+          "source": "Financial Times",
+          "source_short": "FT",
+          "domain": "ft.com",
+          "published_iso": "2026-09-01T04:31:03+00:00",
+          "time_ago": "3h"
+        },
+        {
+          "title": "Amazon’s stock slips as the FTC alleges billions of dollars in hidden ad fees",
+          "url": "https://www.marketwatch.com/story/amazons-stock-slips-as-the-ftc-alleges-billions-of-dollars-in-hidden-ad-fees-4ae44ee4?mod=mw_rss_topstories",
           "source": "MarketWatch",
           "source_short": "MW",
           "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T12:21:00+00:00",
-          "time_ago": "11m"
-        },
-        {
-          "title": "After an 'extraordinary' earnings season, here's the next big positive for stocks",
-          "url": "https://finance.yahoo.com/markets/article/after-an-extraordinary-earnings-season-heres-the-next-big-positive-for-stocks-122048479.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T12:20:48+00:00",
-          "time_ago": "11m"
-        },
-        {
-          "title": "Aon to expand middle-market reach with $17bn USI takeover",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/aon-expand-middle-market-reach-121734709.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T12:17:34+00:00",
-          "time_ago": "14m"
-        },
-        {
-          "title": "Stock Market Today: Dow Falls, Oil Prices Jump As U.S., Iran Exchange New Strikes (Live Coverage)",
-          "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-us-iran-attacks-oil-prices-jump/?src=A00220&yptr=yahoo",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "investors.com",
-          "published_iso": "2026-08-31T12:14:11+00:00",
-          "time_ago": "18m"
-        },
-        {
-          "title": "S&P 500 September seasonality: what investors should watch",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-september-seasonality-investors-120856416.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T12:08:56+00:00",
-          "time_ago": "23m"
-        },
-        {
-          "title": "Fed Chairman Kevin Warsh triggered a new problem for stocks",
-          "url": "https://finance.yahoo.com/markets/article/fed-chairman-kevin-warsh-triggered-a-new-problem-for-stocks-120625754.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T12:06:25+00:00",
-          "time_ago": "26m"
-        },
-        {
-          "title": "Reading Festival shows rude health of British and Irish music",
-          "url": "https://www.ft.com/content/7ad8348c-0b90-4cdd-b2e4-e18f61cf7842",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T12:03:02+00:00",
-          "time_ago": "29m"
-        },
-        {
-          "title": "8 Stocks Turn $100,000 Into $12.7 Million In 8 Months",
-          "url": "https://www.investors.com/etfs-and-funds/sectors/sp500-stocks-turn-100000-into-12-7-million-in-8-months/?src=A00220&yptr=yahoo",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "investors.com",
-          "published_iso": "2026-08-31T12:00:03+00:00",
-          "time_ago": "32m"
-        },
-        {
-          "title": "Activist pushes EPAM Systems for buybacks as AI hits its shares",
-          "url": "https://www.ft.com/content/d938c799-a188-4bfe-bf5e-bbaeb208cb8e?syn-25a6b1a6=1",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T12:00:01+00:00",
-          "time_ago": "32m"
-        },
-        {
-          "title": "Here’s what’s worth streaming in September 2026 on Netflix, Hulu, HBO Max and more",
-          "url": "https://www.marketwatch.com/story/heres-whats-worth-streaming-in-september-2026-on-netflix-hulu-hbo-max-and-more-a702e7dd?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T12:00:00+00:00",
-          "time_ago": "32m"
+          "published_iso": "2026-08-31T22:24:00+00:00",
+          "time_ago": "9h"
         },
         {
           "title": "‘I’m leaving money on the table’: I’m 64 and my husband is 70. Should I take spousal benefits or wait for my own?",
@@ -1304,134 +1610,125 @@
           "source": "MarketWatch",
           "source_short": "MW",
           "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T11:45:00+00:00",
-          "time_ago": "47m"
+          "published_iso": "2026-08-31T22:00:00+00:00",
+          "time_ago": "9h"
         },
         {
-          "title": "Stock market today: Dow, S&P 500, Nasdaq futures fall as US strikes Iran, rate-hike bets jump",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-august-31-dow-sp-500-nasdaq-113851714.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T11:38:51+00:00",
-          "time_ago": "53m"
-        },
-        {
-          "title": "America is asking the wrong question about its $40 trillion in debt, this MIT expert warns",
-          "url": "https://www.marketwatch.com/story/america-is-asking-the-wrong-question-about-its-40-trillion-in-debt-this-mit-expert-warns-0fbda60e?mod=mw_rss_topstories",
+          "title": "The S&P 500 usually falls in September. Why this year should be different.",
+          "url": "https://www.marketwatch.com/story/the-s-p-500-usually-falls-in-september-why-this-year-should-be-different-77ebb626?mod=mw_rss_topstories",
           "source": "MarketWatch",
           "source_short": "MW",
           "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T11:21:00+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-08-31T21:36:00+00:00",
+          "time_ago": "10h"
         },
         {
-          "title": "ChatGPT faces tougher rules under EU online safety regime",
-          "url": "https://www.ft.com/content/6af706a3-6e63-46c2-926b-85461a355e9b?syn-25a6b1a6=1",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T11:06:25+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "The City Without Jews — Douglas Smith on life inside Vienna’s catastrophe",
-          "url": "https://www.ft.com/content/487db354-2a78-4c16-bd1b-5ef189a16dd3",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T11:00:02+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "Software companies pay steep price to buy time against AI threat",
-          "url": "https://www.ft.com/content/485a3d1c-d282-4921-9dee-c644c5856030?syn-25a6b1a6=1",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T11:00:02+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "‘I feel shoehorned’: My father funded my $800,000 Roth IRA. Does that give him the right to say how I invest it?",
-          "url": "https://www.marketwatch.com/story/i-feel-shoehorned-my-father-funded-my-800-000-roth-ira-does-that-give-him-the-right-to-say-how-i-invest-it-7b1e3ab3?mod=mw_rss_topstories",
+          "title": "‘Neither of us attended college’: At 62, how can we afford to put our granddaughter through college?",
+          "url": "https://www.marketwatch.com/story/her-life-was-very-challenging-before-we-got-custody-at-62-how-can-we-afford-to-put-our-granddaughter-through-college-b9d550bb?mod=mw_rss_topstories",
           "source": "MarketWatch",
           "source_short": "MW",
           "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T11:00:00+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-08-31T21:34:00+00:00",
+          "time_ago": "10h"
         },
         {
-          "title": "2 key trucking groups in filing raise alarm on Penske decision fallout",
-          "url": "https://finance.yahoo.com/economy/policy/articles/2-key-trucking-groups-filing-110000220.html",
+          "title": "Vanguard’s S&P 500 index fund changed how we invest — but there may be a smarter way to get into the market",
+          "url": "https://www.marketwatch.com/story/vanguards-s-p-500-index-fund-changed-how-we-invest-but-there-may-be-a-smarter-way-to-get-into-the-market-a54a612c?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T21:33:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Maybe the snowbirds are right? One state dominates this list of best places to retire.",
+          "url": "https://www.marketwatch.com/story/maybe-the-snowbirds-are-right-one-state-dominates-this-list-of-best-places-to-retire-ab506160?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T21:23:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "23 best-performing stocks of August, as the software industry continues its recovery",
+          "url": "https://www.marketwatch.com/story/22-best-performing-stocks-of-august-as-the-software-industry-continues-its-recovery-88e432bf?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T21:16:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Tesla’s stock among S&P 500’s top gainers as investors prepare for a Cybercab launch",
+          "url": "https://www.marketwatch.com/story/teslas-stock-is-leading-s-p-500-gainers-as-investors-prepare-for-a-cybercab-launch-f23a0d52?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T21:01:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "This maneuver is boosting oil shipments through the Strait of Hormuz",
+          "url": "https://www.marketwatch.com/story/this-maneuver-is-boosting-oil-shipments-through-the-strait-of-hormuz-070d8fa3?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T20:56:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "With Warsh running the Fed, should bond investors be worried?",
+          "url": "https://www.marketwatch.com/story/should-bond-investors-worry-with-warsh-running-the-fed-0a99c5ac?mod=mw_rss_topstories",
+          "source": "MarketWatch",
+          "source_short": "MW",
+          "domain": "marketwatch.com",
+          "published_iso": "2026-08-31T20:55:00+00:00",
+          "time_ago": "10h"
+        },
+        {
+          "title": "Freddie Mac House Price Index Increased in July; Up 2.3% Year-over-year",
+          "url": "https://calculatedrisk.substack.com/p/freddie-mac-house-price-index-increased-5e4",
+          "source": "Calculated Risk",
+          "source_short": "CalcRisk",
+          "domain": "calculatedrisk.substack.com",
+          "published_iso": "2026-08-31T18:14:42+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "161-year-old kids clothing giant closes 29 more stores",
+          "url": "https://finance.yahoo.com/small-business/articles/161-old-kids-clothing-giant-171700918.html",
           "source": "Yahoo Finance",
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T11:00:00+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-08-31T17:17:00+00:00",
+          "time_ago": "14h"
         },
         {
-          "title": "Hanneli Rupert’s crafts crusade, late-summer getaways and how to get a good night’s sleep – don’t miss HTSI’s most popular reads",
-          "url": "https://www.ft.com/content/51089f41-6f8b-4381-aab5-a83bbe4048c4",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T10:39:30+00:00",
-          "time_ago": "1h"
-        },
-        {
-          "title": "‘I love the inflation!’: Trump shrugs off rising prices — here’s what you can do before inflation eats into your savings",
-          "url": "https://finance.yahoo.com/economy/articles/love-inflation-trump-shrugs-off-103500495.html",
+          "title": "Firearms retailer files Chapter 11 bankruptcy as gun sales drop",
+          "url": "https://finance.yahoo.com/small-business/articles/firearms-retailer-files-chapter-11-153300921.html",
           "source": "Yahoo Finance",
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T10:35:00+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-08-31T15:33:00+00:00",
+          "time_ago": "16h"
         },
         {
-          "title": "KKR to net giant windfall from $17bn sale of USI to Aon",
-          "url": "https://www.ft.com/content/23125dd8-2d09-4c6a-8e55-3245741fba45?syn-25a6b1a6=1",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T10:31:47+00:00",
-          "time_ago": "2h"
+          "title": "Lawler: Update on the GSEs: MBS Holdings Decline, Interest Rate Risk Measures Keep Rising",
+          "url": "https://calculatedrisk.substack.com/p/lawler-update-on-the-gses-mbs-holdings-a54",
+          "source": "Calculated Risk",
+          "source_short": "CalcRisk",
+          "domain": "calculatedrisk.substack.com",
+          "published_iso": "2026-08-31T13:16:39+00:00",
+          "time_ago": "18h"
         },
         {
-          "title": "3 super simple hacks that can save you thousands effortlessly — but you need to do them before September ends",
-          "url": "https://finance.yahoo.com/markets/articles/3-super-simple-hacks-save-103000062.html",
+          "title": "Gold prices today, Monday, August 31, 2026: Gold sinks following U.S. strikes on Iran",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-monday-august-31-2026-gold-sinks-following-us-strikes-on-iran-123744944.html",
           "source": "Yahoo Finance",
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T10:30:00+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "UK offers homegrown AI start-ups £100mn to improve public services",
-          "url": "https://www.ft.com/content/5a10fc78-9a3e-4f12-81e3-dc843b529948?syn-25a6b1a6=1",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T10:24:01+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "And the FTAV chart quiz winner is . . .",
-          "url": "https://www.ft.com/content/35921f10-fdbd-4ca6-b616-694bdaab50a6",
-          "source": "Financial Times",
-          "source_short": "FT",
-          "domain": "ft.com",
-          "published_iso": "2026-08-31T10:11:09+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Best high-yield savings interest rates today, Monday, August 31, 2026: Earn up to 4.15% APY",
-          "url": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-monday-august-31-2026-earn-up-to-415-apy-100000500.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-31T10:00:00+00:00",
-          "time_ago": "2h"
+          "published_iso": "2026-08-31T12:37:44+00:00",
+          "time_ago": "19h"
         },
         {
           "title": "Mortgage and refinance interest rates today, Monday, August 31, 2026: Purchase rates currently higher than refinance rates",
@@ -1440,7 +1737,16 @@
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
           "published_iso": "2026-08-31T10:00:00+00:00",
-          "time_ago": "2h"
+          "time_ago": "21h"
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Monday, August 31, 2026: Earn up to 4.15% APY",
+          "url": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-monday-august-31-2026-earn-up-to-415-apy-100000500.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T10:00:00+00:00",
+          "time_ago": "21h"
         },
         {
           "title": "HELOC and home equity loan rates today, Monday, August 31, 2026: A 19-basis-point differential",
@@ -1449,60 +1755,132 @@
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
           "published_iso": "2026-08-31T10:00:00+00:00",
-          "time_ago": "2h"
+          "time_ago": "21h"
         },
         {
-          "title": "Historic $7.5 million L.A. home restored by ‘Rocky Horror’ actor Tim Curry finds a buyer just hours after his death",
-          "url": "https://www.marketwatch.com/story/historic-7-5-million-l-a-home-restored-by-rocky-horror-actor-tim-curry-finds-a-buyer-just-hours-after-his-death-4934687a?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T09:02:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Here’s what Prince Harry and Meghan Markle’s California mansion could really be worth, and how much it costs to keep it up",
-          "url": "https://www.marketwatch.com/story/heres-what-prince-harry-and-meghan-markles-california-mansion-could-really-be-worth-and-how-much-it-costs-to-keep-it-up-93a3c5fa?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T08:59:00+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "U.S. stock futures slip as chances of rate hike rise after Warsh’s Jackson Hole comments",
-          "url": "https://www.marketwatch.com/story/u-s-stock-futures-flat-as-chances-of-rate-hike-rise-after-warshs-jackson-hole-comments-1f5287f2?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-31T03:03:00+00:00",
-          "time_ago": "9h"
-        },
-        {
-          "title": "‘It’s the ultimate regifting’: My mom gave me a house. Should I transfer it back to her to reduce capital gains?",
-          "url": "https://www.marketwatch.com/story/its-the-ultimate-regifting-my-mom-gave-me-a-house-should-i-transfer-it-back-to-her-to-reduce-capital-gains-e357f49c?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-30T22:31:00+00:00",
-          "time_ago": "14h"
-        },
-        {
-          "title": "‘My main goal is to help people’: I’m single, 74, with $10 million burning a hole in my pocket. What should I do?",
-          "url": "https://www.marketwatch.com/story/my-main-goal-is-to-help-people-im-single-74-with-10-million-burning-a-hole-in-my-pocket-what-should-i-do-0e6112e1?mod=mw_rss_topstories",
-          "source": "MarketWatch",
-          "source_short": "MW",
-          "domain": "marketwatch.com",
-          "published_iso": "2026-08-30T22:15:00+00:00",
-          "time_ago": "14h"
-        },
-        {
-          "title": "Major fruit grower lays off nearly 1,000 workers",
-          "url": "https://finance.yahoo.com/small-business/articles/major-fruit-grower-lays-off-010300694.html",
+          "title": "Best CD rates today, Monday, August 31, 2026: Lock in up to 4.30% APY",
+          "url": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-monday-august-31-2026-lock-in-up-to-430-apy-100000028.html",
           "source": "Yahoo Finance",
           "source_short": "YahooFin",
           "domain": "finance.yahoo.com",
-          "published_iso": "2026-08-30T01:03:00+00:00",
+          "published_iso": "2026-08-31T10:00:00+00:00",
+          "time_ago": "21h"
+        },
+        {
+          "title": "Europe's central bankers fear more turbulence in testy U.S. relations",
+          "url": "https://finance.yahoo.com/news/europes-central-bankers-fear-more-050640340.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T04:59:54+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Index Funds Celebrate Their 50th Birthday",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/index-funds-celebrate-50th-birthday-040300915.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T04:03:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Vanguard’s Altruist Deal Could Be a Warning Shot for ETF Platform Fees",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/vanguard-altruist-deal-could-warning-040200972.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T04:02:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Warsh’s “Quiet Fed” Approach Adds a Hawkish Call at Jackson Hole",
+          "url": "https://finance.yahoo.com/economy/policy/articles/warsh-quiet-fed-approach-adds-040100898.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T04:01:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Is Concentration Causing Investors to Fear the Market-Weighted Index?",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/concentration-causing-investors-fear-market-040100464.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T04:01:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Dow Jones Futures Fall, Oil Prices Pop As U.S. Strikes Iran",
+          "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-microsoft-titans-mask-market-weakness/?src=A00220&yptr=yahoo",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "investors.com",
+          "published_iso": "2026-08-31T03:10:53+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "ONEOK to Acquire Brazos Midland Gas Assets for $4.425 Billion",
+          "url": "https://finance.yahoo.com/energy/articles/oneok-acquire-brazos-midland-gas-023537851.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T02:35:37+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "PetroChina First-Half Profit Jumps 22% to Record High",
+          "url": "https://finance.yahoo.com/energy/articles/petrochina-profit-jumps-22-oil-011638944.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T01:16:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Goldman Sachs sends blunt message on oil price, economy",
+          "url": "https://finance.yahoo.com/energy/articles/goldman-sachs-sends-blunt-message-003700417.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-31T00:37:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Tesla Just Killed Its Solar Roof After Years of Struggling to Scale. What It Means for TSLA Stock.",
+          "url": "https://finance.yahoo.com/energy/articles/tesla-just-killed-solar-roof-220544385.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-30T22:05:44+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Ethereum Price Prediction: Key On-Chain Metric Flashes “Buy” at $2,500",
+          "url": "https://finance.yahoo.com/markets/crypto/articles/ethereum-price-prediction-key-chain-204758899.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-30T20:47:58+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Yum Brands makes a surprising Taco Bell move",
+          "url": "https://finance.yahoo.com/small-business/articles/taco-bell-returns-unexpected-market-203300355.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-30T20:33:00+00:00",
+          "time_ago": "1d"
+        },
+        {
+          "title": "Tesla Stock Could Benefit as Trump Locks Down the U.S. Power Grid",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-could-benefit-trump-203002693.html",
+          "source": "Yahoo Finance",
+          "source_short": "YahooFin",
+          "domain": "finance.yahoo.com",
+          "published_iso": "2026-08-30T20:30:02+00:00",
           "time_ago": "1d"
         },
         {
@@ -1512,7 +1890,7 @@
           "source_short": "CalcRisk",
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-28T14:34:30+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "Fannie and Freddie: Single Family Delinquency Rate Mostly Unchanged in July",
@@ -1521,7 +1899,7 @@
           "source_short": "CalcRisk",
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-27T14:29:24+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "New Home Sales Decrease to 607,000 Annual Rate in July",
@@ -1530,7 +1908,7 @@
           "source_short": "CalcRisk",
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-25T14:36:31+00:00",
-          "time_ago": "5d"
+          "time_ago": "6d"
         },
         {
           "title": "Case-Shiller: National House Price Index Up 1.5% year-over-year in June",
@@ -1539,7 +1917,7 @@
           "source_short": "CalcRisk",
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-25T13:35:07+00:00",
-          "time_ago": "5d"
+          "time_ago": "6d"
         },
         {
           "title": "When will the Existing Home Sales Slump End?",
@@ -1548,7 +1926,7 @@
           "source_short": "CalcRisk",
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-24T18:09:56+00:00",
-          "time_ago": "6d"
+          "time_ago": "Aug 24"
         },
         {
           "title": "MBA: Mortgage Delinquencies Decreased in Q2 2026",
@@ -1594,76 +1972,310 @@
           "domain": "calculatedrisk.substack.com",
           "published_iso": "2026-08-12T14:15:10+00:00",
           "time_ago": "Aug 12"
-        },
-        {
-          "title": "It's Tim Cook's last day as Apple CEO. Investors are $4 trillion richer because of him.",
-          "url": "https://finance.yahoo.com/markets/stocks/article/its-tim-cooks-last-day-as-apple-ceo-investors-are-4-trillion-richer-because-of-him-230325985.html",
-          "source": "Yahoo Finance",
-          "source_short": "YahooFin",
-          "domain": "finance.yahoo.com",
-          "published_iso": "2026-04-20T23:03:25+00:00",
-          "time_ago": "Apr 20"
         }
       ]
     },
     {
-      "id": "science",
-      "title": "Science & Research",
-      "count": 57,
+      "id": "science_ideas",
+      "title": "Science & Ideas",
+      "count": 97,
       "items": [
         {
-          "title": "The paper that predicted the office apocalypse",
-          "url": "https://phys.org/news/2026-08-paper-office-apocalypse.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T12:20:01+00:00",
-          "time_ago": "12m"
+          "title": "Ex-gang boss guilty of orchestrating 1996 murder of rapper Tupac Shakur",
+          "url": "https://www.bbc.co.uk/news/articles/c24j5192j7jo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-09-01T07:02:58+00:00",
+          "time_ago": "41m"
         },
         {
-          "title": "Physicists finally put Feynman's path integral to the test",
-          "url": "https://phys.org/news/2026-08-physicists-feynman-path.html",
+          "title": "Higher cutting could reduce annual bluegrass contamination in tall fescue seed",
+          "url": "https://phys.org/news/2026-08-higher-annual-bluegrass-contamination-tall.html",
           "source": "Phys.org",
           "source_short": "Phys.org",
           "domain": "phys.org",
-          "published_iso": "2026-08-31T12:00:02+00:00",
-          "time_ago": "32m"
+          "published_iso": "2026-09-01T03:40:01+00:00",
+          "time_ago": "4h"
         },
         {
-          "title": "Black fungus thriving in the midst of Ireland's whiskey boom",
-          "url": "https://phys.org/news/2026-08-black-fungus-midst-ireland-whiskey.html",
+          "title": "New policy brief outlines how EU policies can better support sponge restoration",
+          "url": "https://phys.org/news/2026-08-policy-outlines-eu-policies-sponge.html",
           "source": "Phys.org",
           "source_short": "Phys.org",
           "domain": "phys.org",
-          "published_iso": "2026-08-31T11:40:03+00:00",
-          "time_ago": "52m"
+          "published_iso": "2026-09-01T03:00:01+00:00",
+          "time_ago": "4h"
         },
         {
-          "title": "JWST may solve a 20-year mystery behind a rule-breaking gamma-ray burst",
-          "url": "https://phys.org/news/2026-08-jwst-year-mystery-gamma-ray.html",
+          "title": "National survey measures full financial burden of community sport in Australia",
+          "url": "https://phys.org/news/2026-08-national-survey-full-financial-burden.html",
           "source": "Phys.org",
           "source_short": "Phys.org",
           "domain": "phys.org",
-          "published_iso": "2026-08-31T11:30:01+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-09-01T02:20:01+00:00",
+          "time_ago": "5h"
         },
         {
-          "title": "What happens next with bird flu? An expert explains why monitoring matters",
-          "url": "https://phys.org/news/2026-08-bird-flu-expert.html",
+          "title": "Cover crops could ease the shift from perennial seed to annual crops",
+          "url": "https://phys.org/news/2026-08-crops-ease-shift-perennial-seed.html",
           "source": "Phys.org",
           "source_short": "Phys.org",
           "domain": "phys.org",
-          "published_iso": "2026-08-31T11:20:03+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-09-01T02:00:01+00:00",
+          "time_ago": "5h"
         },
         {
-          "title": "Is history a school subject in crisis?",
-          "url": "https://phys.org/news/2026-08-history-school-subject-crisis.html",
+          "title": "Drones take farming to new heights",
+          "url": "https://phys.org/news/2026-08-drones-farming-heights.html",
           "source": "Phys.org",
           "source_short": "Phys.org",
           "domain": "phys.org",
-          "published_iso": "2026-08-31T11:00:07+00:00",
-          "time_ago": "1h"
+          "published_iso": "2026-09-01T01:20:01+00:00",
+          "time_ago": "6h"
+        },
+        {
+          "title": "Australia's reefs follow trend of global coral cover decline",
+          "url": "https://phys.org/news/2026-08-australia-reefs-trend-global-coral.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-09-01T00:20:01+00:00",
+          "time_ago": "7h"
+        },
+        {
+          "title": "Memory Decline Starts Earlier Than You Might Think",
+          "url": "https://nautil.us/memory-decline-starts-earlier-than-you-might-think-1284669/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-09-01T00:00:00+00:00",
+          "time_ago": "7h"
+        },
+        {
+          "title": "Important role of plastid ion channels in plant stress response identified",
+          "url": "https://phys.org/news/2026-08-important-role-plastid-ion-channels.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T23:40:04+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "Even small amounts of ocean plastic can affect petrel chicks",
+          "url": "https://phys.org/news/2026-08-small-amounts-ocean-plastic-affect.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T23:20:06+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "Sliding sugars offer simpler, smarter route to precision liver-targeted therapies",
+          "url": "https://phys.org/news/2026-08-sugars-simpler-smarter-route-precision.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T23:20:02+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "Even ancient bacteria possessed intercellular communication structures like humans today, study finds",
+          "url": "https://phys.org/news/2026-08-ancient-bacteria-intercellular-communication-humans.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T23:00:05+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "AI chatbot use for emotional support tied to loneliness in students",
+          "url": "https://phys.org/news/2026-08-ai-chatbot-emotional-loneliness-students.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T22:50:01+00:00",
+          "time_ago": "8h"
+        },
+        {
+          "title": "Role of ethics education in accounting fraud prevention",
+          "url": "https://phys.org/news/2026-08-role-ethics-accounting-fraud.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T22:40:06+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "'One-pot' CRISPR platform delivers lab-like sensitivity in 30 minutes for at-home testing",
+          "url": "https://phys.org/news/2026-08-pot-crispr-platform-lab-sensitivity.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T22:40:03+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "Nature's color palette explains why everything we see is a mix of red, yellow, green and blue",
+          "url": "https://phys.org/news/2026-08-nature-palette-red-yellow-green.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T22:30:03+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "Faint far-infrared radiation drives a correlated insulator-to-metal transition in magic-angle graphene",
+          "url": "https://phys.org/news/2026-08-faint-infrared-insulator-metal-transition.html",
+          "source": "Phys.org",
+          "source_short": "Phys.org",
+          "domain": "phys.org",
+          "published_iso": "2026-08-31T22:20:03+00:00",
+          "time_ago": "9h"
+        },
+        {
+          "title": "New Test for Broken-Heart Syndrome Offers Insights into the Mysterious Disease",
+          "url": "https://nautil.us/new-test-for-broken-heart-syndrome-offers-insights-into-the-mysterious-disease-1284666/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-31T20:30:00+00:00",
+          "time_ago": "11h"
+        },
+        {
+          "title": "Festival honouring Dolly Parton set for Nashville and London",
+          "url": "https://www.bbc.co.uk/news/articles/c5ywd9q3ywvo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T18:58:35+00:00",
+          "time_ago": "12h"
+        },
+        {
+          "title": "The Extinct Tasmanian Tiger’s Bite Was Unlike Any Other Predatory Mammal’s",
+          "url": "https://nautil.us/the-extinct-tasmanian-tigers-bite-was-unlike-any-other-predatory-mammals-1284660/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-31T18:30:00+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "US singer D4vd's celebrity lawyers withdraw from murder case",
+          "url": "https://www.bbc.co.uk/news/articles/crr451lpl4no?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T17:54:23+00:00",
+          "time_ago": "13h"
+        },
+        {
+          "title": "Victoria Beckham's company makes its first profit after 18 years",
+          "url": "https://www.bbc.co.uk/news/articles/cj645yl6d6do?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T17:28:19+00:00",
+          "time_ago": "14h"
+        },
+        {
+          "title": "This Viking Dress Survived for 1,300 Years, Protected by Its Metal Ornaments",
+          "url": "https://nautil.us/this-viking-dress-survived-for-1300-years-protected-by-its-metal-ornaments-1284625/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-31T16:00:00+00:00",
+          "time_ago": "15h"
+        },
+        {
+          "title": "John Galliano exhibition at New York Met cancelled after backlash",
+          "url": "https://www.bbc.co.uk/news/articles/c4gkp6pgy03o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T15:30:05+00:00",
+          "time_ago": "16h"
+        },
+        {
+          "title": "‘Stunning’ Percolation Proof Solves Decades-Old Puzzle About Phase Transitions",
+          "url": "https://www.quantamagazine.org/stunning-percolation-proof-solves-decades-old-puzzle-about-phase-transitions-20260831/",
+          "source": "Quanta Magazine",
+          "source_short": "Quanta",
+          "domain": "quantamagazine.org",
+          "published_iso": "2026-08-31T14:24:27+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "Popular sweeteners may leave effects that last for generations",
+          "url": "https://www.sciencedaily.com/releases/2026/08/260830000019.htm",
+          "source": "ScienceDaily",
+          "source_short": "SciDaily",
+          "domain": "sciencedaily.com",
+          "published_iso": "2026-08-31T14:04:01+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "How a “Psychic” Horse Named Clever Hans Changed the Way We Do Science",
+          "url": "https://nautil.us/how-a-psychic-horse-named-clever-hans-changed-the-way-we-do-science-1284622/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-31T14:00:00+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "One injection could keep osteoarthritis drugs working for weeks",
+          "url": "https://www.sciencedaily.com/releases/2026/08/260829235947.htm",
+          "source": "ScienceDaily",
+          "source_short": "SciDaily",
+          "domain": "sciencedaily.com",
+          "published_iso": "2026-08-31T13:52:45+00:00",
+          "time_ago": "17h"
+        },
+        {
+          "title": "A “quantum bath” puts quantum entanglement on autopilot",
+          "url": "https://www.sciencedaily.com/releases/2026/08/260830000002.htm",
+          "source": "ScienceDaily",
+          "source_short": "SciDaily",
+          "domain": "sciencedaily.com",
+          "published_iso": "2026-08-31T13:08:37+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "As Death Toll From Nepal Flood Rises, Officials Call to Tackle Warming",
+          "url": "https://e360.yale.edu/digest/nepal-floods-climate",
+          "source": "Yale E360",
+          "source_short": "YaleE360",
+          "domain": "e360.yale.edu",
+          "published_iso": "2026-08-31T13:00:00+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Scientists challenge a 70-year-old “lizard brain” myth",
+          "url": "https://www.sciencedaily.com/releases/2026/08/260829235958.htm",
+          "source": "ScienceDaily",
+          "source_short": "SciDaily",
+          "domain": "sciencedaily.com",
+          "published_iso": "2026-08-31T12:53:45+00:00",
+          "time_ago": "18h"
+        },
+        {
+          "title": "Fossil feet may be misleading scientists about human evolution",
+          "url": "https://www.sciencedaily.com/releases/2026/08/260829235942.htm",
+          "source": "ScienceDaily",
+          "source_short": "SciDaily",
+          "domain": "sciencedaily.com",
+          "published_iso": "2026-08-31T12:38:26+00:00",
+          "time_ago": "19h"
+        },
+        {
+          "title": "An Expert Pieced Together This Roman Document Like a Jigsaw Puzzle. You’ll Never Guess What It’s About",
+          "url": "https://nautil.us/an-expert-pieced-together-this-roman-document-like-a-jigsaw-puzzle-youll-never-guess-what-its-about-1284616/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-31T12:00:00+00:00",
+          "time_ago": "19h"
         },
         {
           "title": "Scientists find why the liver may not heal even after you stop drinking",
@@ -1672,7 +2284,25 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-31T10:43:38+00:00",
-          "time_ago": "1h"
+          "time_ago": "21h"
+        },
+        {
+          "title": "The Singapore strategies",
+          "url": "https://aeon.co/essays/did-singapore-go-wrong-in-its-quest-for-food-security",
+          "source": "Aeon",
+          "source_short": "Aeon",
+          "domain": "aeon.co",
+          "published_iso": "2026-08-31T10:00:00+00:00",
+          "time_ago": "21h"
+        },
+        {
+          "title": "Dolly Parton laid to rest alongside husband in Nashville",
+          "url": "https://www.bbc.co.uk/news/articles/cew95ke74l7o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T09:24:50+00:00",
+          "time_ago": "22h"
         },
         {
           "title": "NASA’s Roman Space Telescope launches to reveal the Universe’s darkest secrets",
@@ -1681,61 +2311,25 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-31T09:23:21+00:00",
-          "time_ago": "3h"
+          "time_ago": "22h"
         },
         {
-          "title": "Not tiger, not wolf: Australian thylacine skull reveals a far different hunting style",
-          "url": "https://phys.org/news/2026-08-tiger-wolf-australian-thylacine-skull.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T09:00:02+00:00",
-          "time_ago": "3h"
+          "title": "Hints of fiery finale for last ever episode of River City",
+          "url": "https://www.bbc.co.uk/news/articles/c1dl31k01v7o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T05:20:22+00:00",
+          "time_ago": "1d"
         },
         {
-          "title": "Grand Canyon flash flood leaves one dead, around 15 missing",
-          "url": "https://phys.org/news/2026-08-grand-canyon-dead.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T08:10:01+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "Karina rapidly becomes a major hurricane in the Pacific far from land, forecasters say",
-          "url": "https://phys.org/news/2026-08-karina-rapidly-major-hurricane-pacific.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T07:54:14+00:00",
-          "time_ago": "4h"
-        },
-        {
-          "title": "Scientists discover diamonds can generate electricity",
-          "url": "https://www.sciencedaily.com/releases/2026/08/260829035223.htm",
-          "source": "ScienceDaily",
-          "source_short": "SciDaily",
-          "domain": "sciencedaily.com",
-          "published_iso": "2026-08-31T04:13:53+00:00",
-          "time_ago": "8h"
-        },
-        {
-          "title": "The SKA project: A model for dialogue between historical astronomical archives, local memory and modern science",
-          "url": "https://phys.org/news/2026-08-ska-dialogue-historical-astronomical-archives.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T04:00:01+00:00",
-          "time_ago": "8h"
-        },
-        {
-          "title": "Using data to help wheat growers adapt to unpredictable weather",
-          "url": "https://phys.org/news/2026-08-wheat-growers-unpredictable-weather.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-31T00:30:03+00:00",
-          "time_ago": "12h"
+          "title": "This actor was told he had Alzheimer's, now he's performing a one-man show",
+          "url": "https://www.bbc.co.uk/news/articles/c4g3nwwjd8go?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-31T01:47:54+00:00",
+          "time_ago": "1d"
         },
         {
           "title": "Scale of snakebites estimated globally",
@@ -1744,7 +2338,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-31T00:00:00+00:00",
-          "time_ago": "12h"
+          "time_ago": "1d"
         },
         {
           "title": "What’s your lab’s archetype? The answer could inform how you use AI",
@@ -1753,7 +2347,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-31T00:00:00+00:00",
-          "time_ago": "12h"
+          "time_ago": "1d"
         },
         {
           "title": "Order from disorder: do we need a new law of physics?",
@@ -1762,7 +2356,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-31T00:00:00+00:00",
-          "time_ago": "12h"
+          "time_ago": "1d"
         },
         {
           "title": "The leap second is dead. Long live the leap hour?",
@@ -1771,7 +2365,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-31T00:00:00+00:00",
-          "time_ago": "12h"
+          "time_ago": "1d"
         },
         {
           "title": "Why are rich people so pessimistic? What the numbers say",
@@ -1780,52 +2374,16 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-31T00:00:00+00:00",
-          "time_ago": "12h"
+          "time_ago": "1d"
         },
         {
-          "title": "'Cut-to-fuse' strategy: A new route for molecular skeletal editing",
-          "url": "https://phys.org/news/2026-08-fuse-strategy-route-molecular-skeletal.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-30T21:00:03+00:00",
-          "time_ago": "15h"
-        },
-        {
-          "title": "Tides can be mapped much more locally using a new method based on satellite images",
-          "url": "https://phys.org/news/2026-08-tides-locally-method-based-satellite.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-30T19:00:04+00:00",
-          "time_ago": "17h"
-        },
-        {
-          "title": "As super El Nino strengthens, study suggests that climate change is intensifying El Ninos",
-          "url": "https://phys.org/news/2026-08-super-el-nino-climate-ninos.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-30T18:00:02+00:00",
-          "time_ago": "18h"
-        },
-        {
-          "title": "Infection kills gut cells, while diet reshapes existing ones, fruit fly study finds",
-          "url": "https://phys.org/news/2026-08-infection-gut-cells-diet-reshapes.html",
-          "source": "Phys.org",
-          "source_short": "Phys.org",
-          "domain": "phys.org",
-          "published_iso": "2026-08-30T17:00:01+00:00",
-          "time_ago": "19h"
-        },
-        {
-          "title": "1.4-million-year-old footprints reveal a surprisingly large human relative",
-          "url": "https://www.sciencedaily.com/releases/2026/08/260829035221.htm",
-          "source": "ScienceDaily",
-          "source_short": "SciDaily",
-          "domain": "sciencedaily.com",
-          "published_iso": "2026-08-30T15:17:06+00:00",
-          "time_ago": "21h"
+          "title": "Lola Young surprises Reading Festival with final day set",
+          "url": "https://www.bbc.co.uk/news/articles/c6247yv8564o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-30T19:36:06+00:00",
+          "time_ago": "1d"
         },
         {
           "title": "This strange “spacetime crystal” can suddenly become a black hole",
@@ -1834,25 +2392,7 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-30T15:05:09+00:00",
-          "time_ago": "21h"
-        },
-        {
-          "title": "Common supplements rival antibiotics for severe gum disease",
-          "url": "https://www.sciencedaily.com/releases/2026/08/260829035216.htm",
-          "source": "ScienceDaily",
-          "source_short": "SciDaily",
-          "domain": "sciencedaily.com",
-          "published_iso": "2026-08-30T14:35:22+00:00",
-          "time_ago": "21h"
-        },
-        {
-          "title": "IBM quantum computer solves classically intractable problem in 15 minutes",
-          "url": "https://www.sciencedaily.com/releases/2026/08/260829035219.htm",
-          "source": "ScienceDaily",
-          "source_short": "SciDaily",
-          "domain": "sciencedaily.com",
-          "published_iso": "2026-08-30T14:08:13+00:00",
-          "time_ago": "22h"
+          "time_ago": "1d"
         },
         {
           "title": "HEPA air purifiers may boost brain function after just one month",
@@ -1861,7 +2401,7 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-30T13:33:54+00:00",
-          "time_ago": "22h"
+          "time_ago": "1d"
         },
         {
           "title": "Hundreds of hidden earthquakes found at Antarctica’s Doomsday Glacier",
@@ -1870,7 +2410,7 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-30T13:07:17+00:00",
-          "time_ago": "23h"
+          "time_ago": "1d"
         },
         {
           "title": "Researchers unveil sustainable spirulina solution to vitamin B12 deficiency",
@@ -1879,7 +2419,7 @@
           "source_short": "SciDaily",
           "domain": "sciencedaily.com",
           "published_iso": "2026-08-30T05:17:05+00:00",
-          "time_ago": "1d"
+          "time_ago": "2d"
         },
         {
           "title": "AI models are being used to track zoonotic diseases. Will they prevent the next pandemic?",
@@ -1888,7 +2428,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-30T00:00:00+00:00",
-          "time_ago": "1d"
+          "time_ago": "2d"
         },
         {
           "title": "Lift-off! NASA launches Roman Space Telescope to tackle dark-energy mysteries",
@@ -1897,7 +2437,16 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-30T00:00:00+00:00",
-          "time_ago": "1d"
+          "time_ago": "2d"
+        },
+        {
+          "title": "I’m Part of the Team Writing the Next Bible of Psychiatry—For the First Time, the DSM Will Use Biology to Understand Mental Disorders",
+          "url": "https://nautil.us/im-part-of-the-team-writing-the-next-bible-of-psychiatry-for-the-first-time-the-dsm-will-use-biology-to-understand-mental-disorders-1284613/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-29T12:00:00+00:00",
+          "time_ago": "2d"
         },
         {
           "title": "Long-term melatonin use linked to 90% higher heart failure risk",
@@ -1909,13 +2458,49 @@
           "time_ago": "2d"
         },
         {
-          "title": "Australia’s red soil may be hiding a massive clean energy source",
-          "url": "https://www.sciencedaily.com/releases/2026/08/260829035214.htm",
-          "source": "ScienceDaily",
-          "source_short": "SciDaily",
-          "domain": "sciencedaily.com",
-          "published_iso": "2026-08-29T10:05:43+00:00",
-          "time_ago": "2d"
+          "title": "Charli XCX electrifies Reading Festival with era-spanning set",
+          "url": "https://www.bbc.co.uk/news/articles/c750ng9grk0o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Culture",
+          "source_short": "BBCCult",
+          "domain": "bbc.co.uk",
+          "published_iso": "2026-08-28T23:34:34+00:00",
+          "time_ago": "3d"
+        },
+        {
+          "title": "Watch This Shrimp-Like Fish Walk Backwards",
+          "url": "https://nautil.us/watch-this-shrimp-like-fish-walk-backwards-1284607/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-28T22:00:00+00:00",
+          "time_ago": "3d"
+        },
+        {
+          "title": "COVID Brain Fog May Not Be Irreversible",
+          "url": "https://nautil.us/covid-brain-fog-may-not-be-irreversible-1284604/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-28T21:00:00+00:00",
+          "time_ago": "3d"
+        },
+        {
+          "title": "Listen in on the Sounds of a Jurassic Period Forest",
+          "url": "https://nautil.us/listen-in-on-the-sounds-of-a-jurassic-period-forest-1284593/",
+          "source": "Nautilus",
+          "source_short": "Nautilus",
+          "domain": "nautil.us",
+          "published_iso": "2026-08-28T20:00:00+00:00",
+          "time_ago": "3d"
+        },
+        {
+          "title": "Subjective Perspective Makes Objective Reality ‘Everywhere Whole’",
+          "url": "https://www.noemamag.com/subjective-perspective-makes-objective-reality-everywhere-whole",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-28T16:27:19+00:00",
+          "time_ago": "3d"
         },
         {
           "title": "Does Computer Science Need Computers?",
@@ -1924,7 +2509,7 @@
           "source_short": "Quanta",
           "domain": "quantamagazine.org",
           "published_iso": "2026-08-28T13:30:34+00:00",
-          "time_ago": "2d"
+          "time_ago": "3d"
         },
         {
           "title": "In Africa, a Growing Underground Solar Boom",
@@ -1942,7 +2527,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "Mysteries of the deep and AI friendship: Books in brief",
@@ -1951,7 +2536,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "The Moderna cancer vaccine offers hope — now we must speed up personalized therapies",
@@ -1960,7 +2545,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "Heisuke Hironaka obituary: mathematician who smoothed out geometry’s complexities",
@@ -1969,7 +2554,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "Will Meta’s deal make social media safe for kids? Researchers are dubious",
@@ -1978,7 +2563,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
         },
         {
           "title": "What employers are looking for in the age of AI — and four ways to provide it",
@@ -1987,7 +2572,16 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-28T00:00:00+00:00",
-          "time_ago": "3d"
+          "time_ago": "4d"
+        },
+        {
+          "title": "The Latest Chapter In American Military Muddling",
+          "url": "https://www.noemamag.com/the-latest-chapter-in-american-military-muddling",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-27T16:18:15+00:00",
+          "time_ago": "4d"
         },
         {
           "title": "A Hard-Won Rule to Cut Chemical Plant Pollution Is Being Unraveled",
@@ -2005,7 +2599,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-27T00:00:00+00:00",
-          "time_ago": "4d"
+          "time_ago": "5d"
         },
         {
           "title": "Animal-microbe partnerships date back to the dawn of complex life",
@@ -2014,7 +2608,7 @@
           "source_short": "Nature",
           "domain": "nature.com",
           "published_iso": "2026-08-27T00:00:00+00:00",
-          "time_ago": "4d"
+          "time_ago": "5d"
         },
         {
           "title": "In Hilbert Space, All Things Are Quantumly Possible",
@@ -2023,7 +2617,7 @@
           "source_short": "Quanta",
           "domain": "quantamagazine.org",
           "published_iso": "2026-08-26T14:30:35+00:00",
-          "time_ago": "4d"
+          "time_ago": "5d"
         },
         {
           "title": "Access to Urban Woodlands Linked With Lower Use of Antidepressants",
@@ -2032,7 +2626,16 @@
           "source_short": "YaleE360",
           "domain": "e360.yale.edu",
           "published_iso": "2026-08-26T12:43:00+00:00",
-          "time_ago": "4d"
+          "time_ago": "5d"
+        },
+        {
+          "title": "When The AI Says To Kill",
+          "url": "https://www.noemamag.com/when-the-ai-says-to-kill",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-25T16:30:50+00:00",
+          "time_ago": "6d"
         },
         {
           "title": "Bomb Fishing Is Wreaking Havoc on Indonesia's Coral Reefs",
@@ -2050,7 +2653,7 @@
           "source_short": "Quanta",
           "domain": "quantamagazine.org",
           "published_iso": "2026-08-24T14:00:55+00:00",
-          "time_ago": "6d"
+          "time_ago": "Aug 24"
         },
         {
           "title": "One of the World's ‘Most Wanted’ Lost Fish Is Rediscovered",
@@ -2060,6 +2663,15 @@
           "domain": "e360.yale.edu",
           "published_iso": "2026-08-24T12:29:00+00:00",
           "time_ago": "Aug 24"
+        },
+        {
+          "title": "Introducing Noema Issue VII: The Next Axial Age",
+          "url": "https://www.noemamag.com/introducing-noema-issue-vii-the-next-axial-age",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-21T15:27:34+00:00",
+          "time_ago": "Aug 21"
         },
         {
           "title": "‘Huge Breakthrough’ in the Math of Imbalance",
@@ -2078,247 +2690,6 @@
           "domain": "e360.yale.edu",
           "published_iso": "2026-08-21T12:58:00+00:00",
           "time_ago": "Aug 21"
-        },
-        {
-          "title": "Are We Thinking Correctly About AI Intelligence?",
-          "url": "https://www.quantamagazine.org/are-we-thinking-correctly-about-ai-intelligence-20260820/",
-          "source": "Quanta Magazine",
-          "source_short": "Quanta",
-          "domain": "quantamagazine.org",
-          "published_iso": "2026-08-20T14:04:40+00:00",
-          "time_ago": "Aug 20"
-        },
-        {
-          "title": "Filipino Cacao Growers Learn to Live With a Hotter Climate",
-          "url": "https://e360.yale.edu/features/2026-film-contest-first-place-philippines-chocolates",
-          "source": "Yale E360",
-          "source_short": "YaleE360",
-          "domain": "e360.yale.edu",
-          "published_iso": "2026-08-20T09:16:00+00:00",
-          "time_ago": "Aug 20"
-        },
-        {
-          "title": "A London Scheme to Cut Car Pollution Restored Lung Growth in Children",
-          "url": "https://e360.yale.edu/digest/ulez-children-lung-growth",
-          "source": "Yale E360",
-          "source_short": "YaleE360",
-          "domain": "e360.yale.edu",
-          "published_iso": "2026-08-19T09:41:00+00:00",
-          "time_ago": "Aug 19"
-        },
-        {
-          "title": "Collapse of Atlantic Currents Could Drive a Surge in Warming",
-          "url": "https://e360.yale.edu/digest/amoc-warming-study",
-          "source": "Yale E360",
-          "source_short": "YaleE360",
-          "domain": "e360.yale.edu",
-          "published_iso": "2026-08-18T12:56:00+00:00",
-          "time_ago": "Aug 18"
-        },
-        {
-          "title": "So Far This Year, China Has Wasted Enough Clean Energy to Power Mexico",
-          "url": "https://e360.yale.edu/digest/china-renewable-curtailments",
-          "source": "Yale E360",
-          "source_short": "YaleE360",
-          "domain": "e360.yale.edu",
-          "published_iso": "2026-08-17T13:36:00+00:00",
-          "time_ago": "Aug 17"
-        }
-      ]
-    },
-    {
-      "id": "culture",
-      "title": "Culture & Ideas",
-      "count": 30,
-      "items": [
-        {
-          "title": "An Expert Pieced Together This Roman Document Like a Jigsaw Puzzle. You’ll Never Guess What It’s About",
-          "url": "https://nautil.us/an-expert-pieced-together-this-roman-document-like-a-jigsaw-puzzle-youll-never-guess-what-its-about-1284616/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-31T12:00:00+00:00",
-          "time_ago": "32m"
-        },
-        {
-          "title": "The Singapore strategies",
-          "url": "https://aeon.co/essays/did-singapore-go-wrong-in-its-quest-for-food-security",
-          "source": "Aeon",
-          "source_short": "Aeon",
-          "domain": "aeon.co",
-          "published_iso": "2026-08-31T10:00:00+00:00",
-          "time_ago": "2h"
-        },
-        {
-          "title": "Dolly Parton laid to rest alongside husband in Nashville",
-          "url": "https://www.bbc.co.uk/news/articles/cew95ke74l7o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T09:24:50+00:00",
-          "time_ago": "3h"
-        },
-        {
-          "title": "Hints of fiery finale for last ever episode of River City",
-          "url": "https://www.bbc.co.uk/news/articles/c1dl31k01v7o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T05:20:22+00:00",
-          "time_ago": "7h"
-        },
-        {
-          "title": "This actor was told he had Alzheimer's, now he's performing a one-man show",
-          "url": "https://www.bbc.co.uk/news/articles/c4g3nwwjd8go?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-31T01:47:54+00:00",
-          "time_ago": "10h"
-        },
-        {
-          "title": "Lola Young surprises Reading Festival with final day set",
-          "url": "https://www.bbc.co.uk/news/articles/c6247yv8564o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-30T19:36:06+00:00",
-          "time_ago": "16h"
-        },
-        {
-          "title": "I’m Part of the Team Writing the Next Bible of Psychiatry—For the First Time, the DSM Will Use Biology to Understand Mental Disorders",
-          "url": "https://nautil.us/im-part-of-the-team-writing-the-next-bible-of-psychiatry-for-the-first-time-the-dsm-will-use-biology-to-understand-mental-disorders-1284613/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-29T12:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Dolly Parton's dad couldn't read - it inspired her to send books to millions of children",
-          "url": "https://www.bbc.co.uk/news/articles/cpwlrrzp8eeo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-29T00:35:04+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Charli XCX electrifies Reading Festival with era-spanning set",
-          "url": "https://www.bbc.co.uk/news/articles/c750ng9grk0o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-28T23:34:34+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Watch This Shrimp-Like Fish Walk Backwards",
-          "url": "https://nautil.us/watch-this-shrimp-like-fish-walk-backwards-1284607/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T22:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "COVID Brain Fog May Not Be Irreversible",
-          "url": "https://nautil.us/covid-brain-fog-may-not-be-irreversible-1284604/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T21:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Listen in on the Sounds of a Jurassic Period Forest",
-          "url": "https://nautil.us/listen-in-on-the-sounds-of-a-jurassic-period-forest-1284593/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T20:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "The Gibbon’s Gaze: A Mirror Into the Human Mind",
-          "url": "https://nautil.us/the-gibbons-gaze-a-mirror-into-the-human-mind-1284595/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T18:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Paul Heaton scores first number one album as Dolly Parton's 9 to 5 finally reaches top 40",
-          "url": "https://www.bbc.co.uk/news/articles/c8d3ml106j8o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-28T16:48:36+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "How to Think About Thinking",
-          "url": "https://nautil.us/how-to-think-about-thinking-1284587/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T16:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "Cyborg Roaches Could Be the Future of Triage Medicine",
-          "url": "https://nautil.us/cyborg-roaches-could-be-the-future-of-triage-medicine-1284583/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T14:00:00+00:00",
-          "time_ago": "2d"
-        },
-        {
-          "title": "The First Moon Spaceport Is Coming. But First We’ll Need Moon Traffic Control",
-          "url": "https://nautil.us/the-first-moon-spaceport-is-coming-but-first-well-need-moon-traffic-control-1284577/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-28T12:00:00+00:00",
-          "time_ago": "3d"
-        },
-        {
-          "title": "Selena Gomez pushes back against 'frivolous' fraud claims",
-          "url": "https://www.bbc.co.uk/news/articles/cz0z4k28804o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-28T05:53:05+00:00",
-          "time_ago": "3d"
-        },
-        {
-          "title": "Matt Lucas and Hugh Bonneville among actors calling for law on AI voice cloning",
-          "url": "https://www.bbc.co.uk/news/articles/c4gv5gepxnyo?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-28T05:11:16+00:00",
-          "time_ago": "3d"
-        },
-        {
-          "title": "Jacob Elordi on why The Dog Stars had him asking 'What am I missing' in life?",
-          "url": "https://www.bbc.co.uk/news/articles/c74g2j83dx1o?at_medium=RSS&at_campaign=rss",
-          "source": "BBC Culture",
-          "source_short": "BBCCult",
-          "domain": "bbc.co.uk",
-          "published_iso": "2026-08-27T23:44:07+00:00",
-          "time_ago": "3d"
-        },
-        {
-          "title": "This Is What Happens When 1,000 People Bury Their Underwear for Science",
-          "url": "https://nautil.us/this-is-what-happens-when-1000-people-bury-their-underwear-for-science-1284574/",
-          "source": "Nautilus",
-          "source_short": "Nautilus",
-          "domain": "nautil.us",
-          "published_iso": "2026-08-27T22:00:00+00:00",
-          "time_ago": "3d"
         },
         {
           "title": "The fog of hunger",
@@ -2348,6 +2719,15 @@
           "time_ago": "Aug 20"
         },
         {
+          "title": "Filipino Cacao Growers Learn to Live With a Hotter Climate",
+          "url": "https://e360.yale.edu/features/2026-film-contest-first-place-philippines-chocolates",
+          "source": "Yale E360",
+          "source_short": "YaleE360",
+          "domain": "e360.yale.edu",
+          "published_iso": "2026-08-20T09:16:00+00:00",
+          "time_ago": "Aug 20"
+        },
+        {
           "title": "The conscience files",
           "url": "https://aeon.co/videos/thieves-of-cursed-rocks-pen-letters-of-remorse-to-a-national-park",
           "source": "Aeon",
@@ -2355,6 +2735,24 @@
           "domain": "aeon.co",
           "published_iso": "2026-08-19T10:01:00+00:00",
           "time_ago": "Aug 19"
+        },
+        {
+          "title": "A London Scheme to Cut Car Pollution Restored Lung Growth in Children",
+          "url": "https://e360.yale.edu/digest/ulez-children-lung-growth",
+          "source": "Yale E360",
+          "source_short": "YaleE360",
+          "domain": "e360.yale.edu",
+          "published_iso": "2026-08-19T09:41:00+00:00",
+          "time_ago": "Aug 19"
+        },
+        {
+          "title": "Collapse of Atlantic Currents Could Drive a Surge in Warming",
+          "url": "https://e360.yale.edu/digest/amoc-warming-study",
+          "source": "Yale E360",
+          "source_short": "YaleE360",
+          "domain": "e360.yale.edu",
+          "published_iso": "2026-08-18T12:56:00+00:00",
+          "time_ago": "Aug 18"
         },
         {
           "title": "In praise of zealotry",
@@ -2384,6 +2782,15 @@
           "time_ago": "Aug 17"
         },
         {
+          "title": "AI Needs Public Feedback At Scale Before It’s Too Late",
+          "url": "https://www.noemamag.com/ai-needs-public-feedback-at-scale-before-its-too-late",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-14T15:11:46+00:00",
+          "time_ago": "Aug 14"
+        },
+        {
           "title": "The neverending house",
           "url": "https://aeon.co/essays/the-art-of-dwelling-in-santiagos-self-built-homes",
           "source": "Aeon",
@@ -2393,6 +2800,15 @@
           "time_ago": "Aug 14"
         },
         {
+          "title": "The Nature Of Free Will In The Age Of AI",
+          "url": "https://www.noemamag.com/the-nature-of-free-will-in-the-age-of-ai",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-13T15:10:23+00:00",
+          "time_ago": "Aug 13"
+        },
+        {
           "title": "Where the earth meets the sky",
           "url": "https://aeon.co/videos/in-the-remote-desert-an-awe-inspiring-artwork-collapses-time-and-space",
           "source": "Aeon",
@@ -2400,9 +2816,45 @@
           "domain": "aeon.co",
           "published_iso": "2026-08-13T10:01:00+00:00",
           "time_ago": "Aug 13"
+        },
+        {
+          "title": "The Tantalizing Possibility Of Locating Consciousness In The Brain",
+          "url": "https://www.noemamag.com/the-tantalizing-possibility-of-locating-consciousness-in-the-brain",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-11T17:16:19+00:00",
+          "time_ago": "Aug 11"
+        },
+        {
+          "title": "From The Trap Of Geopolitics To A Geo-Civilizational Paradigm",
+          "url": "https://www.noemamag.com/from-the-trap-of-geopolitics-to-a-geo-civilizational-paradigm",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-07T13:15:22+00:00",
+          "time_ago": "Aug 07"
+        },
+        {
+          "title": "Why Is Everyone In Tech So Sad?",
+          "url": "https://www.noemamag.com/why-is-everyone-in-tech-so-sad",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-06T13:10:48+00:00",
+          "time_ago": "Aug 06"
+        },
+        {
+          "title": "How To Give Everyday People A Say In AI Governance",
+          "url": "https://www.noemamag.com/how-to-give-everyday-people-a-say-in-ai-governance",
+          "source": "Noema",
+          "source_short": "Noema",
+          "domain": "noemamag.com",
+          "published_iso": "2026-08-04T13:01:54+00:00",
+          "time_ago": "Aug 04"
         }
       ]
     }
   ],
-  "total_count": 263
+  "total_count": 314
 }

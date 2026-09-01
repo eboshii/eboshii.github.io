@@ -31,53 +31,46 @@ FEEDS_CONFIG = [
         "category_id": "world",
         "category_title": "World & Wire",
         "feeds": [
-            {"name": "BBC News", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "limit": 15},
-            {"name": "The Guardian", "short": "Guardian", "url": "https://www.theguardian.com/world/rss", "limit": 15},
-            {"name": "NPR News", "short": "NPR", "url": "https://feeds.npr.org/1001/rss.xml", "limit": 12},
-            {"name": "Deutsche Welle", "short": "DW", "url": "https://rss.dw.com/rdf/rss-en-all", "limit": 12},
-            {"name": "Al Jazeera", "short": "AlJazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml", "limit": 12},
+            {"name": "BBC News", "short": "BBC", "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "limit": 20},
+            {"name": "The Guardian", "short": "Guardian", "url": "https://www.theguardian.com/world/rss", "limit": 20},
+            {"name": "NPR News", "short": "NPR", "url": "https://feeds.npr.org/1001/rss.xml", "limit": 15},
+            {"name": "Deutsche Welle", "short": "DW", "url": "https://rss.dw.com/rdf/rss-en-all", "limit": 15},
+            {"name": "Al Jazeera", "short": "AlJazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml", "limit": 15},
         ]
     },
     {
         "category_id": "tech",
         "category_title": "Tech & Computing",
         "feeds": [
-            {"name": "Hacker News", "short": "HN", "url": "https://news.ycombinator.com/rss", "limit": 20},
-            {"name": "Ars Technica", "short": "Ars", "url": "https://feeds.arstechnica.com/arstechnica/index", "limit": 15},
-            {"name": "The Verge", "short": "Verge", "url": "https://www.theverge.com/rss/index.xml", "limit": 15},
-            {"name": "Lobsters", "short": "Lobsters", "url": "https://lobste.rs/rss", "limit": 12},
-            {"name": "MIT Tech Review", "short": "MIT", "url": "https://www.technologyreview.com/feed/", "limit": 10},
+            {"name": "Hacker News", "short": "HN", "url": "https://news.ycombinator.com/rss", "limit": 25},
+            {"name": "Ars Technica", "short": "Ars", "url": "https://feeds.arstechnica.com/arstechnica/index", "limit": 20},
+            {"name": "The Verge", "short": "Verge", "url": "https://www.theverge.com/rss/index.xml", "limit": 20},
+            {"name": "Lobsters", "short": "Lobsters", "url": "https://lobste.rs/rss", "limit": 15},
+            {"name": "MIT Tech Review", "short": "MIT", "url": "https://www.technologyreview.com/feed/", "limit": 12},
         ]
     },
     {
         "category_id": "markets",
         "category_title": "Markets & Finance",
         "feeds": [
-            {"name": "MarketWatch", "short": "MW", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "limit": 15},
-            {"name": "Yahoo Finance", "short": "YahooFin", "url": "https://finance.yahoo.com/news/rssindex", "limit": 15},
-            {"name": "Financial Times", "short": "FT", "url": "https://www.ft.com/news-feed?format=rss", "limit": 12},
-            {"name": "Calculated Risk", "short": "CalcRisk", "url": "https://calculatedrisk.substack.com/feed", "limit": 10},
+            {"name": "MarketWatch", "short": "MW", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "limit": 20},
+            {"name": "Yahoo Finance", "short": "YahooFin", "url": "https://finance.yahoo.com/news/rssindex", "limit": 20},
+            {"name": "Financial Times", "short": "FT", "url": "https://www.ft.com/news-feed?format=rss", "limit": 15},
+            {"name": "Calculated Risk", "short": "CalcRisk", "url": "https://calculatedrisk.substack.com/feed", "limit": 12},
         ]
     },
     {
-        "category_id": "science",
-        "category_title": "Science & Research",
+        "category_id": "science_ideas",
+        "category_title": "Science & Ideas",
         "feeds": [
             {"name": "Nature", "short": "Nature", "url": "https://www.nature.com/nature.rss", "limit": 15},
             {"name": "Phys.org", "short": "Phys.org", "url": "https://phys.org/rss-feed/", "limit": 15},
-            {"name": "Quanta Magazine", "short": "Quanta", "url": "https://api.quantamagazine.org/feed/", "limit": 10},
+            {"name": "Quanta Magazine", "short": "Quanta", "url": "https://api.quantamagazine.org/feed/", "limit": 12},
             {"name": "ScienceDaily", "short": "SciDaily", "url": "https://www.sciencedaily.com/rss/all.xml", "limit": 12},
             {"name": "Yale E360", "short": "YaleE360", "url": "https://e360.yale.edu/feed.xml", "limit": 10},
-        ]
-    },
-    {
-        "category_id": "culture",
-        "category_title": "Culture & Ideas",
-        "feeds": [
             {"name": "Aeon", "short": "Aeon", "url": "https://aeon.co/feed.rss", "limit": 10},
             {"name": "Nautilus", "short": "Nautilus", "url": "https://nautil.us/feed", "limit": 10},
             {"name": "Noema", "short": "Noema", "url": "https://www.noemamag.com/feed/", "limit": 10},
-            {"name": "3 Quarks Daily", "short": "3QD", "url": "https://3quarksdaily.com/feed", "limit": 10},
             {"name": "BBC Culture", "short": "BBCCult", "url": "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml", "limit": 10},
         ]
     }
