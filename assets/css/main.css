@@ -1,19 +1,21 @@
 /* -----------------------------------------------
-   Design tokens
+   Design tokens (Dark Retro Cosmic Theme)
 ----------------------------------------------- */
 :root {
-  --bg:         #FCF9F2;
-  --bg-raised:  #F4EDE0;
-  --text:       #181614;
-  --muted:      #685E52;
-  --accent:     #7C5828;
-  --accent-dim: #B89258;
-  --border:     #D6C7B2;
-  --code-bg:    #EFE6D6;
-  --max-w:      700px;
-  --font-serif: 'EB Garamond', Georgia, serif;
-  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono:  'JetBrains Mono', 'Fira Mono', monospace;
+  --bg:            #05030a;
+  --bg-card:       rgba(14, 10, 24, 0.72);
+  --bg-raised:     rgba(28, 18, 48, 0.75);
+  --text:          #F5F0E8;
+  --muted:         #B3A898;
+  --accent:        #F0B365;
+  --accent-dim:    #A6753B;
+  --border:        rgba(235, 225, 210, 0.18);
+  --border-strong: rgba(235, 225, 210, 0.32);
+  --code-bg:       rgba(20, 14, 34, 0.85);
+  --max-w:         700px;
+  --font-serif:    'EB Garamond', Georgia, serif;
+  --font-sans:     'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', 'Fira Mono', monospace;
 }
 
 /* -----------------------------------------------
@@ -21,6 +23,17 @@
 ----------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 img, video { max-width: 100%; height: auto; display: block; }
+
+/* Fullscreen WebGL background */
+#nebula-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  display: block;
+}
 
 /* -----------------------------------------------
    Base
@@ -42,8 +55,14 @@ body {
    Header / Nav
 ----------------------------------------------- */
 header {
+  background: rgba(5, 3, 10, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 nav {
@@ -132,10 +151,12 @@ nav {
   top: calc(100% + 6px);
   right: 0;
   min-width: 140px;
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: rgba(14, 10, 24, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
   border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
   padding: 0.35rem 0;
   opacity: 0;
   pointer-events: none;
@@ -163,7 +184,7 @@ nav {
 }
 
 .nav-dropdown-menu a:hover {
-  background: var(--bg-raised);
+  background: rgba(240, 179, 101, 0.12);
   color: var(--accent);
   border: none;
 }
@@ -207,17 +228,22 @@ main {
 
 .section-card {
   display: block;
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: 4px;
   padding: 1.4rem 1.5rem;
   text-decoration: none;
   color: var(--text);
-  transition: border-color 0.2s, background 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
 }
 
 .section-card:hover {
   border-color: var(--accent);
   background: var(--bg-raised);
+  transform: translateY(-2px);
 }
 
 .section-card h2 {
@@ -545,6 +571,9 @@ main {
    Footer
 ----------------------------------------------- */
 footer {
+  background: rgba(5, 3, 10, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
   padding: 1.25rem 2rem;
   text-align: center;
@@ -553,23 +582,23 @@ footer {
 }
 
 /* -----------------------------------------------
-   Rouge syntax highlighting (warm theme)
+   Rouge syntax highlighting (Dark Cosmic Theme)
 ----------------------------------------------- */
 .highlight .c,  .highlight .ch, .highlight .cm,
-.highlight .c1, .highlight .cs { color: #9B8B78; font-style: italic; }
+.highlight .c1, .highlight .cs { color: #8D8599; font-style: italic; }
 .highlight .k,  .highlight .kd, .highlight .kn,
-.highlight .kp, .highlight .kr, .highlight .kt { color: #7A5C3E; font-weight: 500; }
+.highlight .kp, .highlight .kr, .highlight .kt { color: #F0B365; font-weight: 500; }
 .highlight .s,  .highlight .sb, .highlight .sc,
 .highlight .sd, .highlight .s2, .highlight .sh,
-.highlight .si, .highlight .sx, .highlight .s1 { color: #5E7E4A; }
+.highlight .si, .highlight .sx, .highlight .s1 { color: #7FD48A; }
 .highlight .n,  .highlight .na, .highlight .nb,
 .highlight .nc, .highlight .nd, .highlight .ni,
 .highlight .ne, .highlight .nf, .highlight .nl,
 .highlight .nn, .highlight .nx { color: var(--text); }
 .highlight .mi, .highlight .mf, .highlight .mo,
-.highlight .mh, .highlight .m  { color: #5A7EA6; }
-.highlight .o                  { color: var(--muted); }
-.highlight .err                { color: #C0392B; }
+.highlight .mh, .highlight .m  { color: #6DB3F2; }
+.highlight .o                  { color: #E0C9A6; }
+.highlight .err                { color: #F26D6D; }
 
 /* -----------------------------------------------
    News Wire / High-Density Grid Layout
@@ -627,7 +656,9 @@ main.main-wide {
   padding: 0.15rem 0.45rem;
   border-radius: 3px;
   border: 1px solid var(--border);
-  background: var(--bg-raised);
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--muted);
 }
 
@@ -658,7 +689,9 @@ main.main-wide {
   font-size: 0.78rem;
   border: 1px solid var(--border);
   border-radius: 3px;
-  background: var(--bg-raised);
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text);
   outline: none;
   transition: border-color 0.15s;
@@ -666,7 +699,7 @@ main.main-wide {
 
 .search-wrapper input:focus {
   border-color: var(--accent);
-  background: var(--bg);
+  background: var(--bg-raised);
 }
 
 .search-icon {
@@ -708,7 +741,9 @@ main.main-wide {
   padding: 0.2rem 0.55rem;
   border: 1px solid var(--border);
   border-radius: 3px;
-  background: transparent;
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--muted);
   cursor: pointer;
   transition: all 0.15s;
@@ -737,12 +772,15 @@ main.main-wide {
 
 .news-column {
   border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--bg);
+  border-radius: 4px;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 .col-header {
@@ -769,7 +807,7 @@ main.main-wide {
   font-family: var(--font-mono);
   font-size: 0.64rem;
   color: var(--muted);
-  background: var(--bg);
+  background: rgba(5, 3, 10, 0.7);
   border: 1px solid var(--border);
   padding: 0.05rem 0.3rem;
   border-radius: 2px;
