@@ -421,20 +421,39 @@
     oCtx.restore();
   }
 
-  function addFoam(lx, ly, vx, vy, count = 1) {
+  function addFoam(lx, ly, vx, vy, count = 1, isWhite = false, isSplash = false) {
     for (let i = 0; i < count; i++) {
+      let speedFactor = 0.15 + Math.random() * 0.35;
+      let angle = Math.atan2(vy, vx) + Math.PI + (Math.random() - 0.5) * (isSplash ? Math.PI * 2 : 1.2);
+      let pVx = Math.cos(angle) * (Math.hypot(vx, vy) * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
+      let pVy = Math.sin(angle) * (Math.hypot(vx, vy) * speedFactor + (isSplash ? Math.random() * 1.2 : Math.random() * 0.4));
+
+      // Wide distribution of lifespans & decay rates so spray disappears at varied lengths behind the boat
+      let decayRate;
+      let randType = Math.random();
+      if (randType < 0.25) {
+        decayRate = 0.045 + Math.random() * 0.035; // Short flecks (disappear near boat)
+      } else if (randType < 0.70) {
+        decayRate = 0.018 + Math.random() * 0.02;  // Medium trail
+      } else {
+        decayRate = 0.006 + Math.random() * 0.01;  // Long lingering wake foam (disappears far behind)
+      }
+
+      const isParticleWhite = isWhite || (Math.random() < 0.65);
+
       boat.foamParticles.push({
-        x: lx + (Math.random() - 0.5) * 6,
-        y: ly + (Math.random() - 0.5) * 4 + 3,
-        vx: -vx * 0.25 + (Math.random() - 0.5) * 0.5,
-        vy: -vy * 0.25 + (Math.random() - 0.5) * 0.5,
-        size: 1.0 + Math.random() * 1.3,
-        life: 1.0,
-        decay: 0.025 + Math.random() * 0.02
+        x: lx + (Math.random() - 0.5) * (isSplash ? 12 : 5),
+        y: ly + (Math.random() - 0.5) * (isSplash ? 8 : 4) + (isSplash ? 0 : 2),
+        vx: pVx,
+        vy: pVy,
+        size: 0.8 + Math.random() * (isSplash ? 2.0 : 1.4),
+        life: 0.7 + Math.random() * 0.3,
+        decay: decayRate,
+        isWhite: isParticleWhite
       });
     }
-    if (boat.foamParticles.length > 50) {
-      boat.foamParticles.splice(0, boat.foamParticles.length - 50);
+    if (boat.foamParticles.length > 200) {
+      boat.foamParticles.splice(0, boat.foamParticles.length - 200);
     }
   }
 
@@ -503,21 +522,28 @@
         spawnElapsed += dt;
         plopProgress = Math.min(1.0, spawnElapsed / SPAWN_DURATION);
 
-        // 1. Ascending ripple as mast & sails rise through the water surface (~30% into rise)
-        if (plopProgress >= 0.28 && !spawnAscendRippled) {
-          spawnAscendRippled = true;
-          addFoam(lx, ly, 0, 0, 5);
-          if (window.addBoatWakeNode) {
-            window.addBoatWakeNode(boat.x, boat.y, 0.45);
+        // Continuous water surface white foam bubbles during emergence
+        if (plopProgress > 0.15 && plopProgress < 0.85) {
+          if (Math.random() < 0.5) {
+            addFoam(lx, ly, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 0.8, 2, true, true);
           }
         }
 
-        // 2. Splashdown ripple & foam burst as hull drops back into the sea (~85% into rise)
+        // 1. Ascending white foam ring as mast & sails rise through the water surface (~28% into rise)
+        if (plopProgress >= 0.28 && !spawnAscendRippled) {
+          spawnAscendRippled = true;
+          addFoam(lx, ly, 0, 0, 14, true, true);
+          if (window.addBoatWakeNode) {
+            window.addBoatWakeNode(boat.x, boat.y, 0.55);
+          }
+        }
+
+        // 2. Splashdown white foam burst as hull drops back into the sea (~85% into rise)
         if (plopProgress >= 0.85 && !spawnSplashdownRippled) {
           spawnSplashdownRippled = true;
-          addFoam(lx, ly, 0, 0, 16);
+          addFoam(lx, ly, 0, 0, 28, true, true);
           if (window.addBoatWakeNode) {
-            window.addBoatWakeNode(boat.x, boat.y, 0.95);
+            window.addBoatWakeNode(boat.x, boat.y, 1.0);
           }
         }
 
@@ -555,7 +581,7 @@
           boat.stretch = 1.12; // Forward elongation burst
           boat.stretchVel = 0.4;
           boat.strokeDist = 0.0;
-          addFoam(lx, ly, moveX, moveY, 4);
+          addFoam(lx, ly, moveX, moveY, 6, true, false);
           if (window.addBoatWakeNode) {
             window.addBoatWakeNode(boat.x, boat.y, 0.7);
           }
@@ -595,7 +621,7 @@
           boat.strokeDist = (boat.strokeDist || 0) + Math.hypot(boat.vx, boat.vy);
 
           if (Math.random() < 0.35) {
-            addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 1);
+            addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, 1, true);
           }
         } else {
           boat.speed = 0;
@@ -635,7 +661,7 @@
 
       // Wake node deposition while moving
       if (boat.speed > 0.35 && canControl) {
-        addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE);
+        addFoam(lx, ly, boat.vx / PIXEL_SCALE, boat.vy / PIXEL_SCALE, Math.random() < 0.7 ? 2 : 1, true);
 
         if (now - boat.lastRippleTime > 75) {
           boat.lastRippleTime = now;
@@ -645,11 +671,13 @@
         }
       }
 
-      // Draw trailing foam
+      // Draw trailing foam and water surface spray
       for (let i = boat.foamParticles.length - 1; i >= 0; i--) {
         const p = boat.foamParticles[i];
         p.x += p.vx;
         p.y += p.vy;
+        p.vx *= 0.94; // Water drag
+        p.vy *= 0.94;
         p.life -= p.decay;
 
         if (p.life <= 0) {
@@ -657,8 +685,19 @@
           continue;
         }
 
-        offCtx.fillStyle = `rgba(127, 212, 138, ${p.life * 0.8})`;
-        offCtx.fillRect(Math.floor(p.x), Math.floor(p.y), Math.max(1, Math.floor(p.size)), Math.max(1, Math.floor(p.size)));
+        const alpha = Math.max(0, Math.min(1, p.life * 0.9));
+        if (p.isWhite) {
+          offCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        } else {
+          offCtx.fillStyle = `rgba(160, 235, 185, ${alpha * 0.85})`;
+        }
+
+        offCtx.fillRect(
+          Math.floor(p.x),
+          Math.floor(p.y),
+          Math.max(1, Math.floor(p.size)),
+          Math.max(1, Math.floor(p.size))
+        );
       }
 
       // Draw sailboat with squash & stretch + heel lean + plop emergence
