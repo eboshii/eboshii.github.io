@@ -454,7 +454,7 @@
         const hh = (rect.height * 0.5 - 1.5) * dpr;
         gl.uniform4f(uKofiBox, cx, cy, hw, hh);
         gl.uniform1f(uKofiRadius, 8.0 * dpr);
-        gl.uniform1f(uKofiFade, 36.0 * dpr); // 36px S-curve halo
+        gl.uniform1f(uKofiFade, 72.0 * dpr); // 2x width: 72px base (extends 72px to 230px with Weierstrass modulation)
       } else {
         gl.uniform4f(uKofiBox, -9999.0, -9999.0, 0.0, 0.0);
         gl.uniform1f(uKofiRadius, 0.0);
