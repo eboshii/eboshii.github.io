@@ -2,14 +2,14 @@
    Design tokens
 ----------------------------------------------- */
 :root {
-  --bg:         #FAF7F2;
-  --bg-raised:  #F3EEE7;
-  --text:       #2C2C2C;
-  --muted:      #8A7F72;
-  --accent:     #8B6F47;
-  --accent-dim: #C9A97A;
-  --border:     #E4DDD4;
-  --code-bg:    #EDE8E0;
+  --bg:         #FCF9F2;
+  --bg-raised:  #F4EDE0;
+  --text:       #181614;
+  --muted:      #685E52;
+  --accent:     #7C5828;
+  --accent-dim: #B89258;
+  --border:     #D6C7B2;
+  --code-bg:    #EFE6D6;
   --max-w:      700px;
   --font-serif: 'EB Garamond', Georgia, serif;
   --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
