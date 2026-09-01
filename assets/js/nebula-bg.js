@@ -108,16 +108,16 @@
           float prob = hash(cellId + 0.137);
           if (prob > threshold) {
             vec2 jitter = vec2(hash(cellId + 1.71), hash(cellId + 9.33)) - 0.5;
-            vec2 starPos = offset + jitter * 0.75;
+            vec2 starPos = offset + jitter * 0.70;
             float dist = length(gv - starPos);
 
-            // Core & glow
-            float starRadius = 0.06 + hash(cellId + 4.19) * 0.06;
+            // Delicate pinpoint star core
+            float starRadius = 0.015 + hash(cellId + 4.19) * 0.020;
             float core = smoothstep(starRadius, 0.0, dist);
-            float glow = 0.012 / (dist * dist + 0.012);
+            float glow = 0.0012 / (dist * dist + 0.0018);
 
             // Gentle twinkle over a few seconds (period ~2-5s)
-            float freq = (1.2 + hash(cellId + 5.72) * 1.6) * speedFactor;
+            float freq = (1.0 + hash(cellId + 5.72) * 1.5) * speedFactor;
             float phase = hash(cellId + 8.29) * 6.28318;
             float twinkle = 0.55 + 0.45 * sin(time * freq + phase);
 
@@ -125,12 +125,12 @@
             float hueRnd = hash(cellId + 2.91);
             vec3 tint = vec3(1.0, 0.96, 0.92);
             if (hueRnd < 0.35) {
-              tint = vec3(1.0, 0.80, 0.52); // warm amber
+              tint = vec3(1.0, 0.82, 0.55); // warm amber
             } else if (hueRnd < 0.65) {
-              tint = vec3(0.70, 0.88, 1.0); // pale cyan-blue
+              tint = vec3(0.72, 0.88, 1.0); // pale cyan-blue
             }
 
-            float intensity = (core * 1.4 + glow * 0.35) * twinkle * brightnessScale;
+            float intensity = (core * 1.0 + glow * 0.15) * twinkle * brightnessScale;
             totalStars += tint * intensity;
           }
         }
@@ -200,15 +200,15 @@
       col = mix(col, c_amber, intersection * 0.90);
 
       // ---------------------------------------------------------
-      // Multi-Pass Poisson-Disk Starfield (Dense Faint -> Sparse Bright)
+      // Multi-Pass Poisson-Disk Starfield (Sparse Pinpoints)
       // ---------------------------------------------------------
       vec3 stars = vec3(0.0);
-      // Pass 1: Dense faint background stars
-      stars += starLayer(rawUv, 52.0, 0.30, 0.38, u_time, 0.75);
-      // Pass 2: Medium field stars
-      stars += starLayer(rawUv, 24.0, 0.60, 0.70, u_time, 1.0);
-      // Pass 3: Sparse prominent bright stars
-      stars += starLayer(rawUv, 10.0, 0.78, 1.15, u_time, 1.25);
+      // Pass 1: Faint background micro-pinpoints (sparse)
+      stars += starLayer(rawUv, 38.0, 0.84, 0.35, u_time, 0.8);
+      // Pass 2: Medium field stars (very sparse)
+      stars += starLayer(rawUv, 18.0, 0.92, 0.65, u_time, 1.0);
+      // Pass 3: Rare bright focal stars
+      stars += starLayer(rawUv, 8.0, 0.982, 0.95, u_time, 1.2);
 
       // 4x4 Ordered Bayer Dithering + Subtle Shadow Noise
       float dither = bayer4x4(gridCoord);
