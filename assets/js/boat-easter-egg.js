@@ -11,10 +11,10 @@
  * - Emergent 2.5D physical wake trail superposition
  */
 (function () {
-  // Only active on homepage
+  // Active on homepage and tip jar page
   function isBoatSupportedPage() {
     const p = window.location.pathname.replace(/^\/eboshii\.github\.io/, '').replace(/\/+$/, '');
-    return p === '' || p === '/index.html';
+    return p === '' || p === '/index.html' || p === '/tip' || p === '/tip/index.html';
   }
 
   let boatCanvas, ctx;
