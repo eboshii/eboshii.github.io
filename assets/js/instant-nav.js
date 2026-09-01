@@ -221,6 +221,19 @@
       // Run any page-specific scripts (news search, stats expandable table, etc.)
       runScripts(currentMain);
 
+      // Re-trigger MathJax typesetting for equations on new route
+      if (window.MathJax) {
+        if (typeof window.MathJax.typesetPromise === 'function') {
+          window.MathJax.typesetPromise([currentMain]).catch(function (err) {
+            console.error('MathJax typeset error:', err);
+          });
+        } else if (window.MathJax.startup && window.MathJax.startup.promise) {
+          window.MathJax.startup.promise.then(function () {
+            window.MathJax.typesetPromise([currentMain]);
+          });
+        }
+      }
+
       // Trigger tracking on new route
       if (window.EboshiiTracker) {
         const key = window.EboshiiTracker.getRouteKey(url.pathname);

@@ -4,19 +4,19 @@ date: 2026-06-01
 math: true
 ---
 
-Es-HyperNEAT uses a [Compositional Pattern-Producing Network (CPPN)](https://en.wikipedia.org/wiki/Compositional_pattern-producing_network) to learn where to place neural network nodes and the weights to apply to their edges.
+ES-HyperNEAT uses a [Compositional Pattern-Producing Network (CPPN)](https://en.wikipedia.org/wiki/Compositional_pattern-producing_network) to learn where to place neural network nodes and the weights to apply to their edges.
 
-The CPPN $f$ is a composition of some set of canoncial functions, and is of the form.
+The CPPN $f$ is a composition of some set of canonical functions, and is of the form:
 
 $$
 f(x_0,y_0,x_1,y_1) = w
 $$
 
-The $(0,-1,x,y)$ space is considered a node centric *substrate* in ES-HyperNEAT, in this case centered arbitrarily on $(0,-1)$ in order to construct the 2-D substrate. The 2-dimensional substrate is searched, using a recursive [Quadtree](https://en.wikipedia.org/wiki/Quadtree) algorithm, to identify areas of high complexity (which corresponds to areas of high variance in $w$). 
+The $(0,-1,x,y)$ space is considered a node-centric *substrate* in ES-HyperNEAT, in this case centered arbitrarily on $(0,-1)$ in order to construct the 2-D substrate. The 2-dimensional substrate is searched, using a recursive [Quadtree](https://en.wikipedia.org/wiki/Quadtree) algorithm, to identify areas of high complexity (which corresponds to areas of high variance in $w$). 
 
 A trivial example of a CPPN:
- 
-```
+
+```mermaid
 graph LR
     subgraph Input Layer
         x0["x_0"]
@@ -61,14 +61,28 @@ graph LR
     h3 --> w
 ```
 
-$$\mathbf{x} = \begin{pmatrix} x_0 \\ y_0 \\ x_1 \\ y_1 \end{pmatrix}$$
-$$h_1 = \sin(\mathbf{w}_{h1}^T \mathbf{x} + b_{h1})$$
-$$h_2 = \cos(\mathbf{w}_{h2}^T \mathbf{x} + b_{h2})$$
-$$h_3 = \exp(-(\mathbf{w}_{h3}^T \mathbf{x} + b_{h3})^2)$$
-$$w = w_{o1}h_1 + w_{o2}h_2 + w_{o3}h_3 + b_o$$
+$$
+\mathbf{x} = \begin{pmatrix} x_0 \\ y_0 \\ x_1 \\ y_1 \end{pmatrix}
+$$
+
+$$
+h_1 = \sin(\mathbf{w}_{h1}^T \mathbf{x} + b_{h1})
+$$
+
+$$
+h_2 = \cos(\mathbf{w}_{h2}^T \mathbf{x} + b_{h2})
+$$
+
+$$
+h_3 = \exp(-(\mathbf{w}_{h3}^T \mathbf{x} + b_{h3})^2)
+$$
+
+$$
+w = w_{o1}h_1 + w_{o2}h_2 + w_{o3}h_3 + b_o
+$$
 
 With such a CPPN, the $f(0,-1,x,y)$ substrate might look like:
 
 I'm positing that a 2-dimensional substrate is quite limiting. 
 
-This is still a WIP, why are you here. 
+This is still a WIP, why are you here.
